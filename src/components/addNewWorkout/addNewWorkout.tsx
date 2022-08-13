@@ -9,7 +9,6 @@ import { Container } from "./styles";
 export type defaultValue = { sets?: string; reps?: string };
 
 interface addNewProp {
-  exercise_number: number;
   onDelete?(id: number | string | undefined): void;
   register?: UseFormRegister<any>;
   setValue: any;

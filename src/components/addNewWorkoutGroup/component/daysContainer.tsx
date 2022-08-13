@@ -237,7 +237,6 @@ const AddExercises = ({ data: dayData, updateDay, onClose }: addProps) => {
                 }}
                 onDelete={deleteExercise}
                 key={i}
-                exercise_number={i}
                 data={e}
               />
             ))}
