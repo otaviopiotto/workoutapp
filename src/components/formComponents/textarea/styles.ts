@@ -54,7 +54,7 @@ export const TextAreaContainer = styled.div<InputProps>`
     border-radius: 8px;
     border: 1px solid
       ${(props) =>
-        props.error ? errorColor : ({ theme }) => theme.colors.grey[800]};
+        props.error ? errorColor : ({ theme }) => theme.colors.grey[600]};
 
     &:focus {
       outline: 1px solid ${({ theme }) => theme.colors.blue[600]};

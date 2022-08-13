@@ -30,7 +30,7 @@ const GroupCard = ({ group_data, onClick }: GroupProp) => {
           </ul>
         </section>
         <div className="arrow">
-          <AiOutlineRight />
+          <AiOutlineRight className="arrow-icon" />
         </div>
       </Card>
     </Button>

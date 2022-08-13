@@ -22,12 +22,15 @@ export const Card = styled.div`
       ${({ theme }) => theme.fonts.mulish.body_bold};
       color: ${({ theme }) => theme.colors.grey[400]};
     }
+  }
+  .arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    .arrow {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: ${({ theme }) => theme.colors.grey[600]};
+    color: ${({ theme }) => theme.colors.grey[400]};
+    .arrow-icon {
+      font-size: 18px;
     }
   }
 

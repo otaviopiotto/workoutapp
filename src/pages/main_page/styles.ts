@@ -34,6 +34,7 @@ export const Container = styled.main`
     button {
       padding: 0px;
       border-radius: 99px;
+      font-size: 22px;
       color: ${({ theme }) => theme.colors.blue[100]};
     }
   }

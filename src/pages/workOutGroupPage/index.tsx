@@ -28,15 +28,7 @@ const WorkOutPage = () => {
       {!outlet && (
         <header className={!outlet ? "group-header" : ""}>
           <div className="get-back-section">
-            <Button
-              buttonStyle="Text"
-              onClick={() => navigate(-1)}
-              style={{
-                padding: 0,
-                fontSize: "16px",
-                color: "#000312",
-              }}
-            >
+            <Button buttonStyle="Text" onClick={() => navigate(-1)}>
               <AiOutlineArrowLeft />
             </Button>
 
@@ -48,21 +40,11 @@ const WorkOutPage = () => {
                     state: workOutData?.id,
                   })
                 }
-                style={{
-                  padding: 0,
-                  fontSize: "16px",
-                  color: "#000312",
-                }}
               >
                 <AiOutlineEdit />
               </Button>
               <Button
                 buttonStyle="Text"
-                style={{
-                  padding: 0,
-                  fontSize: "16px",
-                  color: "#000312",
-                }}
                 onClick={() => deleteGroup(workOutData.id)}
               >
                 <AiOutlineClose />

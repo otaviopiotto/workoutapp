@@ -51,12 +51,13 @@ export const ModalOverlay = styled(Dialog.Overlay)`
 
 export const ModalBody = styled.main`
   width: 100%;
+  height: 80%;
   padding: 10px;
   background: ${({ theme }) => theme.colors.grey[900]};
   border-radius: 30px 30px 0 0;
-  position: absolute;
-  top: 20%;
+  top: 10%;
   bottom: 0;
+  position: relative;
   transition: 0.3s;
   transform-origin: bottom;
   animation: 0.3s ${entranceAnimation} ease;

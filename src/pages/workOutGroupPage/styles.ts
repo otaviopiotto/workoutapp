@@ -53,6 +53,12 @@ export const Container = styled.main`
     justify-content: space-between;
     margin-bottom: 20px;
 
+    button {
+      padding: 0;
+      color: #000312;
+      font-size: 20px;
+    }
+
     .edit-buttons {
       display: flex;
       gap: 20px;

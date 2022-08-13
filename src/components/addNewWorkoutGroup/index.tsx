@@ -151,12 +151,11 @@ const AddNewWorkOutGroup = () => {
       </section>
 
       <footer>
-        <Button buttonStyle="Secondary" onClick={() => navigate(-1)} dangerous>
-          <AiOutlineArrowLeft />
-        </Button>
-
         <Button buttonStyle="Primary" type="submit" form="group-form">
-          <AiOutlineCheck />
+          Salvar
+        </Button>
+        <Button buttonStyle="Secondary" onClick={() => navigate(-1)} dangerous>
+          Cancelar
         </Button>
       </footer>
     </Container>

@@ -41,7 +41,8 @@ export const Container = styled.main`
 
   footer {
     display: flex;
-    gap: 30px;
+    flex-direction: column;
+    gap: 10px;
     position: fixed;
     bottom: 20px;
     left: 0;
@@ -50,7 +51,8 @@ export const Container = styled.main`
     justify-content: space-between;
     button {
       border-radius: 99px;
-      padding: 20px;
+      padding: 10px 20px;
+      color: ${({ theme }) => theme.colors.white};
     }
   }
 `;
