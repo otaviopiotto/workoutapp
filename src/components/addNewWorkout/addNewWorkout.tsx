@@ -10,7 +10,7 @@ export type defaultValue = { sets?: string; reps?: string };
 
 interface addNewProp {
   exercise_number: number;
-  onDelete?: () => void;
+  onDelete?(id: number | string | undefined): void;
   register?: UseFormRegister<any>;
   setValue: any;
   data: exerciseType;
@@ -22,13 +22,13 @@ interface addNewProp {
 const AddNewWorkOut = ({ ...props }: addNewProp) => {
   useEffect(() => {
     map(props.data, (e, i) => {
-      props.setValue(`exercise_${props.exercise_number}.${i}`, e);
+      props.setValue(`exercise_${props.data?.id}.${i}`, e);
     });
   }, []);
 
   useEffect(() => {
-    const sets = props.watch(`exercise_${props.exercise_number}.sets`);
-    const reps = props.watch(`exercise_${props.exercise_number}.repetition`);
+    const sets = props.watch(`exercise_${props.data?.id}.sets`);
+    const reps = props.watch(`exercise_${props.data?.id}.repetition`);
 
     if (sets || reps) {
       props.setDefaultValue({
@@ -37,18 +37,18 @@ const AddNewWorkOut = ({ ...props }: addNewProp) => {
       });
     }
   }, [
-    props.watch(`exercise_${props.exercise_number}.repetition`),
-    props.watch(`exercise_${props.exercise_number}.sets`),
+    props.watch(`exercise_${props.data?.id}.repetition`),
+    props.watch(`exercise_${props.data?.id}.sets`),
   ]);
 
   useEffect(() => {
     if (props.defaultValue) {
       props.setValue(
-        `exercise_${props.exercise_number}.sets`,
+        `exercise_${props.data?.id}.sets`,
         props.defaultValue?.sets
       );
       props.setValue(
-        `exercise_${props.exercise_number}.repetition`,
+        `exercise_${props.data?.id}.repetition`,
         props.defaultValue?.reps
       );
     }
@@ -59,24 +59,24 @@ const AddNewWorkOut = ({ ...props }: addNewProp) => {
       <input
         style={{ display: "none" }}
         value={props.data.id}
-        {...props.register?.(`exercise_${props.exercise_number}.id`)}
+        {...props.register?.(`exercise_${props.data?.id}.id`)}
       />
       <input
         placeholder="Exercício"
-        {...props.register?.(`exercise_${props.exercise_number}.exercise`)}
+        {...props.register?.(`exercise_${props.data?.id}.exercise`)}
       />
       <input
         placeholder="Série"
-        {...props.register?.(`exercise_${props.exercise_number}.sets`)}
+        {...props.register?.(`exercise_${props.data?.id}.sets`)}
       />
       <input
         placeholder="Rep"
-        {...props.register?.(`exercise_${props.exercise_number}.repetition`)}
+        {...props.register?.(`exercise_${props.data?.id}.repetition`)}
       />
       <Button
         buttonStyle="Secondary"
         style={{ padding: "2px", height: "fit-content", borderRadius: "99px" }}
-        onClick={props.onDelete}
+        onClick={() => props.onDelete?.(props?.data?.id)}
       >
         <AiOutlineClose />
       </Button>

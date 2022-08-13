@@ -1,4 +1,4 @@
-import { assign, forEach, map } from "lodash";
+import { assign, filter, forEach, map } from "lodash";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlineClose, AiOutlinePlus } from "react-icons/ai";
@@ -142,7 +142,8 @@ const AddExercises = ({ data: dayData, updateDay, onClose }: addProps) => {
   const [exercises, setExercises] = useState<exerciseType | any>([]);
   const [defaultValue, setDefaultValue] = useState<defaultValue>();
 
-  const { handleSubmit, register, unregister, setValue, watch } = useForm({});
+  const { handleSubmit, register, unregister, setValue, watch, resetField } =
+    useForm({});
 
   const onAdd = (data: any) => {
     const workout = map(data, (e) => e);
@@ -164,15 +165,23 @@ const AddExercises = ({ data: dayData, updateDay, onClose }: addProps) => {
 
   const deleteExercise = (id: number | string) => {
     const registerNames = [
-      `exercise_${exercises.length - 1}`,
-      `sets_${exercises.length - 1}`,
-      `repetition_${exercises.length - 1}`,
+      `exercise_${id}.id`,
+      `exercise_${id}.exercise`,
+      `exercise_${id}.sets`,
+      `exercise_${id}.repetition`,
     ];
 
-    unregister(registerNames);
+    console.log(exercises);
     const filterDay = exercises.filter((e: dayType) => e.id !== id);
+    console.log(filterDay);
+    map(registerNames, (value) => resetField(value));
+    unregister([`exercise_${id}`, ...registerNames]);
     setExercises(filterDay);
   };
+
+  useEffect(() => {
+    console.log(exercises);
+  }, [exercises]);
 
   useEffect(() => {
     if (dayData?.muscle_group) {
@@ -226,7 +235,7 @@ const AddExercises = ({ data: dayData, updateDay, onClose }: addProps) => {
                   setValue,
                   watch,
                 }}
-                onDelete={() => deleteExercise(e.id)}
+                onDelete={deleteExercise}
                 key={i}
                 exercise_number={i}
                 data={e}
