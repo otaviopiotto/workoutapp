@@ -9,7 +9,12 @@ import { Modal, ModalContent } from "../../radixModalComponent";
 import { defaultValue } from "../../../components/addNewWorkout/addNewWorkout";
 import { Form } from "../styles";
 import { DayContainer, ExerciseContainer } from "./styles";
-import { HiOutlineDuplicate, HiOutlinePlus, HiOutlineX } from "react-icons/hi";
+import {
+  HiOutlineDuplicate,
+  HiOutlinePlus,
+  HiOutlineViewList,
+  HiOutlineX,
+} from "react-icons/hi";
 
 interface DaysProp {
   day: number;
@@ -85,6 +90,7 @@ const DaysContainer = ({
 
     if (dx > -70 && dx < 70) {
       containerRef.current.style.top = dx + "px";
+      containerRef.current.style.order = day - 1;
     }
 
     if (dx < 0) {
@@ -93,6 +99,7 @@ const DaysContainer = ({
 
       if (dx < -80) {
         containerRef.current.style.order = position;
+
         containerRef.current.style.top = dx + 20 + "px";
 
         moveState = {
@@ -106,6 +113,7 @@ const DaysContainer = ({
 
       if (dx > 80) {
         containerRef.current.style.order = position;
+
         containerRef.current.style.top = dx - 20 + "px";
 
         moveState = {
@@ -117,17 +125,15 @@ const DaysContainer = ({
   };
 
   const mouseDownHandler = (e: any) => {
-    setTimeout(() => {
-      if (containerRef.current.parentElement.clientHeight > 89 * 2) {
-        setHoldingAnim(true);
-        pos = {
-          top: containerRef?.current?.scrollTop,
-          y: e.changedTouches[0].clientY,
-        };
-        document.addEventListener("touchmove", mouseMoveHandler);
-        document.addEventListener("touchend", mouseUpHandler);
-      }
-    }, 600);
+    if (containerRef.current.parentElement.clientHeight > 89 * 2) {
+      setHoldingAnim(true);
+      pos = {
+        top: containerRef?.current?.scrollTop,
+        y: e.changedTouches[0].clientY,
+      };
+      document.addEventListener("touchmove", mouseMoveHandler);
+      document.addEventListener("touchend", mouseUpHandler);
+    }
   };
 
   const mouseUpHandler = () => {
@@ -135,7 +141,7 @@ const DaysContainer = ({
     setMoving(moveState);
     containerRef.current.style.top = 0;
     containerRef.current.style.zIndex = 0;
-    // containerRef.current.style.order = "unset";
+    containerRef.current.style.order = "unset";
     document.removeEventListener("touchmove", mouseMoveHandler);
     document.removeEventListener("touchend", mouseUpHandler);
   };
@@ -154,11 +160,7 @@ const DaysContainer = ({
           />
         </ModalContent>
       </Modal>
-      <DayContainer
-        ref={containerRef}
-        onTouchStart={mouseDownHandler}
-        hold={holdingAnim}
-      >
+      <DayContainer ref={containerRef} hold={holdingAnim}>
         <Button
           buttonStyle="Text"
           style={{ padding: 0, width: "100%", flex: 0.98 }}
@@ -198,6 +200,9 @@ const DaysContainer = ({
         </Button>
 
         <div className="right-side">
+          <Button buttonStyle="Text" onTouchStart={mouseDownHandler}>
+            <HiOutlineViewList fontSize={20} />
+          </Button>
           <Button buttonStyle="Text" onClick={() => onDelete?.(data.id)}>
             <HiOutlineX fontSize={20} />
           </Button>
@@ -302,6 +307,9 @@ const AddExercises = ({ data: dayData, updateDay, onClose }: addProps) => {
           >
             {exercises.map((e: exerciseType | any, i: number) => (
               <AddNewWorkOut
+                onDelete={deleteExercise}
+                data={e}
+                key={i}
                 {...{
                   setDefaultValue,
                   defaultValue,
@@ -309,9 +317,6 @@ const AddExercises = ({ data: dayData, updateDay, onClose }: addProps) => {
                   setValue,
                   watch,
                 }}
-                onDelete={deleteExercise}
-                key={i}
-                data={e}
               />
             ))}
           </ul>
