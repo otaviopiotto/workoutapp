@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { entranceAnim } from "../../pages/workOutGroupPage/styles";
 
 export const Container = styled.main`
+  min-height: 100%;
   padding: 14px 20px 160px;
   animation: ${entranceAnim} 0.5s ease;
   position: relative;

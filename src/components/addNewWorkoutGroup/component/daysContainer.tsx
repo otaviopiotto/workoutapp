@@ -81,16 +81,18 @@ const DaysContainer = ({
     containerRef.current.style.zIndex = 2;
     const dx = e.changedTouches[0].clientY - pos.y;
 
+    const pointerPosition = Math.round(dx / 100);
+
     if (dx > -70 && dx < 70) {
       containerRef.current.style.top = dx + "px";
     }
 
     if (dx < 0) {
-      const downToArr = Math.abs(Math.round(dx / 100)) - day;
+      const downToArr = pointerPosition - day;
       const position = downToArr < 0 ? 0 : downToArr;
 
       if (dx < -80) {
-        containerRef.current.style.order = downToArr;
+        containerRef.current.style.order = position;
         containerRef.current.style.top = dx + 20 + "px";
 
         moveState = {
@@ -99,11 +101,11 @@ const DaysContainer = ({
         };
       }
     } else {
-      const upToArr = Math.abs(Math.round(dx / 100)) + day;
+      const upToArr = pointerPosition + day;
       const position = upToArr > listLength - 1 ? listLength - 1 : upToArr;
 
       if (dx > 80) {
-        containerRef.current.style.order = upToArr;
+        containerRef.current.style.order = position;
         containerRef.current.style.top = dx - 20 + "px";
 
         moveState = {
@@ -115,15 +117,17 @@ const DaysContainer = ({
   };
 
   const mouseDownHandler = (e: any) => {
-    if (containerRef.current.parentElement.clientHeight > 89 * 2) {
-      setHoldingAnim(true);
-      pos = {
-        top: containerRef?.current?.scrollTop,
-        y: e.changedTouches[0].clientY,
-      };
-      document.addEventListener("touchmove", mouseMoveHandler);
-      document.addEventListener("touchend", mouseUpHandler);
-    }
+    setTimeout(() => {
+      if (containerRef.current.parentElement.clientHeight > 89 * 2) {
+        setHoldingAnim(true);
+        pos = {
+          top: containerRef?.current?.scrollTop,
+          y: e.changedTouches[0].clientY,
+        };
+        document.addEventListener("touchmove", mouseMoveHandler);
+        document.addEventListener("touchend", mouseUpHandler);
+      }
+    }, 600);
   };
 
   const mouseUpHandler = () => {
@@ -131,7 +135,7 @@ const DaysContainer = ({
     setMoving(moveState);
     containerRef.current.style.top = 0;
     containerRef.current.style.zIndex = 0;
-    containerRef.current.style.gridArea = "auto";
+    // containerRef.current.style.order = "unset";
     document.removeEventListener("touchmove", mouseMoveHandler);
     document.removeEventListener("touchend", mouseUpHandler);
   };
@@ -247,17 +251,11 @@ const AddExercises = ({ data: dayData, updateDay, onClose }: addProps) => {
       `exercise_${id}.repetition`,
     ];
 
-    console.log(exercises);
     const filterDay = exercises.filter((e: dayType) => e.id !== id);
-    console.log(filterDay);
     map(registerNames, (value) => resetField(value));
     unregister([`exercise_${id}`, ...registerNames]);
     setExercises(filterDay);
   };
-
-  useEffect(() => {
-    console.log(exercises);
-  }, [exercises]);
 
   useEffect(() => {
     if (dayData?.muscle_group) {

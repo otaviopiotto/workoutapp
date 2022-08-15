@@ -115,6 +115,7 @@ const AddNewWorkOutGroup = () => {
     const duplicated = {
       ...data,
       id: (Math.random() * (100000 - 1) + 1).toFixed(0),
+      number: data.number + 1,
     };
     setDays([...days, duplicated]);
   };
