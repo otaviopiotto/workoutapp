@@ -1,22 +1,24 @@
-import { assign, filter, forEach, map } from "lodash";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { map } from "lodash";
 import { useForm } from "react-hook-form";
-import { AiOutlineClose, AiOutlinePlus } from "react-icons/ai";
 import { dayType, exerciseType } from "../../../models/exercise";
 import AddNewWorkOut from "../../addNewWorkout/addNewWorkout";
 import Button from "../../Button";
 import SelectComponent from "../../formComponents/select";
 import { Modal, ModalContent } from "../../radixModalComponent";
-import { Form } from "../styles";
 import { defaultValue } from "../../../components/addNewWorkout/addNewWorkout";
+import { Form } from "../styles";
 import { DayContainer, ExerciseContainer } from "./styles";
+import { HiOutlineDuplicate, HiOutlinePlus, HiOutlineX } from "react-icons/hi";
 
 interface DaysProp {
-  day?: number;
+  day: number;
   data?: any;
   onDelete?(id: string): void;
   updateDay(data: any): void;
-  edditing?: boolean;
+  duplicateDay(data: any): void;
+  setMoving(value: any): any;
+  listLength: number;
 }
 
 const select = [
@@ -56,9 +58,13 @@ const DaysContainer = ({
   day,
   onDelete,
   updateDay,
-  edditing,
+  duplicateDay,
+  setMoving,
+  listLength,
 }: DaysProp) => {
-  const [open, setOpen] = useState(edditing ? false : true);
+  const [open, setOpen] = useState(data?.muscle_group ? false : true);
+  const [holdingAnim, setHoldingAnim] = useState(false);
+  const containerRef = useRef(null as any);
 
   const defaultTitle = !data?.muscle_group
     ? `Dia ${day} - Exercícios`
@@ -67,6 +73,68 @@ const DaysContainer = ({
   useEffect(() => {
     if (!data?.muscle_group) setOpen(true);
   }, [open]);
+
+  let pos = { top: 0, y: 0 };
+  let moveState: any = null;
+
+  const mouseMoveHandler = (e: any) => {
+    containerRef.current.style.zIndex = 2;
+    const dx = e.changedTouches[0].clientY - pos.y;
+
+    if (dx > -70 && dx < 70) {
+      containerRef.current.style.top = dx + "px";
+    }
+
+    if (dx < 0) {
+      const downToArr = Math.abs(Math.round(dx / 100)) - day;
+      const position = downToArr < 0 ? 0 : downToArr;
+
+      if (dx < -80) {
+        containerRef.current.style.order = downToArr;
+        containerRef.current.style.top = dx + 20 + "px";
+
+        moveState = {
+          childPosition: day - 1,
+          arrayP: position,
+        };
+      }
+    } else {
+      const upToArr = Math.abs(Math.round(dx / 100)) + day;
+      const position = upToArr > listLength - 1 ? listLength - 1 : upToArr;
+
+      if (dx > 80) {
+        containerRef.current.style.order = upToArr;
+        containerRef.current.style.top = dx - 20 + "px";
+
+        moveState = {
+          childPosition: day - 1,
+          arrayP: position,
+        };
+      }
+    }
+  };
+
+  const mouseDownHandler = (e: any) => {
+    if (containerRef.current.parentElement.clientHeight > 89 * 2) {
+      setHoldingAnim(true);
+      pos = {
+        top: containerRef?.current?.scrollTop,
+        y: e.changedTouches[0].clientY,
+      };
+      document.addEventListener("touchmove", mouseMoveHandler);
+      document.addEventListener("touchend", mouseUpHandler);
+    }
+  };
+
+  const mouseUpHandler = () => {
+    setHoldingAnim(false);
+    setMoving(moveState);
+    containerRef.current.style.top = 0;
+    containerRef.current.style.zIndex = 0;
+    containerRef.current.style.gridArea = "auto";
+    document.removeEventListener("touchmove", mouseMoveHandler);
+    document.removeEventListener("touchend", mouseUpHandler);
+  };
 
   return (
     <>
@@ -82,7 +150,11 @@ const DaysContainer = ({
           />
         </ModalContent>
       </Modal>
-      <DayContainer>
+      <DayContainer
+        ref={containerRef}
+        onTouchStart={mouseDownHandler}
+        hold={holdingAnim}
+      >
         <Button
           buttonStyle="Text"
           style={{ padding: 0, width: "100%", flex: 0.98 }}
@@ -120,20 +192,24 @@ const DaysContainer = ({
             </div>
           </article>
         </Button>
-        <Button
-          buttonStyle="Text"
-          className="delete-button"
-          onClick={() => onDelete?.(data.id)}
-        >
-          <AiOutlineClose fontSize={20} />
-        </Button>
+
+        <div className="right-side">
+          <Button buttonStyle="Text" onClick={() => onDelete?.(data.id)}>
+            <HiOutlineX fontSize={20} />
+          </Button>
+          <Button buttonStyle="Text" onClick={() => duplicateDay(data)}>
+            <HiOutlineDuplicate fontSize={20} />
+          </Button>
+        </div>
       </DayContainer>
     </>
   );
 };
 
-interface addProps extends DaysProp {
+interface addProps {
   onClose: () => void;
+  data: any;
+  updateDay(data: any): void;
 }
 
 const AddExercises = ({ data: dayData, updateDay, onClose }: addProps) => {
@@ -251,7 +327,7 @@ const AddExercises = ({ data: dayData, updateDay, onClose }: addProps) => {
               }}
               onClick={() => createExercise()}
             >
-              <AiOutlinePlus />
+              <HiOutlinePlus />
             </Button>
           )}
           <Button

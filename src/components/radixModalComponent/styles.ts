@@ -81,7 +81,7 @@ export const ModalTitle = styled.div`
   h5 {
     ${({ theme }) => theme.fonts.mulish.h5_bold};
 
-    color: ${({ theme }) => theme.colors.cold_grey[100]};
+    color: ${({ theme }) => theme.colors.grey[100]};
     margin-right: 50px;
   }
 `;

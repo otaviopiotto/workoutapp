@@ -1,7 +1,7 @@
 import Button from "../Button";
 import { GroupType } from "../../models/exercise";
 import { Card } from "./styles";
-import { AiOutlineCalendar, AiOutlineRight } from "react-icons/ai";
+import { HiOutlineCalendar, HiOutlineChevronRight } from "react-icons/hi";
 
 interface GroupProp {
   group_data: GroupType;
@@ -24,13 +24,13 @@ const GroupCard = ({ group_data, onClick }: GroupProp) => {
 
           <ul className="bottom-section">
             <li>
-              <AiOutlineCalendar /> {group_data?.days?.length}{" "}
+              <HiOutlineCalendar /> {group_data?.days?.length}{" "}
               {group_data?.days?.length > 1 ? "Dias" : "Dia"}
             </li>
           </ul>
         </section>
         <div className="arrow">
-          <AiOutlineRight className="arrow-icon" />
+          <HiOutlineChevronRight className="arrow-icon" />
         </div>
       </Card>
     </Button>

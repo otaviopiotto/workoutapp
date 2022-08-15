@@ -2,10 +2,10 @@ import styled from "styled-components";
 import { entranceAnim } from "../../pages/workOutGroupPage/styles";
 
 export const Container = styled.main`
-  height: 100%;
-  padding: 14px 20px;
+  padding: 14px 20px 160px;
   animation: ${entranceAnim} 0.5s ease;
   position: relative;
+  transition: 0.3s;
 
   .get-back-btn {
     margin-bottom: 20px;
@@ -25,8 +25,8 @@ export const Container = styled.main`
     justify-content: center;
 
     .grid-container {
-      display: grid;
-      grid-template-columns: 1fr;
+      display: flex;
+      flex-direction: column;
       position: relative;
     }
 

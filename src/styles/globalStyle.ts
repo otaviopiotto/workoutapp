@@ -16,18 +16,10 @@ export const theme = {
       50: "#F2F7FA",
     },
 
-    /* Cinza Neutro*/
     black: {
       900: "#000000",
       800: "#121212",
       700: "#1c1c1c",
-      600: "#757575",
-      500: "#1a1a1a",
-      400: "#BDBDBD",
-      300: "#E0E0E0",
-      200: "#EEEEEE",
-      100: "#F5F5F5",
-      50: "#FAFAFA",
     },
     grey: {
       900: "#212121",
@@ -42,18 +34,17 @@ export const theme = {
       50: "#FAFAFA",
     },
 
-    /* Cinza Frio*/
-    cold_grey: {
-      900: "#263238",
-      800: "#37474F",
-      700: "#455A64",
-      600: "#546E7A",
-      500: "#607D8B",
-      400: "#78909C",
-      300: "#90A4AE",
-      200: "#B0BEC5",
-      100: "#CFD8DC",
-      50: "#ECEFF1",
+    pallete: {
+      900: "#0B090A",
+      800: "#161A1D",
+      700: "#660708",
+      600: "#A4161A",
+      500: "#BA181B",
+      400: "#E5383B",
+      300: "#B1A7A6",
+      200: "#D3D3D3",
+      100: "#F5F3F4",
+      50: "#FFFFFF",
     },
 
     // Alertas
@@ -165,7 +156,7 @@ button{
   html, body {
     min-height: 100%;
     height: 100%;
-    background:#000312;
+    background:${theme.colors.pallete[800]};
     overflow-x:hidden;
   }
 

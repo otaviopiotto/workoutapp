@@ -131,7 +131,7 @@ const scrollButtons = css`
   align-items: center;
   justify-content: center;
   padding: 4px 0;
-  color: ${({ theme }) => theme.colors.cold_grey[700]};
+  color: ${({ theme }) => theme.colors.grey[700]};
 `;
 
 export const ScrollUpButton = styled(Select.ScrollUpButton)`

@@ -3,11 +3,9 @@ import { entranceAnim } from "../styles";
 
 export const Container = styled.main`
   height: 100%;
-
   animation: ${entranceAnim} 0.5s ease;
-  header {
-    margin: 0 !important;
 
+  .hero-section {
     .title-section {
       display: flex;
       gap: 10px;
@@ -20,11 +18,11 @@ export const Container = styled.main`
           line-height: 1em;
           font-family: "Roboto", sans-serif;
           font-weight: 900;
-          color: ${({ theme }) => theme.colors.black[900]};
+          color: ${({ theme }) => theme.colors.pallete[200]};
         }
 
         h2 {
-          color: ${({ theme }) => theme.colors.black[900]};
+          color: ${({ theme }) => theme.colors.pallete[200]};
           font-family: "Roboto", sans-serif;
           font-size: 29px;
           font-weight: 900;
@@ -34,21 +32,21 @@ export const Container = styled.main`
           margin-bottom: 4px;
         }
       }
+
+      .right-side {
+        align-self: flex-end;
+      }
     }
 
     .sub-title {
       ${({ theme }) => theme.fonts.mulish.small_semibold};
       line-height: 1em;
-      color: ${({ theme }) => theme.colors.blue[600]};
+      color: ${({ theme }) => theme.colors.pallete[300]};
     }
   }
 
   .list-container {
-    margin: -30px 0 0;
     padding: 20px 16px 0;
-    background: #000312;
-    border-radius: 30px;
-    box-shadow: 0px -10px 1em rgba(0, 0, 0, 0.2);
   }
 
   .top-section {
@@ -60,7 +58,7 @@ export const Container = styled.main`
       width: 100%;
       ${({ theme }) => theme.fonts.mulish.small_bold};
       font-size: 10px;
-      color: ${({ theme }) => theme.colors.grey[500]};
+      color: ${({ theme }) => theme.colors.pallete[300]};
       text-transform: uppercase;
       & + li {
         text-align: center;
@@ -76,7 +74,7 @@ export const Container = styled.main`
     gap: 10px;
 
     & + ul {
-      border-top: solid 1px #171a21;
+      border-top: solid 1px ${({ theme }) => theme.colors.pallete[200]};
     }
 
     li {
@@ -84,7 +82,8 @@ export const Container = styled.main`
       display: flex;
       align-items: center;
       ${({ theme }) => theme.fonts.mulish.small_bold};
-      color: ${({ theme }) => theme.colors.grey[400]};
+      color: ${({ theme }) => theme.colors.pallete[200]};
+
       text-transform: uppercase;
 
       & + li {

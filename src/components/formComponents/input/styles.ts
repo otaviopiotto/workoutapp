@@ -84,7 +84,7 @@ export const InputContainer = styled.div<InputProps>`
     align-items: center;
     justify-content: center;
     ${({ theme }) => theme.fonts.mulish.small_regular}
-    color:${({ theme }) => theme.colors.cold_grey[800]};
+    color:${({ theme }) => theme.colors.grey[800]};
     svg {
       fill: rgba(0, 0, 0, 0.85);
     }

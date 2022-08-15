@@ -14,7 +14,7 @@ transform:scale(1) ;
 `;
 
 export const Container = styled.main`
-  padding: 20px 30px;
+  padding: 20px 16px;
   height: 100%;
   position: relative;
   animation: ${showAnim} 0.4s ease;
@@ -52,7 +52,7 @@ export const Container = styled.main`
     }
 
     .groups {
-      margin-top: 10px;
+      margin-top: 30px;
       display: grid;
       gap: 20px;
     }

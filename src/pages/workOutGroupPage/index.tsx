@@ -4,11 +4,13 @@ import Button from "../../components/Button";
 import { useGroup } from "../../hooks/exerciseGroup";
 import { GroupType } from "../../models/exercise";
 import { Container, DayContainer } from "./styles";
+
 import {
-  AiOutlineArrowLeft,
-  AiOutlineClose,
-  AiOutlineEdit,
-} from "react-icons/ai";
+  HiOutlineArrowNarrowLeft,
+  HiOutlineMenuAlt2,
+  HiOutlinePencil,
+  HiOutlineX,
+} from "react-icons/hi";
 
 const WorkOutPage = () => {
   const [workOutData, setWorkOutData] = useState<GroupType>(null as any);
@@ -25,13 +27,17 @@ const WorkOutPage = () => {
 
   return (
     <Container>
-      {!outlet && (
-        <header className={!outlet ? "group-header" : ""}>
-          <div className="get-back-section">
+      <header className="group-header">
+        <div className="get-back-section">
+          <div className="edit-buttons">
             <Button buttonStyle="Text" onClick={() => navigate(-1)}>
-              <AiOutlineArrowLeft />
+              <HiOutlineArrowNarrowLeft />
             </Button>
+          </div>
 
+          <span>{workOutData?.title}</span>
+
+          {!outlet && (
             <div className="edit-buttons">
               <Button
                 buttonStyle="Text"
@@ -41,24 +47,28 @@ const WorkOutPage = () => {
                   })
                 }
               >
-                <AiOutlineEdit />
+                <HiOutlinePencil />
               </Button>
               <Button
                 buttonStyle="Text"
                 onClick={() => deleteGroup(workOutData.id)}
               >
-                <AiOutlineClose />
+                <HiOutlineX />
               </Button>
             </div>
-          </div>
+          )}
+        </div>
+      </header>
 
-          <div className="title-section">
-            <span>Título do Grupo</span>
-            <h1>{workOutData?.title}</h1>
+      {!outlet && (
+        <section className="hero-section">
+          <div className="left-side">
+            <HiOutlineMenuAlt2 />
+            <span>descrição</span>
           </div>
 
           <p className="description">{workOutData?.description}</p>
-        </header>
+        </section>
       )}
 
       {outlet ? (

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { AiOutlinePlus } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import { useGroup } from "../../hooks/exerciseGroup";
 import GroupCard from "../../components/exerciseGroupCard";
+import { HiOutlinePlus } from "react-icons/hi";
 import { Container } from "./styles";
 
 const MainPage = () => {
@@ -16,7 +16,7 @@ const MainPage = () => {
         <h5>Grupos de Exercício</h5>
 
         <Button buttonStyle="Text" onClick={() => navigate("novo-grupo")}>
-          <AiOutlinePlus />
+          <HiOutlinePlus />
         </Button>
       </header>
 
@@ -32,7 +32,7 @@ const MainPage = () => {
             }}
             onClick={() => navigate("novo-grupo")}
           >
-            <AiOutlinePlus />
+            <HiOutlinePlus />
           </Button>
         )}
 

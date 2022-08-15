@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Container } from "./styles";
 import { useGroup } from "../../../hooks/exerciseGroup";
 import { dayType, exerciseType } from "../../../models/exercise";
-import Button from "../../../components/Button";
-import { AiOutlineArrowLeft } from "react-icons/ai";
 
 const defaultList = ["Exercícios", "Séries", "Repetições"];
 const offList = ["Off", "Off", "Off"];
@@ -13,7 +11,6 @@ const WorkOutInnerPage = () => {
   const [workOutData, setWorkOutData] = useState<dayType>(null as any);
   const { group } = useGroup();
   const { state }: any = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const filterGroup = group.filter((e) => e?.id === state.groupId);
@@ -23,21 +20,7 @@ const WorkOutInnerPage = () => {
 
   return (
     <Container>
-      <header className="group-header ">
-        <div className="get-back-section">
-          <Button
-            buttonStyle="Text"
-            onClick={() => navigate(-1)}
-            style={{
-              padding: 0,
-              fontSize: "16px",
-              color: "#000312",
-            }}
-          >
-            <AiOutlineArrowLeft />
-          </Button>
-        </div>
-
+      <section className="hero-section">
         <div className="title-section">
           <div className="left-side">
             <span className="sub-title">Dia</span>
@@ -49,7 +32,7 @@ const WorkOutInnerPage = () => {
             <h2>{workOutData?.muscle_group}</h2>
           </div>
         </div>
-      </header>
+      </section>
 
       <div className="list-container">
         <ul className="top-section">
@@ -64,7 +47,7 @@ const WorkOutInnerPage = () => {
         {workOutData?.workout?.map((e: exerciseType, i: number) => (
           <ul className="bottom-section" key={i}>
             <li>{e.exercise}</li>
-            <li>{e.sets}</li>
+            <li>{e.sets}x</li>
             <li>{e.repetition}</li>
           </ul>
         ))}

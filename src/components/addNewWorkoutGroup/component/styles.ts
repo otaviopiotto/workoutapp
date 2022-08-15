@@ -10,12 +10,20 @@ to{
 }
 `;
 
-export const DayContainer = styled.div`
+interface props {
+  hold?: boolean;
+}
+
+export const DayContainer = styled.div<props>`
   display: flex;
   border-radius: 16px;
+  position: relative;
   border: solid 1px rgba(82, 82, 82, 0.5);
   margin-top: 10px;
+  transform: ${(prop) => prop.hold && "scale(1.01)"};
   animation: 0.5s ${entranceAnimation} ease;
+  background-color: ${({ theme }) => theme.colors.pallete[800]};
+  transition: 0.3s;
 
   .days-container {
     width: 100%;
@@ -86,11 +94,18 @@ export const DayContainer = styled.div`
     }
   }
 
-  .delete-button {
-    padding: 4px;
-    border-radius: 99px;
+  .right-side {
+    padding: 10px 0;
+    display: grid;
+    button {
+      padding: 6px 4px;
+      border-radius: 0px;
 
-    ${({ theme }) => theme.fonts.mulish.small_bold};
+      & + button {
+        padding-top: 10px;
+        border-top: solid 1px rgba(82, 82, 82, 0.5);
+      }
+    }
   }
 `;
 

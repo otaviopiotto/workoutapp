@@ -18,7 +18,7 @@ export const Container = styled.div<ContainerProp>`
     margin-bottom: 8px;
 
     ${({ theme }) => theme.fonts.mulish.small_regular}
-    color:${({ theme }) => theme.colors.cold_grey_800};
+    color:${({ theme }) => theme.colors.grey_800};
   }
 
   p {

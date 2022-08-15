@@ -5,18 +5,14 @@ import * as Yup from "yup";
 import Button from "../Button";
 import InputComponent from "../formComponents/input";
 
-import {
-  AiOutlineArrowLeft,
-  AiOutlineCheck,
-  AiOutlinePlus,
-} from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { dayType } from "../../models/exercise";
-import { assign } from "lodash";
+import { assign, filter } from "lodash";
 import DaysContainer from "./component/daysContainer";
 import { useLocation, useNavigate } from "react-router-dom";
 import TextAreaComponent from "../formComponents/textarea";
 import { Form, Container } from "./styles";
+import { HiOutlinePlus } from "react-icons/hi";
 
 interface inputProp {
   title: string;
@@ -28,12 +24,20 @@ const schema = Yup.object().shape({
   title: Yup.string().required("Campo obrigatório"),
 });
 
-let i = 0;
+let i = 1;
 
 const AddNewWorkOutGroup = () => {
   const { createGroup, group, updateGroup } = useGroup();
+  const [moving, setMoving] = useState(null as any);
   const navigate = useNavigate();
-  const [days, setDays] = useState<dayType | any>([]);
+
+  const [days, setDays] = useState<dayType | any>([
+    {
+      id: (Math.random() * (100000 - 1) + 1).toFixed(0),
+      number: i,
+      muscle_group: "OFF",
+    },
+  ]);
 
   const { state }: any = useLocation();
 
@@ -107,6 +111,34 @@ const AddNewWorkOutGroup = () => {
     setDays(filterDay);
   };
 
+  const duplicateDay = (data: any) => {
+    const duplicated = {
+      ...data,
+      id: (Math.random() * (100000 - 1) + 1).toFixed(0),
+    };
+    setDays([...days, duplicated]);
+  };
+
+  const moveArrayItemToNewIndex = (
+    arr: any,
+    old_index: number,
+    new_index: number
+  ) => {
+    if (new_index >= arr.length) {
+      let k = new_index - arr.length + 1;
+      while (k--) {
+        return null;
+      }
+    }
+    arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+    return arr;
+  };
+
+  useEffect(() => {
+    if (!moving) return;
+    setDays(moveArrayItemToNewIndex(days, moving.childPosition, moving.arrayP));
+  }, [moving]);
+
   return (
     <Container>
       <Form
@@ -132,22 +164,23 @@ const AddNewWorkOutGroup = () => {
           {days.map((e: dayType | any, index: number) => (
             <DaysContainer
               day={index + 1}
-              edditing={state}
+              duplicateDay={duplicateDay}
               updateDay={updateDay}
               onDelete={handleDelete}
+              listLength={days.length}
+              setMoving={setMoving}
               key={index}
               data={e}
             />
           ))}
-
-          <Button
-            buttonStyle="Secondary"
-            onClick={() => createDay()}
-            className="add-new-day"
-          >
-            <AiOutlinePlus />
-          </Button>
         </div>
+        <Button
+          buttonStyle="Secondary"
+          onClick={() => createDay()}
+          className="add-new-day"
+        >
+          <HiOutlinePlus />
+        </Button>
       </section>
 
       <footer>
