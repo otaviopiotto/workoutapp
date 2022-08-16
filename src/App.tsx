@@ -2,6 +2,8 @@ import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { UserProvider } from "./hooks/exerciseData";
 import { GroupProvider } from "./hooks/exerciseGroup";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import RoutesConfig from "./routes/route";
 import GlobalStyle, { theme } from "./styles/globalStyle";
 
@@ -11,6 +13,7 @@ function App() {
       <GroupProvider>
         <UserProvider>
           <ThemeProvider theme={theme}>
+            <ToastContainer />
             <GlobalStyle />
             <RoutesConfig />
           </ThemeProvider>

@@ -17,6 +17,7 @@ interface ModalProps {
   element?: ReactElement;
   contentStyle?: CSSProperties | undefined;
   children?: any;
+  position?: "top" | "bottom" | "full" | "center";
 }
 
 export const ModalContent: React.FC<ModalProps> = ({
@@ -24,11 +25,12 @@ export const ModalContent: React.FC<ModalProps> = ({
   element,
   children,
   contentStyle,
+  position = "bottom",
 }) => {
   return (
     <ModalPortal>
       <ModalOverlay>
-        <ModalBody>
+        <ModalBody position={position}>
           <StyledModalContent style={contentStyle}>
             <ModalTriggerClose>
               <AiOutlineCloseCircle />

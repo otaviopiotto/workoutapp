@@ -65,7 +65,7 @@ export const Container = styled.main`
     }
 
     .description {
-      padding-left: 26px;
+      padding: 0 26px;
       line-break: anywhere;
 
       ${({ theme }) => theme.fonts.mulish.small_regular};
@@ -83,35 +83,56 @@ export const Container = styled.main`
   }
 
   .workout-list {
-    display: flex;
+    display: grid;
+    /* grid-template-columns: repeat(2, 1fr); */
     flex-direction: column;
+    margin-top: 40px;
     padding: 0px 16px;
+    gap: 8px;
   }
 `;
 
 export const DayContainer = styled.li`
-  padding: 20px 0px;
-
-  & + li {
-    border-top: solid 1px ${({ theme }) => theme.colors.pallete[300]};
-  }
+  padding: 14px 10px;
+  background-color: ${({ theme }) => theme.colors.pallete[300]};
+  border-radius: 12px;
 
   header {
     display: flex;
     gap: 10px;
-    align-items: flex-end;
+    align-items: flex-start;
 
     h1,
     span {
-      ${({ theme }) => theme.fonts.mulish.h1};
-      font-size: 32px;
       line-height: 1em;
-      color: ${({ theme }) => theme.colors.grey[400]};
+      color: ${({ theme }) => theme.colors.grey[900]};
     }
 
-    span {
-      color: ${({ theme }) => theme.colors.grey[600]};
-      ${({ theme }) => theme.fonts.mulish.body_bold};
+    h1 {
+      font-size: 32px;
+    }
+
+    .name {
+      text-align: left;
+      color: ${({ theme }) => theme.colors.grey[900]};
+      ${({ theme }) => theme.fonts.mulish.h3_bold};
+    }
+
+    .right-side {
+      height: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-start;
+
+      .icon-container {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 1em;
+        ${({ theme }) => theme.fonts.mulish.small_semibold};
+      }
     }
   }
   .list-container {

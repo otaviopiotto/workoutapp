@@ -1,30 +1,27 @@
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useGroup } from "../../hooks/exerciseGroup";
-import * as Yup from "yup";
-import Button from "../Button";
-import InputComponent from "../formComponents/input";
-
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useGroup } from "../../hooks/exerciseGroup";
+import Button from "../Button";
+
 import { dayType } from "../../models/exercise";
 import { assign } from "lodash";
 import DaysContainer from "./component/daysContainer";
 import { useLocation, useNavigate } from "react-router-dom";
 import TextAreaComponent from "../formComponents/textarea";
-import { Form, Container } from "./styles";
 import { HiOutlinePlus } from "react-icons/hi";
+import { Modal, ModalContent } from "../radixModalComponent";
+import SaveGroup from "./component/saveGroup";
+import { Form, Container } from "./styles";
 
 interface inputProp {
-  title: string;
-  description: string;
-  days: dayType | any;
+  title?: string;
+  description?: string;
+  days?: dayType | any;
 }
 
-const schema = Yup.object().shape({
-  title: Yup.string().required("Campo obrigatório"),
-});
-
 const AddNewWorkOutGroup = () => {
+  const [openModal, setOpenModal] = useState(false);
+  const [formData, setFormData] = useState();
   const { createGroup, group, updateGroup } = useGroup();
   const [moving, setMoving] = useState(null as any);
   const navigate = useNavigate();
@@ -39,14 +36,7 @@ const AddNewWorkOutGroup = () => {
 
   const { state }: any = useLocation();
 
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm<inputProp>({
-    resolver: yupResolver(schema),
-  });
+  const { register, handleSubmit, setValue } = useForm<inputProp>();
 
   useEffect(() => {
     if (!state) return;
@@ -58,17 +48,12 @@ const AddNewWorkOutGroup = () => {
   }, [group, state]);
 
   const onSubmit = (data: any) => {
-    delete data.days;
-    if (state) {
-      updateGroup({ ...data, id: state, days });
-    } else {
-      createGroup({
-        ...data,
-        id: (Math.random() * (100000 - 1) + 1).toFixed(0),
-        days,
-      });
-    }
-    navigate(-1);
+    console.log(data);
+    setFormData({
+      ...data,
+      days,
+    });
+    setOpenModal(true);
   };
 
   const createDay = () => {
@@ -120,60 +105,63 @@ const AddNewWorkOutGroup = () => {
   //   setDays(moveArrayItemToNewIndex(days, moving.childPosition, moving.arrayP));
   // }, [moving]);
 
-  useEffect(() => console.log(days), [days]);
   return (
-    <Container>
-      <Form
-        onSubmit={handleSubmit(onSubmit)}
-        id="group-form"
-        style={{ gap: "20px" }}
-      >
-        <InputComponent
-          placeholder="Título"
-          inputSize="Large"
-          register={{ ...register("title") }}
-          error={errors.title?.message}
-        />
-
-        <TextAreaComponent
-          placeholder="Descrição"
-          register={{ ...register("description") }}
-        />
-      </Form>
-
-      <section className="add-days-section">
-        <div className="grid-container">
-          {days.map((e: dayType | any, index: number) => (
-            <DaysContainer
-              day={index + 1}
-              duplicateDay={duplicateDay}
-              updateDay={updateDay}
-              onDelete={handleDelete}
-              listLength={days.length}
-              setMoving={setMoving}
-              key={index}
-              data={e}
-            />
-          ))}
-        </div>
-        <Button
-          buttonStyle="Secondary"
-          onClick={() => createDay()}
-          className="add-new-day"
+    <>
+      <Modal open={openModal} onOpenChange={() => setOpenModal(!openModal)}>
+        <ModalContent title="Salvar" position="center">
+          <SaveGroup
+            data={formData}
+            id={state}
+            onClose={() => setOpenModal(false)}
+          />
+        </ModalContent>
+      </Modal>
+      <Container>
+        <Form
+          onSubmit={handleSubmit(onSubmit)}
+          id="group-form"
+          style={{ gap: "20px" }}
         >
-          <HiOutlinePlus />
-        </Button>
-      </section>
+          <TextAreaComponent
+            placeholder="Descrição"
+            register={{ ...register("description") }}
+          />
+        </Form>
 
-      <footer>
-        <Button buttonStyle="Text" onClick={() => navigate(-1)} dangerous>
-          Cancelar
-        </Button>
-        <Button buttonStyle="Primary" type="submit" form="group-form">
-          Salvar
-        </Button>
-      </footer>
-    </Container>
+        <section className="add-days-section">
+          <div className="grid-container">
+            {days.map((e: dayType | any, index: number) => (
+              <DaysContainer
+                day={index + 1}
+                duplicateDay={duplicateDay}
+                updateDay={updateDay}
+                onDelete={handleDelete}
+                listLength={days.length}
+                setMoving={setMoving}
+                key={index}
+                data={e}
+              />
+            ))}
+          </div>
+          <Button
+            buttonStyle="Secondary"
+            onClick={() => createDay()}
+            className="add-new-day"
+          >
+            <HiOutlinePlus />
+          </Button>
+        </section>
+
+        <footer>
+          <Button buttonStyle="Text" onClick={() => navigate(-1)} dangerous>
+            Cancelar
+          </Button>
+          <Button buttonStyle="Primary" type="submit" form="group-form">
+            Salvar
+          </Button>
+        </footer>
+      </Container>
+    </>
   );
 };
 

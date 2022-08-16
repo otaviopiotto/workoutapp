@@ -67,5 +67,5 @@ export const Form = styled.form`
   max-width: 600px;
   display: grid;
   gap: 28px;
-  margin-top: 30px;
+  margin-top: 10px;
 `;

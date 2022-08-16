@@ -1,5 +1,4 @@
-import styled, { keyframes } from "styled-components";
-
+import styled, { css, keyframes } from "styled-components";
 import * as Dialog from "@radix-ui/react-dialog";
 
 const entranceAnimation = keyframes`
@@ -49,20 +48,40 @@ export const ModalOverlay = styled(Dialog.Overlay)`
   transition: 0.3s;
 `;
 
-export const ModalBody = styled.main`
-  width: 100%;
-  height: 80%;
+interface modalProp {
+  position?: "top" | "bottom" | "full" | "center";
+}
+
+export const ModalBody = styled.main<modalProp>`
   padding: 10px;
   background: ${({ theme }) => theme.colors.grey[900]};
-  border-radius: 30px 30px 0 0;
-  top: 10%;
-  bottom: 0;
-  position: relative;
+
+  position: absolute;
   transition: 0.3s;
   transform-origin: bottom;
   animation: 0.3s ${entranceAnimation} ease;
   overflow: hidden;
   box-shadow: 0 0 1em rgba(0, 0, 0, 0.3);
+  z-index: 99;
+
+  ${(prop) => {
+    if (prop.position === "bottom") {
+      return css`
+        width: 100%;
+        height: 80%;
+        bottom: 0;
+        border-radius: 30px 30px 0 0;
+      `;
+    } else if (prop.position === "center") {
+      return css`
+        width: 96%;
+        height: unset;
+        border-radius: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+      `;
+    }
+  }}
 `;
 
 export const StyledModalContent = styled(Dialog.Content)`
@@ -72,6 +91,7 @@ export const StyledModalContent = styled(Dialog.Content)`
   overflow-x: hidden;
   padding: 10px;
   transition: 0.3s;
+  z-index: 99;
 `;
 
 export const ModalTitle = styled.div`

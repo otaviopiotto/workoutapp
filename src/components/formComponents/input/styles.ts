@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const errorColor = ({ theme }: any) => theme.colors.alert_failure;
+const errorColor = ({ theme }: any) => theme.colors.pallete[500];
 const disabledColor = ({ theme }: any) => theme.colors.grey_100;
 const disabledFontColor = ({ theme }: any) => theme.colors.grey_400;
 
@@ -55,14 +55,13 @@ const containerSize = {
 };
 
 const inputPadding = {
-  Large: "26px 12px",
+  Large: "10px 12px",
   Medium: "5px 12px",
   Small: "0px 12px",
 };
 
 export const InputContainer = styled.div<InputProps>`
   width: 100%;
-  height: ${(prop) => containerSize[prop.size]};
   display: flex;
   position: relative;
   background: ${(prop) => prop.disabled && disabledColor};
