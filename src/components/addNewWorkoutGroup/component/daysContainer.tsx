@@ -18,8 +18,8 @@ import {
 
 interface DaysProp {
   day: number;
-  data?: any;
-  onDelete?(id: string): void;
+  data?: dayType;
+  onDelete?(id: string | number | undefined): void;
   updateDay(data: any): void;
   duplicateDay(data: any): void;
   setMoving(value: any): any;
@@ -146,9 +146,27 @@ const DaysContainer = ({
     document.removeEventListener("touchend", mouseUpHandler);
   };
 
+  const handleOpenChange = () => {
+    setOpen(!open);
+
+    if (open) {
+      if (!data?.muscle_group) {
+        const formatData = {
+          muscle_group: "OFF",
+          number: day,
+          workout: [],
+        };
+
+        updateDay({ ...data, ...formatData });
+      }
+      setOpen(false);
+    }
+    setOpen(false);
+  };
+
   return (
     <>
-      <Modal open={open} onOpenChange={() => setOpen(!open)}>
+      <Modal open={open} onOpenChange={handleOpenChange}>
         <ModalContent title={defaultTitle}>
           <AddExercises
             {...{
@@ -200,10 +218,10 @@ const DaysContainer = ({
         </Button>
 
         <div className="right-side">
-          <Button buttonStyle="Text" onTouchStart={mouseDownHandler}>
+          {/* <Button buttonStyle="Text" onTouchStart={mouseDownHandler}>
             <HiOutlineViewList fontSize={20} />
-          </Button>
-          <Button buttonStyle="Text" onClick={() => onDelete?.(data.id)}>
+          </Button> */}
+          <Button buttonStyle="Text" onClick={() => onDelete?.(data?.id)}>
             <HiOutlineX fontSize={20} />
           </Button>
           <Button buttonStyle="Text" onClick={() => duplicateDay(data)}>
@@ -219,9 +237,10 @@ interface addProps {
   onClose: () => void;
   data: any;
   updateDay(data: any): void;
+  day: number;
 }
 
-const AddExercises = ({ data: dayData, updateDay, onClose }: addProps) => {
+const AddExercises = ({ data: dayData, updateDay, onClose, day }: addProps) => {
   const [loading, setLoading] = useState(true);
   const [muscleGroup, setMuscleGroup] = useState<string>(select[0].value);
   const [exercises, setExercises] = useState<exerciseType | any>([]);
@@ -234,9 +253,10 @@ const AddExercises = ({ data: dayData, updateDay, onClose }: addProps) => {
     const workout = map(data, (e) => e);
     const formatData = {
       muscle_group: muscleGroup,
+      number: day,
       workout,
     };
-
+    console.log(formatData);
     updateDay({ ...dayData, ...formatData });
     onClose();
   };

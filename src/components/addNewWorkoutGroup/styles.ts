@@ -42,18 +42,23 @@ export const Container = styled.main`
 
   footer {
     display: flex;
-    flex-direction: column;
     gap: 10px;
     position: fixed;
-    bottom: 20px;
-    left: 0;
-    right: 0;
-    padding: 0 20px;
+    bottom: 0px;
+    left: 4px;
+    right: 4px;
+    padding: 20px;
     justify-content: space-between;
+    background: ${({ theme }) => theme.colors.pallete[800]};
+
     button {
-      border-radius: 99px;
+      border-radius: 10px;
       padding: 10px 20px;
       color: ${({ theme }) => theme.colors.white};
+
+      &:nth-child(2) {
+        flex: 1;
+      }
     }
   }
 `;

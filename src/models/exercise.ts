@@ -2,7 +2,6 @@ export interface GroupType {
   id: string | number;
   title: string;
   description: string;
-
   days: dayType[];
 }
 

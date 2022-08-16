@@ -7,7 +7,7 @@ import InputComponent from "../formComponents/input";
 
 import { useEffect, useState } from "react";
 import { dayType } from "../../models/exercise";
-import { assign, filter } from "lodash";
+import { assign } from "lodash";
 import DaysContainer from "./component/daysContainer";
 import { useLocation, useNavigate } from "react-router-dom";
 import TextAreaComponent from "../formComponents/textarea";
@@ -24,8 +24,6 @@ const schema = Yup.object().shape({
   title: Yup.string().required("Campo obrigatório"),
 });
 
-let i = 1;
-
 const AddNewWorkOutGroup = () => {
   const { createGroup, group, updateGroup } = useGroup();
   const [moving, setMoving] = useState(null as any);
@@ -33,27 +31,13 @@ const AddNewWorkOutGroup = () => {
 
   const [days, setDays] = useState<dayType | any>([
     {
-      id: (Math.random() * (100000 - 1) + 1).toFixed(0),
-      number: i,
+      id: (Math.random() * (1000000000 - 1) + 1).toFixed(0),
+      number: 1,
       muscle_group: "OFF",
     },
   ]);
 
   const { state }: any = useLocation();
-
-  useEffect(() => {
-    const filterGroup: any = group.filter((e) => e.id === state);
-
-    if (filterGroup.length) {
-      i = filterGroup[0]?.days?.length;
-
-      return;
-    }
-
-    if (i !== days?.number) {
-      i = 0;
-    }
-  }, []);
 
   const {
     register,
@@ -75,25 +59,22 @@ const AddNewWorkOutGroup = () => {
 
   const onSubmit = (data: any) => {
     delete data.days;
-
     if (state) {
-      updateGroup({ ...data, id: state, days: days });
+      updateGroup({ ...data, id: state, days });
     } else {
       createGroup({
         ...data,
         id: (Math.random() * (100000 - 1) + 1).toFixed(0),
-        days: days,
+        days,
       });
     }
     navigate(-1);
   };
 
   const createDay = () => {
-    i += 1;
-
     const newDay = {
       id: (Math.random() * (100000 - 1) + 1).toFixed(0),
-      number: i,
+      number: days.length + 1,
     };
     setDays([...days, newDay]);
   };
@@ -104,10 +85,9 @@ const AddNewWorkOutGroup = () => {
   };
 
   const handleDelete = (id: string | number) => {
-    i -= 1;
-    const filterDay = days.filter((e: dayType) => {
-      if (e.id !== id) return true;
-    });
+    const filterDay = days.filter((e: dayType) => e.id !== id);
+    filterDay.forEach((e: any, i: number) => (e.number = i + 1));
+
     setDays(filterDay);
   };
 
@@ -115,31 +95,32 @@ const AddNewWorkOutGroup = () => {
     const duplicated = {
       ...data,
       id: (Math.random() * (100000 - 1) + 1).toFixed(0),
-      number: data.number + 1,
+      number: days.length + 1,
     };
     setDays([...days, duplicated]);
   };
 
-  const moveArrayItemToNewIndex = (
-    arr: any,
-    old_index: number,
-    new_index: number
-  ) => {
-    if (new_index >= arr.length) {
-      let k = new_index - arr.length + 1;
-      while (k--) {
-        return null;
-      }
-    }
-    arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
-    return arr;
-  };
+  // const moveArrayItemToNewIndex = (
+  //   arr: any,
+  //   old_index: number,
+  //   new_index: number
+  // ) => {
+  //   if (new_index >= arr.length) {
+  //     let k = new_index - arr.length + 1;
+  //     while (k--) {
+  //       return null;
+  //     }
+  //   }
+  //   arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+  //   return arr;
+  // };
 
-  useEffect(() => {
-    if (!moving) return;
-    setDays(moveArrayItemToNewIndex(days, moving.childPosition, moving.arrayP));
-  }, [moving]);
+  // useEffect(() => {
+  //   if (!moving) return;
+  //   setDays(moveArrayItemToNewIndex(days, moving.childPosition, moving.arrayP));
+  // }, [moving]);
 
+  useEffect(() => console.log(days), [days]);
   return (
     <Container>
       <Form
@@ -185,11 +166,11 @@ const AddNewWorkOutGroup = () => {
       </section>
 
       <footer>
+        <Button buttonStyle="Text" onClick={() => navigate(-1)} dangerous>
+          Cancelar
+        </Button>
         <Button buttonStyle="Primary" type="submit" form="group-form">
           Salvar
-        </Button>
-        <Button buttonStyle="Secondary" onClick={() => navigate(-1)} dangerous>
-          Cancelar
         </Button>
       </footer>
     </Container>
