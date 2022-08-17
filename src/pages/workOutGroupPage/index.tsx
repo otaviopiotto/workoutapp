@@ -105,8 +105,6 @@ interface dayProps {
 const DayCard = ({ data, groupId }: dayProps) => {
   const navigate = useNavigate();
 
-  console.log(data);
-
   const handleClickCard = () => {
     if (data?.muscle_group.toLowerCase().includes("off")) return;
 

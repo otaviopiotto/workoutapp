@@ -35,8 +35,14 @@ export const GroupProvider = ({ children }: any) => {
   };
 
   const updateGroup = (data: GroupType) => {
-    const objIndex = group.findIndex((obj: any) => obj.id == data.id);
-    assign(group[objIndex], data);
+    const objIndex = group.findIndex((obj: any) => obj.id === data.id);
+    const updated = assign(group[objIndex], data);
+    const filterWorkout: any = group.filter((e) => e.id !== updated.id);
+
+    localStorage.setItem(
+      "user-workout-group",
+      JSON.stringify([...filterWorkout, updated])
+    );
   };
 
   useEffect(() => {

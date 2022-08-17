@@ -48,7 +48,6 @@ const AddNewWorkOutGroup = () => {
   }, [group, state]);
 
   const onSubmit = (data: any) => {
-    console.log(data);
     setFormData({
       ...data,
       days,
