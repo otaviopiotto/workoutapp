@@ -110,17 +110,22 @@ export const DayContainer = styled.div<props>`
 `;
 
 export const ExerciseContainer = styled.div`
+  height: calc(100% - 100px);
   .add-exercise-section {
+    height: 100%;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    justify-content: center;
 
     .add-new {
+      max-height: 76%;
+      overflow-y: auto;
+      padding: 0 20px 30px;
+      margin: 0 -20px;
       display: flex;
       flex-direction: column;
       gap: 10px;
-      margin-top: 0px;
+      margin-top: 20px;
     }
   }
   .list-header {
@@ -139,6 +144,25 @@ export const ExerciseContainer = styled.div`
       &:nth-child(3) {
         flex: 0.3;
       }
+    }
+  }
+
+  .modal-footer {
+    display: flex;
+    gap: 10px;
+    position: fixed;
+    bottom: 0px;
+    left: 4px;
+    right: 4px;
+    padding: 20px;
+    justify-content: space-between;
+    background: ${({ theme }) => theme.colors.pallete[800]};
+
+    button {
+      border-radius: 10px;
+      padding: 10px 20px;
+      color: ${({ theme }) => theme.colors.white};
+      flex: 1;
     }
   }
 `;

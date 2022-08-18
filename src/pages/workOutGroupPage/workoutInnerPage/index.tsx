@@ -20,6 +20,10 @@ const WorkOutInnerPage = () => {
 
   return (
     <Container>
+      <div className="decoration-lines">
+        <span />
+        <span />
+      </div>
       <section className="hero-section">
         <div className="title-section">
           <div className="left-side">

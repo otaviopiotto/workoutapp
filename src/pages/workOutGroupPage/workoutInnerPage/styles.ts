@@ -5,6 +5,25 @@ export const Container = styled.main`
   height: 100%;
   animation: ${entranceAnim} 0.5s ease;
 
+  .decoration-lines {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+
+    span {
+      width: 2px;
+      height: 100%;
+      display: block;
+      margin-left: auto;
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+  }
+
   .hero-section {
     .title-section {
       display: flex;

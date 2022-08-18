@@ -36,12 +36,13 @@ export const Container = styled.main`
       button {
         padding: 0;
         color: ${({ theme }) => theme.colors.pallete[200]};
-        font-size: 18px;
+        font-size: 22px;
       }
 
       .edit-buttons {
         width: 50px;
         display: flex;
+        gap: 20px;
         justify-content: space-between;
       }
     }

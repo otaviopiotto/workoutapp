@@ -24,7 +24,8 @@ export const ModalTriggerClose = styled(Dialog.Close)`
   top: 22px;
   cursor: pointer;
   z-index: 9;
-  background: ${({ theme }) => theme.colors.grey[900]};
+  background: ${({ theme }) => theme.colors.pallete[800]};
+
   border-radius: 99px;
   svg {
     font-size: 28px;
@@ -54,31 +55,31 @@ interface modalProp {
 
 export const ModalBody = styled.main<modalProp>`
   padding: 10px;
-  background: ${({ theme }) => theme.colors.grey[900]};
+  background: ${({ theme }) => theme.colors.pallete[800]};
+  max-height: 94vh;
 
-  position: absolute;
   transition: 0.3s;
-  transform-origin: bottom;
   animation: 0.3s ${entranceAnimation} ease;
   overflow: hidden;
   box-shadow: 0 0 1em rgba(0, 0, 0, 0.3);
-  z-index: 99;
 
   ${(prop) => {
     if (prop.position === "bottom") {
       return css`
         width: 100%;
-        height: 80%;
+        height: 90%;
         bottom: 0;
         border-radius: 30px 30px 0 0;
+        transform-origin: bottom;
+        position: absolute;
       `;
     } else if (prop.position === "center") {
       return css`
         width: 96%;
         height: unset;
         border-radius: 20px;
-        top: 50%;
-        transform: translateY(-50%);
+        transform-origin: center;
+        position: relative;
       `;
     }
   }}
@@ -86,7 +87,7 @@ export const ModalBody = styled.main<modalProp>`
 
 export const StyledModalContent = styled(Dialog.Content)`
   width: 100%;
-  max-height: 94vh;
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 10px;

@@ -4,15 +4,12 @@ import Button from "../../components/Button";
 import { useGroup } from "../../hooks/exerciseGroup";
 import { dayType, GroupType } from "../../models/exercise";
 import { Container, DayContainer } from "./styles";
-
 import {
   HiOutlineArrowNarrowLeft,
   HiOutlineClipboardList,
   HiOutlineMenuAlt2,
   HiOutlinePencil,
   HiOutlineTrash,
-  HiOutlineX,
-  HiTrash,
 } from "react-icons/hi";
 import { Modal, ModalContent } from "../../components/radixModalComponent";
 import DeleteModal from "./components/deleteModal";

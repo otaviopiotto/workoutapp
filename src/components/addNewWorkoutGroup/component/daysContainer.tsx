@@ -4,17 +4,12 @@ import { useForm } from "react-hook-form";
 import { dayType, exerciseType } from "../../../models/exercise";
 import AddNewWorkOut from "../../addNewWorkout/addNewWorkout";
 import Button from "../../Button";
-import SelectComponent from "../../formComponents/select";
 import { Modal, ModalContent } from "../../radixModalComponent";
 import { defaultValue } from "../../../components/addNewWorkout/addNewWorkout";
 import { Form } from "../styles";
 import { DayContainer, ExerciseContainer } from "./styles";
-import {
-  HiOutlineDuplicate,
-  HiOutlinePlus,
-  HiOutlineViewList,
-  HiOutlineX,
-} from "react-icons/hi";
+import { HiOutlineDuplicate, HiOutlinePlus, HiOutlineX } from "react-icons/hi";
+import InputComponent from "../../formComponents/input";
 
 interface DaysProp {
   day: number;
@@ -25,35 +20,6 @@ interface DaysProp {
   setMoving(value: any): any;
   listLength: number;
 }
-
-const select = [
-  {
-    value: "OFF",
-    label: "OFF",
-  },
-  {
-    value: "Peito e Tríceps",
-    label: "Peito e Tríceps",
-  },
-
-  {
-    value: "Costas e Bíceps",
-    label: "Costas e Bíceps",
-  },
-
-  {
-    value: "Pernas e Ombros",
-    label: "Pernas e Ombros",
-  },
-  {
-    value: "Superiores",
-    label: "Superiores",
-  },
-  {
-    value: "Inferiores",
-    label: "Inferiores",
-  },
-];
 
 const defaultList = ["Exercícios", "Séries", "Repetições"];
 const offList = ["Off", "Off", "Off"];
@@ -242,7 +208,6 @@ interface addProps {
 
 const AddExercises = ({ data: dayData, updateDay, onClose, day }: addProps) => {
   const [loading, setLoading] = useState(true);
-  const [muscleGroup, setMuscleGroup] = useState<string>(select[0].value);
   const [exercises, setExercises] = useState<exerciseType | any>([]);
   const [defaultValue, setDefaultValue] = useState<defaultValue>();
 
@@ -250,13 +215,15 @@ const AddExercises = ({ data: dayData, updateDay, onClose, day }: addProps) => {
     useForm({});
 
   const onAdd = (data: any) => {
+    const muscle_group = data.muscle_group;
+
+    delete data.muscle_group;
     const workout = map(data, (e) => e);
     const formatData = {
-      muscle_group: muscleGroup,
+      muscle_group,
       number: day,
       workout,
     };
-    console.log(formatData);
     updateDay({ ...dayData, ...formatData });
     onClose();
   };
@@ -284,8 +251,10 @@ const AddExercises = ({ data: dayData, updateDay, onClose, day }: addProps) => {
 
   useEffect(() => {
     if (dayData?.muscle_group) {
-      setMuscleGroup(dayData.muscle_group);
+      setValue("muscle_group", dayData.muscle_group);
       setLoading(false);
+    } else {
+      setValue("muscle_group", "OFF");
     }
     if (!dayData?.workout) {
       setLoading(false);
@@ -301,26 +270,20 @@ const AddExercises = ({ data: dayData, updateDay, onClose, day }: addProps) => {
 
   return (
     <ExerciseContainer>
-      <Form onSubmit={handleSubmit(onAdd)} id="add-exercise" style={{ gap: 0 }}>
+      <Form
+        onSubmit={handleSubmit(onAdd)}
+        id="add-exercise"
+        style={{ gap: 0, height: "100%", display: "unset", marginTop: "20px" }}
+      >
         {!loading && (
-          <SelectComponent
-            options={select}
-            defaultValue={muscleGroup}
+          <InputComponent
             label="Dia de:"
-            preSelected
-            onValueChange={(value) => setMuscleGroup(value)}
+            style={{ gap: 0, height: "fit-content" }}
+            register={{ ...register("muscle_group") }}
           />
         )}
 
         <section className="add-exercise-section">
-          <ul
-            className="list-header"
-            style={{ display: !exercises.length ? "none" : "flex" }}
-          >
-            {exercises.length
-              ? defaultList.map((e, i) => <li key={i}>{e}</li>)
-              : null}
-          </ul>
           <ul
             className="add-new"
             style={{ display: !exercises.length ? "none" : "flex" }}
@@ -340,19 +303,19 @@ const AddExercises = ({ data: dayData, updateDay, onClose, day }: addProps) => {
               />
             ))}
           </ul>
-          {muscleGroup !== "OFF" && (
-            <Button
-              buttonStyle="Secondary"
-              style={{
-                padding: "8px",
-                borderRadius: "99px",
-                margin: "10px auto",
-              }}
-              onClick={() => createExercise()}
-            >
-              <HiOutlinePlus />
-            </Button>
-          )}
+          <Button
+            buttonStyle="Secondary"
+            style={{
+              padding: "8px",
+              borderRadius: "99px",
+              margin: "10px auto",
+            }}
+            onClick={() => createExercise()}
+          >
+            <HiOutlinePlus />
+          </Button>
+        </section>
+        <footer className="modal-footer">
           <Button
             buttonStyle="Primary"
             type="submit"
@@ -361,7 +324,7 @@ const AddExercises = ({ data: dayData, updateDay, onClose, day }: addProps) => {
           >
             Salvar
           </Button>
-        </section>
+        </footer>
       </Form>
     </ExerciseContainer>
   );
