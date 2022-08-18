@@ -120,7 +120,7 @@ export const ExerciseContainer = styled.div`
     .add-new {
       max-height: 76%;
       overflow-y: auto;
-      padding: 0 20px 30px;
+      padding: 10px 30px 20px;
       margin: 0 -20px;
       display: flex;
       flex-direction: column;

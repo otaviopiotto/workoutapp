@@ -303,25 +303,12 @@ const AddExercises = ({ data: dayData, updateDay, onClose, day }: addProps) => {
               />
             ))}
           </ul>
-          <Button
-            buttonStyle="Secondary"
-            style={{
-              padding: "8px",
-              borderRadius: "99px",
-              margin: "10px auto",
-            }}
-            onClick={() => createExercise()}
-          >
-            <HiOutlinePlus />
-          </Button>
         </section>
         <footer className="modal-footer">
-          <Button
-            buttonStyle="Primary"
-            type="submit"
-            form="add-exercise"
-            style={{ marginTop: "20px" }}
-          >
+          <Button buttonStyle="Secondary" onClick={() => createExercise()}>
+            <HiOutlinePlus />
+          </Button>
+          <Button buttonStyle="Primary" type="submit" form="add-exercise">
             Salvar
           </Button>
         </footer>

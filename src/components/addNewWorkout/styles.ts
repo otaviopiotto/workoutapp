@@ -16,7 +16,7 @@ export const Container = styled.li`
   grid-template-columns: 1fr 1fr 20px;
   animation: 0.3s ${entranceAnimation} ease;
   background-color: ${({ theme }) => theme.colors.pallete[800]};
-  box-shadow: 0 0 1em rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.4);
   padding: 12px 10px;
   border-radius: 14px;
   transform-origin: top;

@@ -40,7 +40,7 @@ const SaveGroup = ({ id, data, onClose }: saveGroupProps) => {
 
   const onSubmit = ({ title }: any) => {
     if (id) {
-      updateGroup({ ...data, id });
+      updateGroup({ ...data, id, title });
     } else {
       createGroup({
         title,
@@ -55,14 +55,13 @@ const SaveGroup = ({ id, data, onClose }: saveGroupProps) => {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      {!id && (
-        <InputComponent
-          placeholder="Título"
-          inputSize="Large"
-          register={{ ...register("title") }}
-          error={errors.title?.message}
-        />
-      )}
+      <InputComponent
+        placeholder="Título"
+        inputSize="Large"
+        register={{ ...register("title") }}
+        error={errors.title?.message}
+      />
+
       <Button buttonStyle="Primary" size="Large" type="submit">
         Salvar
       </Button>

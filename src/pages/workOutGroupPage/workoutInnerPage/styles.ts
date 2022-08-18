@@ -72,6 +72,8 @@ export const Container = styled.main`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
+    border-bottom: solid 1px rgba(255, 255, 255, 0.02);
+    padding-bottom: 10px;
 
     li {
       width: 100%;
@@ -93,7 +95,7 @@ export const Container = styled.main`
     gap: 10px;
 
     & + ul {
-      border-top: solid 1px ${({ theme }) => theme.colors.pallete[200]};
+      border-top: solid 1px rgba(255, 255, 255, 0.02);
     }
 
     li {
