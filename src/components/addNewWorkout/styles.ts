@@ -26,7 +26,7 @@ export const Container = styled.li`
 
   .set-count {
     width: 100%;
-    height: -webkit-fill-available;
+    height: 34px;
     display: flex;
     border: solid 1px ${({ theme }) => theme.colors.grey[800]};
     align-items: center;

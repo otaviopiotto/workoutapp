@@ -55,6 +55,9 @@ const AddNewWorkOut = ({ ...props }: addNewProp) => {
         `exercise_${props.data?.id}.repetition`,
         props.defaultValue?.reps
       );
+    } else {
+      props.setValue(`exercise_${props.data?.id}.sets`, 3);
+      props.setValue(`exercise_${props.data?.id}.repetition`, 10);
     }
   }, []);
 

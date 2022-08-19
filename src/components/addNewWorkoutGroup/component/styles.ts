@@ -82,13 +82,21 @@ export const DayContainer = styled.div<props>`
 
       .exercise-bottom {
         .list-header {
+          margin-bottom: 6px;
           li {
             color: ${({ theme }) => theme.colors.grey[700]};
+            padding: 0 2px;
           }
         }
         ul {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
+          li {
+            color: ${({ theme }) => theme.colors.grey[500]};
+            font-size: 10px;
+            line-height: 1.2em;
+            padding: 0 2px;
+          }
         }
       }
     }
@@ -118,14 +126,20 @@ export const ExerciseContainer = styled.div`
     gap: 10px;
 
     .add-new {
-      max-height: 76%;
+      max-height: 70vh;
       overflow-y: auto;
-      padding: 10px 30px 20px;
+      padding: 10px 30px 90px;
       margin: 0 -20px;
       display: flex;
       flex-direction: column;
       gap: 10px;
       margin-top: 20px;
+    }
+
+    .add-new-exercise {
+      border-radius: 99px;
+      padding: 60px;
+      margin: 20px auto 0;
     }
   }
   .list-header {
@@ -149,6 +163,7 @@ export const ExerciseContainer = styled.div`
 
   .modal-footer {
     display: flex;
+    flex-direction: column;
     gap: 10px;
     position: fixed;
     bottom: 0px;

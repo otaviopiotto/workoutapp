@@ -303,6 +303,16 @@ const AddExercises = ({ data: dayData, updateDay, onClose, day }: addProps) => {
               />
             ))}
           </ul>
+
+          {!exercises.length ? (
+            <Button
+              buttonStyle="Secondary"
+              onClick={() => createExercise()}
+              className="add-new-exercise"
+            >
+              <HiOutlinePlus />
+            </Button>
+          ) : null}
         </section>
         <footer className="modal-footer">
           <Button buttonStyle="Secondary" onClick={() => createExercise()}>
