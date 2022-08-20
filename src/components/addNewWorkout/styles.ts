@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 const entranceAnimation = keyframes`
 from{
@@ -10,19 +10,52 @@ from{
     opacity:1;
 }
 `;
-export const Container = styled.li`
-  display: grid;
-  align-items: center;
-  grid-template-columns: 1fr 1fr 20px;
-  animation: 0.3s ${entranceAnimation} ease;
-  background-color: ${({ theme }) => theme.colors.pallete[800]};
+const deleteAnim = keyframes`
+  from{    
+    transform:scaleY(1) ;
+    opacity:1;
+}
+to{
+  
+  transform:scaleY(0) ;
+  opacity:0;    
+  }
+`;
+
+interface containerAnim {
+  deleteAnim?: boolean;
+}
+
+export const Container = styled.li<containerAnim>`
   box-shadow: 0 0 1em rgba(0, 0, 0, 0.4);
-  padding: 12px 10px;
-  border-radius: 14px;
   transform-origin: top;
-  gap: 14px;
-  column-gap: 20px;
-  scroll-snap-align: 10px;
+  background-color: ${({ theme }) => theme.colors.pallete[800]};
+  animation: 0.3s ${entranceAnimation} ease;
+  border-radius: 14px;
+  padding: 10px 12px;
+
+  ${(prop) => {
+    if (prop.deleteAnim) {
+      return css`
+        animation: 0.6s ${deleteAnim} ease;
+      `;
+    } else {
+      return css`
+        animation: 0.3s ${entranceAnimation} ease;
+      `;
+    }
+  }}
+
+  .input-section {
+    display: grid;
+    border-radius: 14px;
+    backdrop-filter: blur(10px);
+    align-items: center;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    column-gap: 8px;
+    scroll-snap-type: x proximity;
+  }
 
   .set-count {
     width: 100%;
@@ -33,7 +66,7 @@ export const Container = styled.li`
     overflow: hidden;
     border-radius: 8px;
     input {
-      flex: 1 !important;
+      flex: 0.6 !important;
       border-radius: 0px;
       border: solid ${({ theme }) => theme.colors.grey[800]};
       border-width: 0 1px;
@@ -72,22 +105,13 @@ export const Container = styled.li`
       outline: solid 1px ${({ theme }) => theme.colors.grey[800]};
       background-color: ${({ theme }) => theme.colors.pallete[800]};
     }
-
-    &:nth-child(2) {
-      flex: 0.5;
-    }
-    &:nth-child(3) {
-      flex: 0.2;
-    }
-    &:nth-child(4) {
-      flex: 0.3;
-    }
   }
 
   .delete-button {
     border-radius: 0px !important;
-    grid-row-start: 1;
+    grid-column: span 3;
+    /* grid-row-start: 1;
     grid-column-start: 3;
-    grid-row-end: 3;
+    grid-row-end: 4; */
   }
 `;

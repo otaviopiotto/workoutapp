@@ -17,4 +17,6 @@ export interface exerciseType {
   exercise?: string;
   sets?: string;
   repetition?: string;
+  time?: Date | string;
+  observation?: string;
 }

@@ -118,22 +118,34 @@ export const DayContainer = styled.div<props>`
 `;
 
 export const ExerciseContainer = styled.div`
-  height: calc(100% - 100px);
+  height: calc(100vh - 180px);
   .add-exercise-section {
-    height: 100%;
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    padding-bottom: 180px;
 
     .add-new {
-      max-height: 70vh;
-      overflow-y: auto;
-      padding: 10px 30px 90px;
-      margin: 0 -20px;
+      max-height: min-content;
+      overflow-x: auto;
+      padding: 8px;
       display: flex;
       flex-direction: column;
       gap: 10px;
       margin-top: 20px;
+
+      &::-webkit-scrollbar {
+        visibility: hidden;
+      }
+
+      &::-webkit-scrollbar-track {
+        visibility: hidden;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        visibility: hidden;
+      }
     }
 
     .add-new-exercise {
@@ -165,7 +177,7 @@ export const ExerciseContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
-    position: fixed;
+    position: absolute;
     bottom: 0px;
     left: 4px;
     right: 4px;

@@ -273,7 +273,13 @@ const AddExercises = ({ data: dayData, updateDay, onClose, day }: addProps) => {
       <Form
         onSubmit={handleSubmit(onAdd)}
         id="add-exercise"
-        style={{ gap: 0, height: "100%", display: "unset", marginTop: "20px" }}
+        style={{
+          gap: 0,
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          marginTop: "20px",
+        }}
       >
         {!loading && (
           <InputComponent
