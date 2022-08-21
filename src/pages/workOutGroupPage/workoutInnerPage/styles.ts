@@ -5,111 +5,87 @@ export const Container = styled.main`
   height: 100%;
   animation: ${entranceAnim} 0.5s ease;
 
-  .decoration-lines {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    pointer-events: none;
+  .inner-hero-section {
+    padding: 70px 16px 0;
+    margin-bottom: 20px;
+    color: ${({ theme }) => theme.colors.pallete[300]};
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: relative;
 
-    span {
-      width: 2px;
-      height: 100%;
-      display: block;
-      margin-left: auto;
-      background-color: rgba(255, 255, 255, 0.02);
-    }
-  }
-
-  .hero-section {
     .title-section {
       display: flex;
+      flex-direction: column;
       gap: 10px;
-      div {
-        display: flex;
-        flex-direction: column;
 
-        h1 {
-          font-size: 38px;
-          line-height: 1em;
-          font-family: "Roboto", sans-serif;
-          font-weight: 900;
-          color: ${({ theme }) => theme.colors.pallete[200]};
-        }
-
-        h2 {
-          color: ${({ theme }) => theme.colors.pallete[200]};
-          font-family: "Roboto", sans-serif;
-          font-size: 29px;
-          font-weight: 900;
-        }
-
-        span {
-          margin-bottom: 4px;
-        }
+      h2 {
+        color: ${({ theme }) => theme.colors.pallete[200]};
+        font-size: 29px;
+        font-weight: 700;
+        max-width: 280px;
       }
 
-      .right-side {
-        align-self: flex-end;
+      .top-side {
+        display: flex;
+        gap: 10px;
+
+        span {
+          ${({ theme }) => theme.fonts.mulish.small_semibold};
+          color: ${({ theme }) => theme.colors.pallete[200]};
+        }
       }
     }
 
-    .sub-title {
-      ${({ theme }) => theme.fonts.mulish.small_semibold};
-      line-height: 1em;
-      color: ${({ theme }) => theme.colors.pallete[300]};
+    .decoration-number {
+      position: absolute;
+      right: 20px;
+      bottom: 20px;
+      font-size: 70px;
+      color: rgba(255, 255, 255, 0.14);
     }
   }
 
   .list-container {
     padding: 20px 16px 0;
-  }
 
-  .top-section {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    border-bottom: solid 1px rgba(255, 255, 255, 0.02);
-    padding-bottom: 10px;
-
-    li {
-      width: 100%;
-      ${({ theme }) => theme.fonts.mulish.small_bold};
-      font-size: 10px;
-      color: ${({ theme }) => theme.colors.pallete[300]};
-      text-transform: uppercase;
-      & + li {
-        text-align: center;
-      }
-    }
-  }
-
-  .bottom-section {
-    display: grid;
-    min-height: 80px;
-    grid-template-columns: repeat(3, 1fr);
-    padding: 14px 0;
-    gap: 10px;
-
-    & + ul {
-      border-top: solid 1px rgba(255, 255, 255, 0.02);
-    }
-
-    li {
-      width: 100%;
+    .bottom-section {
+      min-height: 80px;
       display: flex;
-      align-items: center;
-      ${({ theme }) => theme.fonts.mulish.small_bold};
-      color: ${({ theme }) => theme.colors.pallete[200]};
+      flex-direction: column;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 14px 40px;
+      margin: 0 -20px;
+      border: solid rgba(255, 255, 255, 0.02);
+      border-width: 1px 0;
 
-      text-transform: uppercase;
+      h5 {
+        ${({ theme }) => theme.fonts.mulish.body_bold};
+        color: ${({ theme }) => theme.colors.pallete[200]};
+      }
 
-      & + li {
-        justify-content: center;
-        text-align: center;
+      p {
+        ${({ theme }) => theme.fonts.mulish.small_regular};
+        color: ${({ theme }) => theme.colors.pallete[200]};
+      }
+
+      ul {
+        display: flex;
+        gap: 20px;
+        margin-top: 10px;
+
+        li {
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          color: ${({ theme }) => theme.colors.pallete[200]};
+          font-size: 14px;
+
+          span {
+            ${({ theme }) => theme.fonts.mulish.small_semibold};
+            color: ${({ theme }) => theme.colors.pallete[200]};
+          }
+        }
       }
     }
   }

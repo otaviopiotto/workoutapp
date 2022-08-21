@@ -59,46 +59,46 @@ export const theme = {
   fonts: {
     mulish: {
       h1: [
-        "font: 24px 'Mulish', sans-serif; font-weight: 700; line-height: 48px;",
+        "font: 24px 'Montserrat', sans-serif; font-weight: 700; line-height: 48px;",
       ],
       h2: [
-        "font: 22px 'Mulish', sans-serif; font-weight: 600;line-height: 1em;",
+        "font: 22px 'Montserrat', sans-serif; font-weight: 600;line-height: 1em;",
       ],
       h3_regular: [
-        "font: 1.75rem 'Mulish', sans-serif; font-weight: 400; line-height: 48px;",
+        "font: 1.75rem 'Montserrat', sans-serif; font-weight: 400; line-height: 48px;",
       ],
       h3_semibold: [
-        "font: 1.75rem 'Mulish', sans-serif; font-weight: 600; line-height: 48px;",
+        "font: 1.75rem 'Montserrat', sans-serif; font-weight: 600; line-height: 48px;",
       ],
       h4: [
-        "font: 1.56rem 'Mulish', sans-serif;font-weight: 600;line-height: 32px;",
+        "font: 1.56rem 'Montserrat', sans-serif;font-weight: 600;line-height: 32px;",
       ],
       h5_regular: [
-        "font: 1.25rem 'Mulish', sans-serif;font-weight: 400;line-height: 28px;",
+        "font: 1.25rem 'Montserrat', sans-serif;font-weight: 400;line-height: 28px;",
       ],
       h5_semibold: [
-        "font: 1.25rem 'Mulish', sans-serif;font-weight: 600;line-height: 28px;",
+        "font: 1.25rem 'Montserrat', sans-serif;font-weight: 600;line-height: 28px;",
       ],
       h5_bold: [
-        "font: 1.25rem 'Mulish', sans-serif;font-weight: 700; line-height: 28px;",
+        "font: 1.25rem 'Montserrat', sans-serif;font-weight: 700; line-height: 28px;",
       ],
       body_regular: [
-        "font: 1rem 'Mulish', sans-serif; line-height: 24px;font-weight: 400",
+        "font: 1rem 'Montserrat', sans-serif; line-height: 24px;font-weight: 400",
       ],
       body_semibold: [
-        "font: 1rem 'Mulish', sans-serif; line-height: 24px;font-weight: 600",
+        "font: 1rem 'Montserrat', sans-serif; line-height: 24px;font-weight: 600",
       ],
       body_bold: [
-        "font: 1rem 'Mulish', sans-serif; line-height: 24px;font-weight: 700",
+        "font: 1rem 'Montserrat', sans-serif; line-height: 24px;font-weight: 700",
       ],
       small_regular: [
-        "font: 12px  'Mulish', sans-serif; line-height: 20px;font-weight: 400",
+        "font: 12px  'Montserrat', sans-serif; line-height: 20px;font-weight: 400",
       ],
       small_semibold: [
-        "font: 12px 'Mulish', sans-serif; line-height: 20px;font-weight: 600",
+        "font: 12px 'Montserrat', sans-serif; line-height: 20px;font-weight: 600",
       ],
       small_bold: [
-        "font:12px 'Mulish', sans-serif; line-height: 20px;font-weight: 700",
+        "font:12px 'Montserrat', sans-serif; line-height: 20px;font-weight: 700",
       ],
     },
   },

@@ -21,8 +21,8 @@ interface DaysProp {
   listLength: number;
 }
 
-const defaultList = ["Exercícios", "Séries", "Repetições"];
-const offList = ["Off", "Off", "Off"];
+const defaultList = ["Exercícios", "Séries", "Reps", "Desc"];
+const offList = ["Off", "Off", "Off", "Off"];
 
 const DaysContainer = ({
   data,
@@ -172,9 +172,12 @@ const DaysContainer = ({
 
                   {data?.workout?.map((e: exerciseType, i: number) => (
                     <ul key={i}>
-                      <li>{e.exercise}</li>
-                      <li>{e.sets}</li>
+                      <li style={{ width: "110px" }}>
+                        <span>{e.exercise}</span>
+                      </li>
+                      <li>{e.sets}x</li>
                       <li>{e.repetition}</li>
+                      <li>{e.time}s</li>
                     </ul>
                   ))}
                 </section>

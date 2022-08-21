@@ -18,10 +18,30 @@ export const Container = styled.main`
   animation: ${entranceAnim} 0.5s ease;
   position: relative;
 
+  .decoration-lines {
+    display: grid;
+    grid-template-columns: 16px 1fr 1fr 16px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+
+    span {
+      width: 2px;
+      height: 100%;
+      display: block;
+      margin-left: auto;
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+  }
+
   .group-header {
     width: 100%;
     padding: 20px 20px 0;
     position: absolute;
+    z-index: 99;
 
     .get-back-section {
       display: flex;
@@ -56,19 +76,36 @@ export const Container = styled.main`
     flex-direction: column;
     gap: 4px;
 
+    .top-side {
+      h1 {
+        color: ${({ theme }) => theme.colors.pallete[50]};
+      }
+    }
+
+    .bottom-side {
+      padding: 0 16px;
+      display: flex;
+      gap: 10px;
+    }
+
     .left-side {
       display: flex;
       gap: 10px;
 
       span {
+        text-orientation: sideways-right;
+        writing-mode: vertical-lr;
+        transform: rotate(180deg);
+        line-height: 1em;
+        color: ${({ theme }) => theme.colors.pallete[200]};
+        font-size: 10px !important;
         ${({ theme }) => theme.fonts.mulish.small_regular};
       }
     }
 
     .description {
-      padding: 0 26px;
       line-break: anywhere;
-
+      font-size: 10px !important;
       ${({ theme }) => theme.fonts.mulish.small_regular};
       line-height: 1.2em;
       color: ${({ theme }) => theme.colors.pallete[200]};
@@ -85,28 +122,39 @@ export const Container = styled.main`
 
   .workout-list {
     display: grid;
-    /* grid-template-columns: repeat(2, 1fr); */
+    grid-template-columns: repeat(2, 1fr);
+
     flex-direction: column;
     margin-top: 40px;
     padding: 0px 16px;
-    gap: 8px;
   }
 `;
 
 export const DayContainer = styled.li`
   padding: 14px 10px;
-  background-color: ${({ theme }) => theme.colors.pallete[300]};
-  border-radius: 12px;
+  border: solid rgba(255, 255, 255, 0.02);
+  border-width: 1px 0;
 
   header {
     display: flex;
-    gap: 10px;
+    flex-direction: column;
     align-items: flex-start;
+    gap: 10px;
+
+    .top-side {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+
+      span {
+        ${({ theme }) => theme.fonts.mulish.small_regular};
+      }
+    }
 
     h1,
     span {
       line-height: 1em;
-      color: ${({ theme }) => theme.colors.grey[900]};
+      color: ${({ theme }) => theme.colors.pallete[200]};
     }
 
     h1 {
@@ -115,18 +163,12 @@ export const DayContainer = styled.li`
 
     .name {
       text-align: left;
-      color: ${({ theme }) => theme.colors.grey[900]};
+      color: ${({ theme }) => theme.colors.pallete[200]};
+
       ${({ theme }) => theme.fonts.mulish.h3_bold};
     }
 
-    .right-side {
-      height: 100%;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      align-items: flex-start;
-
+    .bottom-side {
       .icon-container {
         display: flex;
         align-items: center;
@@ -139,39 +181,5 @@ export const DayContainer = styled.li`
   .list-container {
     padding-left: 10px;
     margin-top: 20px;
-  }
-
-  .top-section {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-
-    li {
-      width: 100%;
-      ${({ theme }) => theme.fonts.mulish.small_bold};
-      font-size: 10px;
-      color: ${({ theme }) => theme.colors.grey[800]};
-      text-transform: uppercase;
-      & + li {
-        text-align: center;
-      }
-    }
-  }
-
-  .bottom-section {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-
-    li {
-      width: 100%;
-      padding: 10px 0;
-      ${({ theme }) => theme.fonts.mulish.small_regular};
-      color: ${({ theme }) => theme.colors.grey[700]};
-      text-transform: uppercase;
-      & + li {
-        text-align: center;
-      }
-    }
   }
 `;

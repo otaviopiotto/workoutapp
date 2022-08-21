@@ -3,9 +3,11 @@ import { useLocation } from "react-router-dom";
 import { Container } from "./styles";
 import { useGroup } from "../../../hooks/exerciseGroup";
 import { dayType, exerciseType } from "../../../models/exercise";
-
-const defaultList = ["Exercícios", "Séries", "Repetições"];
-const offList = ["Off", "Off", "Off"];
+import {
+  HiOutlineClock,
+  HiOutlineFastForward,
+  HiOutlineRefresh,
+} from "react-icons/hi";
 
 const WorkOutInnerPage = () => {
   const [workOutData, setWorkOutData] = useState<dayType>(null as any);
@@ -20,40 +22,45 @@ const WorkOutInnerPage = () => {
 
   return (
     <Container>
-      <div className="decoration-lines">
-        <span />
-        <span />
-      </div>
-      <section className="hero-section">
+      <section className="inner-hero-section">
         <div className="title-section">
-          <div className="left-side">
+          <div className="top-side">
             <span className="sub-title">Dia</span>
-            <h1>{workOutData?.number?.toString().padStart(2, "0")}</h1>
+            <span>{workOutData?.number?.toString().padStart(2, "0")}</span>
           </div>
 
-          <div className="right-side">
-            <span className="sub-title">Grupo Muscular</span>
+          <div className="bottom-side">
             <h2>{workOutData?.muscle_group}</h2>
           </div>
         </div>
+
+        <h1 className="decoration-number">
+          {workOutData?.number?.toString().padStart(2, "0")}
+        </h1>
       </section>
 
       <div className="list-container">
-        <ul className="top-section">
-          {(workOutData?.muscle_group.toLowerCase().includes("off")
-            ? offList
-            : defaultList
-          ).map((e, i) => (
-            <li key={i}>{e}</li>
-          ))}
-        </ul>
-
         {workOutData?.workout?.map((e: exerciseType, i: number) => (
-          <ul className="bottom-section" key={i}>
-            <li>{e.exercise}</li>
-            <li>{e.sets}x</li>
-            <li>{e.repetition}</li>
-          </ul>
+          <div className="bottom-section" key={i}>
+            <h5>{e.exercise}</h5>
+            {e.observation && <p>{e.observation}</p>}
+
+            <ul>
+              <li>
+                <HiOutlineFastForward />
+
+                <span>{e.sets}x</span>
+              </li>
+              <li>
+                <HiOutlineRefresh />
+                <span>{e.repetition}</span>
+              </li>
+              <li>
+                <HiOutlineClock />
+                <span>{e.time || 0}s</span>
+              </li>
+            </ul>
+          </div>
         ))}
       </div>
     </Container>

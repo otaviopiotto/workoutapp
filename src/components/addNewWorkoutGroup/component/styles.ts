@@ -18,11 +18,10 @@ export const DayContainer = styled.div<props>`
   display: flex;
   border-radius: 16px;
   position: relative;
-  border: solid 1px rgba(82, 82, 82, 0.5);
   margin-top: 10px;
   transform: ${(prop) => prop.hold && "scale(1.01)"};
   animation: 0.5s ${entranceAnimation} ease;
-  background-color: ${({ theme }) => theme.colors.pallete[800]};
+  background-color: #0a1111;
   transition: 0.3s;
 
   .days-container {
@@ -53,7 +52,7 @@ export const DayContainer = styled.div<props>`
           text-align: left;
           ${({ theme }) => theme.fonts.mulish.h1_bold};
           font-size: 42px;
-          color: ${({ theme }) => theme.colors.grey[600]};
+          color: ${({ theme }) => theme.colors.pallete[200]};
         }
       }
 
@@ -68,7 +67,7 @@ export const DayContainer = styled.div<props>`
           h3 {
             text-align: left;
             ${({ theme }) => theme.fonts.mulish.body_bold};
-            color: ${({ theme }) => theme.colors.grey[600]};
+            color: ${({ theme }) => theme.colors.pallete[200]};
           }
         }
 
@@ -76,7 +75,7 @@ export const DayContainer = styled.div<props>`
           text-align: left;
 
           ${({ theme }) => theme.fonts.mulish.small_regular};
-          color: ${({ theme }) => theme.colors.grey[600]};
+          color: ${({ theme }) => theme.colors.pallete[200]};
         }
       }
 
@@ -90,12 +89,19 @@ export const DayContainer = styled.div<props>`
         }
         ul {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: 1fr 30px 30px 30px;
+          gap: 10px;
           li {
             color: ${({ theme }) => theme.colors.grey[500]};
             font-size: 10px;
             line-height: 1.2em;
             padding: 0 2px;
+
+            &:nth-child(1) {
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
+            }
           }
         }
       }
@@ -108,11 +114,6 @@ export const DayContainer = styled.div<props>`
     button {
       padding: 6px 4px;
       border-radius: 0px;
-
-      & + button {
-        padding-top: 10px;
-        border-top: solid 1px rgba(82, 82, 82, 0.5);
-      }
     }
   }
 `;

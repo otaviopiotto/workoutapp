@@ -17,17 +17,19 @@ const GroupCard = ({ group_data, onClick }: GroupProp) => {
     >
       <Card>
         <section className="left-side">
-          <div className="top-section">
-            <span>Treino</span>
-            <h1>{group_data?.title}</h1>
-          </div>
+          <span className="sideways">Treino</span>
+          <div className="middle-part">
+            <div className="top-section">
+              <h1>{group_data?.title}</h1>
+            </div>
 
-          <ul className="bottom-section">
-            <li>
-              <HiOutlineCalendar /> {group_data?.days?.length}{" "}
-              {group_data?.days?.length > 1 ? "Dias" : "Dia"}
-            </li>
-          </ul>
+            <ul className="bottom-section">
+              <li>
+                <HiOutlineCalendar /> {group_data?.days?.length}{" "}
+                {group_data?.days?.length > 1 ? "Dias" : "Dia"}
+              </li>
+            </ul>
+          </div>
         </section>
         <div className="arrow">
           <HiOutlineChevronRight className="arrow-icon" />

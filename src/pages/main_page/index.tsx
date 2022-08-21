@@ -13,14 +13,20 @@ const MainPage = () => {
   return (
     <Container>
       <header className="group-header">
-        <h5>Grupos de Exercício</h5>
-
-        <Button buttonStyle="Text" onClick={() => navigate("novo-grupo")}>
-          <HiOutlinePlus />
-        </Button>
+        <h5>
+          Meus <br />
+          Exercícios
+        </h5>
       </header>
 
       <section className="group-section">
+        <div className="header">
+          <span>Grupos</span>
+
+          <Button buttonStyle="Text" onClick={() => navigate("novo-grupo")}>
+            <HiOutlinePlus />
+          </Button>
+        </div>
         {!group.length && (
           <Button
             buttonStyle="Secondary"
@@ -50,6 +56,12 @@ const MainPage = () => {
           ))}
         </ul>
       </section>
+
+      <footer>
+        <Button buttonStyle="Text" onClick={() => navigate("novo-grupo")}>
+          <HiOutlinePlus />
+        </Button>
+      </footer>
     </Container>
   );
 };

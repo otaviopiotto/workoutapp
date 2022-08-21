@@ -25,22 +25,32 @@ export const Container = styled.main`
     justify-content: space-between;
     margin-top: 20px;
     h5 {
-      ${({ theme }) => theme.fonts.mulish.h5_bold};
-
+      ${({ theme }) => theme.fonts.mulish.h5_semibold};
+      font-size: 32px;
       line-height: 1.2em;
       color: ${({ theme }) => theme.colors.grey[300]};
-    }
-
-    button {
-      padding: 0px;
-      border-radius: 99px;
-      font-size: 22px;
-      color: ${({ theme }) => theme.colors.blue[100]};
     }
   }
 
   .group-section {
-    margin-top: 20px;
+    margin-top: 40px;
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      span {
+        ${({ theme }) => theme.fonts.mulish.small_semibold};
+
+        color: ${({ theme }) => theme.colors.pallete[50]};
+      }
+
+      button {
+        font-size: 20px;
+        padding: 0;
+        color: ${({ theme }) => theme.colors.pallete[50]};
+      }
+    }
     .indicator {
       display: flex;
       gap: 10px;
@@ -55,6 +65,23 @@ export const Container = styled.main`
       margin-top: 30px;
       display: grid;
       gap: 20px;
+    }
+  }
+
+  footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+
+    button {
+      background: rgba(217, 217, 217, 0.06);
+      padding: 20px;
+      color: ${({ theme }) => theme.colors.pallete[50]};
+
+      border-radius: 99px;
     }
   }
 `;

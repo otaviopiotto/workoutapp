@@ -7,7 +7,6 @@ import { Container, DayContainer } from "./styles";
 import {
   HiOutlineArrowNarrowLeft,
   HiOutlineClipboardList,
-  HiOutlineMenuAlt2,
   HiOutlinePencil,
   HiOutlineTrash,
 } from "react-icons/hi";
@@ -38,6 +37,13 @@ const WorkOutPage = () => {
         </ModalContent>
       </Modal>
       <Container>
+        {!outlet && (
+          <div className="decoration-lines">
+            <span />
+            <span />
+            <span />
+          </div>
+        )}
         <header className="group-header">
           <div className="get-back-section">
             <div className="edit-buttons">
@@ -45,8 +51,6 @@ const WorkOutPage = () => {
                 <HiOutlineArrowNarrowLeft />
               </Button>
             </div>
-
-            <span>{workOutData?.title}</span>
 
             {!outlet && (
               <div className="edit-buttons">
@@ -68,26 +72,32 @@ const WorkOutPage = () => {
           </div>
         </header>
 
-        {!outlet && (
-          <section className="hero-section">
-            <div className="left-side">
-              <HiOutlineMenuAlt2 />
-              <span>descrição</span>
-            </div>
-
-            <p className="description">{workOutData?.description}</p>
-          </section>
-        )}
-
         {outlet ? (
           <Outlet />
         ) : (
-          <ul className="workout-list">
-            {workOutData &&
-              workOutData?.days?.map((e, i: number) => (
-                <DayCard data={e} key={i} groupId={state} />
-              ))}
-          </ul>
+          <>
+            <section className="hero-section">
+              <div className="top-side">
+                <h1>{workOutData?.title}</h1>
+              </div>
+              {workOutData?.description && (
+                <div className="bottom-side">
+                  <div className="left-side">
+                    <span>Descrição</span>
+                  </div>
+
+                  <p className="description">{workOutData?.description}</p>
+                </div>
+              )}
+            </section>
+
+            <ul className="workout-list">
+              {workOutData &&
+                workOutData?.days?.map((e, i: number) => (
+                  <DayCard data={e} key={i} groupId={state} />
+                ))}
+            </ul>
+          </>
         )}
       </Container>
     </>
@@ -121,15 +131,18 @@ const DayCard = ({ data, groupId }: dayProps) => {
         onClick={handleClickCard}
       >
         <header>
-          <h1>{data?.number?.toString().padStart(2, "0")}</h1>
-
-          <div className="right-side">
-            <span className="name">{data?.muscle_group}</span>
+          <div className="top-side">
+            <h1>{data?.number?.toString().padStart(2, "0")}</h1>
 
             <span className="icon-container">
-              <HiOutlineClipboardList fontSize={12} /> {data?.workout?.length}{" "}
-              Treinos
+              <HiOutlineClipboardList fontSize={12} />{" "}
+              {data?.workout?.length || 0}{" "}
+              {data?.workout?.length > 1 ? "Treinos" : "Treino"}
             </span>
+          </div>
+
+          <div className="bottom-side">
+            <span className="name">{data?.muscle_group}</span>
           </div>
         </header>
       </Button>
