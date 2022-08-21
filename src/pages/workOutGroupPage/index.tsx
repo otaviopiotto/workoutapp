@@ -29,7 +29,7 @@ const WorkOutPage = () => {
   return (
     <>
       <Modal open={openModal} onOpenChange={() => setOpenModal(!openModal)}>
-        <ModalContent title="Salvar" position="center">
+        <ModalContent title="Deletar" position="center">
           <DeleteModal
             id={workOutData?.id}
             onClose={() => setOpenModal(false)}
