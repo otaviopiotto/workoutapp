@@ -78,27 +78,31 @@ export const Container = styled.main`
 
     .top-side {
       h1 {
+        line-height: 1.2em;
         color: ${({ theme }) => theme.colors.pallete[50]};
       }
     }
 
     .bottom-side {
+      margin-top: 20px;
       padding: 0 16px;
       display: flex;
-      gap: 10px;
+      flex-direction: column;
     }
 
     .left-side {
       display: flex;
-      gap: 10px;
+      gap: 2px;
 
       span {
-        text-orientation: sideways-right;
+        /* text-orientation: sideways-right;
         writing-mode: vertical-lr;
-        transform: rotate(180deg);
+        transform: rotate(180deg); */
+        /* padding-bottom: 6px; */
+        /* text-align: right; */
         line-height: 1em;
         color: ${({ theme }) => theme.colors.pallete[200]};
-        font-size: 10px !important;
+        font-size: 9px !important;
         ${({ theme }) => theme.fonts.mulish.small_regular};
       }
     }
@@ -162,6 +166,7 @@ export const DayContainer = styled.li`
     }
 
     .name {
+      display: block;
       text-align: left;
       color: ${({ theme }) => theme.colors.pallete[200]};
 

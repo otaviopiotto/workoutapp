@@ -15,6 +15,8 @@ export const Card = styled.div`
     .sideways {
       text-orientation: sideways-right;
       writing-mode: vertical-lr;
+      text-align: right;
+      padding-bottom: 6px;
       transform: rotate(180deg);
       ${({ theme }) => theme.fonts.mulish.small_semibold};
       line-height: 1em;
