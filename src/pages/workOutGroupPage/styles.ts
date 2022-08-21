@@ -40,8 +40,9 @@ export const Container = styled.main`
   .group-header {
     width: 100%;
     padding: 20px 20px 0;
-    position: absolute;
+    position: fixed;
     z-index: 99;
+    background-color: ${({ theme }) => theme.colors.pallete[800]};
 
     .get-back-section {
       display: flex;
@@ -95,14 +96,9 @@ export const Container = styled.main`
       gap: 2px;
 
       span {
-        /* text-orientation: sideways-right;
-        writing-mode: vertical-lr;
-        transform: rotate(180deg); */
-        /* padding-bottom: 6px; */
-        /* text-align: right; */
         line-height: 1em;
         color: ${({ theme }) => theme.colors.pallete[200]};
-        font-size: 9px !important;
+        font-size: 8px !important;
         ${({ theme }) => theme.fonts.mulish.small_regular};
       }
     }
@@ -135,7 +131,7 @@ export const Container = styled.main`
 `;
 
 export const DayContainer = styled.li`
-  padding: 14px 10px;
+  padding: 34px 14px;
   border: solid rgba(255, 255, 255, 0.02);
   border-width: 1px 0;
 

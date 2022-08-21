@@ -118,12 +118,13 @@ export default createGlobalStyle`
       width: 6px;
       height: 6px;
       border-radius: 99px;
-      
+      z-index:99 ;
       
     }
     
     *::-webkit-scrollbar-track {
-      background: #e0e0e0;
+      background: ${theme.colors.pallete[800]};
+
       border-radius: 99px;
       
     }

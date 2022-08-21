@@ -17,7 +17,6 @@ export const Container = styled.main`
     .title-section {
       display: flex;
       flex-direction: column;
-      gap: 10px;
 
       h2 {
         color: ${({ theme }) => theme.colors.pallete[200]};
@@ -54,7 +53,7 @@ export const Container = styled.main`
       display: flex;
       flex-direction: column;
       grid-template-columns: repeat(3, 1fr);
-      padding: 14px 40px;
+      padding: 34px 40px;
       margin: 0 -20px;
       border: solid rgba(255, 255, 255, 0.02);
       border-width: 1px 0;

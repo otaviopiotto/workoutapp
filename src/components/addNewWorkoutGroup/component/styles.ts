@@ -125,7 +125,7 @@ export const ExerciseContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding-bottom: 180px;
+    padding-bottom: 30px;
 
     .add-new {
       max-height: min-content;
@@ -178,11 +178,10 @@ export const ExerciseContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
-    position: absolute;
+    position: sticky;
     bottom: 0px;
     left: 4px;
     right: 4px;
-    padding: 20px;
     justify-content: space-between;
     background: ${({ theme }) => theme.colors.pallete[800]};
 
