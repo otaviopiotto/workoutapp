@@ -65,7 +65,7 @@ export const Button = styled.button<containerProps>`
   border: solid rgba(255, 255, 255, 0.02);
   border-width: 1px 0;
   transition: 0.3s;
-
+  -webkit-tap-highlight-color: transparent;
   ${(prop) => {
     if (prop.focus) {
       return css`
