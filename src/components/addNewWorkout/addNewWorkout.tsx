@@ -92,13 +92,6 @@ const AddNewWorkOut = ({ ...props }: addNewProp) => {
     }
   };
 
-  const handleDelete = () => {
-    setDeleteAnim(true);
-    setTimeout(() => {
-      props.onDelete?.(props?.data?.id);
-    }, 600);
-  };
-
   useEffect(() => {
     if (Object.keys(props.data).length > 1) {
       map(props.data, (e, i) => {
@@ -182,7 +175,7 @@ const AddNewWorkOut = ({ ...props }: addNewProp) => {
           buttonStyle="Text"
           className="delete-button"
           style={{ padding: "2px", height: "fit-content" }}
-          onClick={handleDelete}
+          onClick={() => props.onDelete?.(props?.data?.id)}
         >
           <HiOutlineTrash />
         </Button>

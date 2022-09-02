@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Container } from "./styles";
 import { useGroup } from "../../../hooks/exerciseGroup";
 import { dayType, exerciseType } from "../../../models/exercise";
 import {
@@ -8,6 +7,7 @@ import {
   HiOutlineFastForward,
   HiOutlineRefresh,
 } from "react-icons/hi";
+import { Container, Button } from "./styles";
 
 const WorkOutInnerPage = () => {
   const [workOutData, setWorkOutData] = useState<dayType>(null as any);
@@ -41,29 +41,51 @@ const WorkOutInnerPage = () => {
 
       <div className="list-container">
         {workOutData?.workout?.map((e: exerciseType, i: number) => (
-          <div className="bottom-section" key={i}>
-            <h5>{e.exercise}</h5>
-            {e.observation && <p>{e.observation}</p>}
-
-            <ul>
-              <li>
-                <HiOutlineFastForward />
-
-                <span>{e.sets}x</span>
-              </li>
-              <li>
-                <HiOutlineRefresh />
-                <span>{e.repetition}</span>
-              </li>
-              <li>
-                <HiOutlineClock />
-                <span>{e.time || 0}s</span>
-              </li>
-            </ul>
-          </div>
+          <ExerciseContainer data={e} key={i} />
         ))}
       </div>
     </Container>
+  );
+};
+
+interface prop {
+  data: exerciseType;
+}
+
+const ExerciseContainer = ({ data }: prop) => {
+  const [focus, setFocus] = useState(false);
+
+  return (
+    <Button
+      className="bottom-section"
+      focus={focus}
+      onClick={() => setFocus(!focus)}
+    >
+      <h5>{data.exercise}</h5>
+      {data.observation && <p>{data.observation}</p>}
+
+      <ul>
+        <li>
+          <HiOutlineFastForward />
+
+          <span>
+            {data.sets}x {focus && "Séries"}
+          </span>
+        </li>
+        <li>
+          <HiOutlineRefresh />
+          <span>
+            {data.repetition} {focus && "Repetições"}
+          </span>
+        </li>
+        <li>
+          <HiOutlineClock />
+          <span>
+            {data.time || 0}s {focus && "Descanso"}
+          </span>
+        </li>
+      </ul>
+    </Button>
   );
 };
 

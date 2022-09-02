@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { map } from "lodash";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useForm } from "react-hook-form";
 import { dayType, exerciseType } from "../../../models/exercise";
 import AddNewWorkOut from "../../addNewWorkout/addNewWorkout";
@@ -210,6 +211,8 @@ interface addProps {
 }
 
 const AddExercises = ({ data: dayData, updateDay, onClose, day }: addProps) => {
+  const [listParent] = useAutoAnimate({});
+
   const [loading, setLoading] = useState(true);
   const [exercises, setExercises] = useState<exerciseType | any>([]);
   const [defaultValue, setDefaultValue] = useState<defaultValue>();
@@ -296,6 +299,7 @@ const AddExercises = ({ data: dayData, updateDay, onClose, day }: addProps) => {
           <ul
             className="add-new"
             style={{ display: !exercises.length ? "none" : "flex" }}
+            ref={listParent as any}
           >
             {exercises.map((e: exerciseType | any, i: number) => (
               <AddNewWorkOut

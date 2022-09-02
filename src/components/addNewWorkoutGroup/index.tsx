@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useForm } from "react-hook-form";
 import { useGroup } from "../../hooks/exerciseGroup";
 import Button from "../Button";
@@ -20,6 +21,7 @@ interface inputProp {
 }
 
 const AddNewWorkOutGroup = () => {
+  const [listParent] = useAutoAnimate({});
   const [openModal, setOpenModal] = useState(false);
   const [formData, setFormData] = useState();
   const { createGroup, group, updateGroup } = useGroup();
@@ -128,7 +130,7 @@ const AddNewWorkOutGroup = () => {
         </Form>
 
         <section className="add-days-section">
-          <div className="grid-container">
+          <div className="grid-container" ref={listParent as any}>
             {days.map((e: dayType | any, index: number) => (
               <DaysContainer
                 day={index + 1}
