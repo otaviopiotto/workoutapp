@@ -24,8 +24,7 @@ const AddNewWorkOutGroup = () => {
   const [listParent] = useAutoAnimate({});
   const [openModal, setOpenModal] = useState(false);
   const [formData, setFormData] = useState();
-  const { createGroup, group, updateGroup } = useGroup();
-  const [moving, setMoving] = useState(null as any);
+  const { group } = useGroup();
   const navigate = useNavigate();
 
   const [days, setDays] = useState<dayType | any>([
@@ -86,26 +85,6 @@ const AddNewWorkOutGroup = () => {
     setDays([...days, duplicated]);
   };
 
-  // const moveArrayItemToNewIndex = (
-  //   arr: any,
-  //   old_index: number,
-  //   new_index: number
-  // ) => {
-  //   if (new_index >= arr.length) {
-  //     let k = new_index - arr.length + 1;
-  //     while (k--) {
-  //       return null;
-  //     }
-  //   }
-  //   arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
-  //   return arr;
-  // };
-
-  // useEffect(() => {
-  //   if (!moving) return;
-  //   setDays(moveArrayItemToNewIndex(days, moving.childPosition, moving.arrayP));
-  // }, [moving]);
-
   return (
     <>
       <Modal open={openModal} onOpenChange={() => setOpenModal(!openModal)}>
@@ -137,8 +116,6 @@ const AddNewWorkOutGroup = () => {
                 duplicateDay={duplicateDay}
                 updateDay={updateDay}
                 onDelete={handleDelete}
-                listLength={days.length}
-                setMoving={setMoving}
                 key={index}
                 data={e}
               />

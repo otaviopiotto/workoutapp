@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { map } from "lodash";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useForm } from "react-hook-form";
 import { dayType, exerciseType } from "../../../models/exercise";
 import AddNewWorkOut from "../../addNewWorkout/addNewWorkout";
@@ -18,8 +17,6 @@ interface DaysProp {
   onDelete?(id: string | number | undefined): void;
   updateDay(data: any): void;
   duplicateDay(data: any): void;
-  setMoving(value: any): any;
-  listLength: number;
 }
 
 const defaultList = ["Exercícios", "Séries", "Reps", "Desc"];
@@ -31,8 +28,6 @@ const DaysContainer = ({
   onDelete,
   updateDay,
   duplicateDay,
-  setMoving,
-  listLength,
 }: DaysProp) => {
   const [open, setOpen] = useState(data?.muscle_group ? false : true);
   const [holdingAnim, setHoldingAnim] = useState(false);
@@ -45,73 +40,6 @@ const DaysContainer = ({
   useEffect(() => {
     if (!data?.muscle_group) setOpen(true);
   }, [open]);
-
-  let pos = { top: 0, y: 0 };
-  let moveState: any = null;
-
-  const mouseMoveHandler = (e: any) => {
-    containerRef.current.style.zIndex = 2;
-    const dx = e.changedTouches[0].clientY - pos.y;
-
-    const pointerPosition = Math.round(dx / 100);
-
-    if (dx > -70 && dx < 70) {
-      containerRef.current.style.top = dx + "px";
-      containerRef.current.style.order = day - 1;
-    }
-
-    if (dx < 0) {
-      const downToArr = pointerPosition - day;
-      const position = downToArr < 0 ? 0 : downToArr;
-
-      if (dx < -80) {
-        containerRef.current.style.order = position;
-
-        containerRef.current.style.top = dx + 20 + "px";
-
-        moveState = {
-          childPosition: day - 1,
-          arrayP: position,
-        };
-      }
-    } else {
-      const upToArr = pointerPosition + day;
-      const position = upToArr > listLength - 1 ? listLength - 1 : upToArr;
-
-      if (dx > 80) {
-        containerRef.current.style.order = position;
-
-        containerRef.current.style.top = dx - 20 + "px";
-
-        moveState = {
-          childPosition: day - 1,
-          arrayP: position,
-        };
-      }
-    }
-  };
-
-  const mouseDownHandler = (e: any) => {
-    if (containerRef.current.parentElement.clientHeight > 89 * 2) {
-      setHoldingAnim(true);
-      pos = {
-        top: containerRef?.current?.scrollTop,
-        y: e.changedTouches[0].clientY,
-      };
-      document.addEventListener("touchmove", mouseMoveHandler);
-      document.addEventListener("touchend", mouseUpHandler);
-    }
-  };
-
-  const mouseUpHandler = () => {
-    setHoldingAnim(false);
-    setMoving(moveState);
-    containerRef.current.style.top = 0;
-    containerRef.current.style.zIndex = 0;
-    containerRef.current.style.order = "unset";
-    document.removeEventListener("touchmove", mouseMoveHandler);
-    document.removeEventListener("touchend", mouseUpHandler);
-  };
 
   const handleOpenChange = () => {
     setOpen(!open);
@@ -188,9 +116,6 @@ const DaysContainer = ({
         </Button>
 
         <div className="right-side">
-          {/* <Button buttonStyle="Text" onTouchStart={mouseDownHandler}>
-            <HiOutlineViewList fontSize={20} />
-          </Button> */}
           <Button buttonStyle="Text" onClick={() => onDelete?.(data?.id)}>
             <HiOutlineX fontSize={20} />
           </Button>
