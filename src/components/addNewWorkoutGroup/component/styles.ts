@@ -57,6 +57,7 @@ export const DayContainer = styled.div<props>`
       }
 
       .exercise-list {
+        flex-basis: 80%;
         display: flex;
         flex-direction: column;
         padding-left: 30px;

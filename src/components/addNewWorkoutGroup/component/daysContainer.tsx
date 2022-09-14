@@ -211,8 +211,6 @@ interface addProps {
 }
 
 const AddExercises = ({ data: dayData, updateDay, onClose, day }: addProps) => {
-  const [listParent] = useAutoAnimate({});
-
   const [loading, setLoading] = useState(true);
   const [exercises, setExercises] = useState<exerciseType | any>([]);
   const [defaultValue, setDefaultValue] = useState<defaultValue>();
@@ -299,7 +297,6 @@ const AddExercises = ({ data: dayData, updateDay, onClose, day }: addProps) => {
           <ul
             className="add-new"
             style={{ display: !exercises.length ? "none" : "flex" }}
-            ref={listParent as any}
           >
             {exercises.map((e: exerciseType | any, i: number) => (
               <AddNewWorkOut

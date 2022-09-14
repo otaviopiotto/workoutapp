@@ -100,6 +100,13 @@ const AddNewWorkOut = ({ ...props }: addNewProp) => {
     }
   }, []);
 
+  const handleDelete = () => {
+    setDeleteAnim(true);
+    setTimeout(() => {
+      props.onDelete?.(props?.data?.id);
+    }, 400);
+  };
+
   return (
     <Container ref={containerRef} deleteAnim={deleteAnim}>
       <div className="input-section">
@@ -175,7 +182,7 @@ const AddNewWorkOut = ({ ...props }: addNewProp) => {
           buttonStyle="Text"
           className="delete-button"
           style={{ padding: "2px", height: "fit-content" }}
-          onClick={() => props.onDelete?.(props?.data?.id)}
+          onClick={handleDelete}
         >
           <HiOutlineTrash />
         </Button>
