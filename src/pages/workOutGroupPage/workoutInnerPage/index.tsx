@@ -69,19 +69,21 @@ const ExerciseContainer = ({ data }: prop) => {
           <HiOutlineFastForward />
 
           <span>
-            {data.sets}x {focus && "Séries"}
+            {data.sets}x {focus && <span className="anim-span">Séries</span>}
           </span>
         </li>
         <li>
           <HiOutlineRefresh />
           <span>
-            {data.repetition} {focus && "Repetições"}
+            {data.repetition}{" "}
+            {focus && <span className="anim-span">Repetições</span>}
           </span>
         </li>
         <li>
           <HiOutlineClock />
           <span>
-            {data.time || 0}s {focus && "Descanso"}
+            {data.time || 0}s{" "}
+            {focus && <span className="anim-span">Descanso</span>}
           </span>
         </li>
       </ul>

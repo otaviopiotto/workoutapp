@@ -148,7 +148,7 @@ const DaysContainer = ({
       <DayContainer ref={containerRef} hold={holdingAnim}>
         <Button
           buttonStyle="Text"
-          style={{ padding: 0, width: "100%", flex: 0.98 }}
+          style={{ padding: 0, width: "90%", flex: 0.98 }}
           onClick={() => setOpen(true)}
         >
           <article className="days-container">

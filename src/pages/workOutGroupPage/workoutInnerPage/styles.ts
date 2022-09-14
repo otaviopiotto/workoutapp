@@ -94,10 +94,22 @@ export const Button = styled.button<containerProps>`
     display: flex;
     gap: 20px;
     margin-top: 10px;
+    transition: 0.3s;
+    ${(prop) => {
+      if (prop.focus) {
+        return css`
+          width: 100%;
+          flex-direction: column;
+          border-top: 1px solid rgba(255, 255, 255, 0.3);
+          padding-top: 12px;
+        `;
+      }
+    }}
 
     li {
       display: flex;
       align-items: center;
+      text-align: left;
       gap: 4px;
       color: ${({ theme }) => theme.colors.pallete[200]};
       font-size: 14px;
@@ -105,6 +117,10 @@ export const Button = styled.button<containerProps>`
       span {
         ${({ theme }) => theme.fonts.mulish.small_semibold};
         color: ${({ theme }) => theme.colors.pallete[200]};
+      }
+
+      .anim-span {
+        animation: ${entranceAnim} 0.5s ease;
       }
     }
   }
