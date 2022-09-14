@@ -89,7 +89,7 @@ export const DayContainer = styled.div<props>`
         }
         ul {
           display: grid;
-          grid-template-columns: 1fr 30px 30px 30px;
+          grid-template-columns: 0.9fr 30px 30px 30px;
           gap: 10px;
           li {
             color: ${({ theme }) => theme.colors.grey[500]};

@@ -101,7 +101,7 @@ const DaysContainer = ({
 
                   {data?.workout?.map((e: exerciseType, i: number) => (
                     <ul key={i}>
-                      <li style={{ width: "110px" }}>
+                      <li>
                         <span>{e.exercise}</span>
                       </li>
                       <li>{e.sets}x</li>
