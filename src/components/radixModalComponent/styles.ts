@@ -56,7 +56,7 @@ interface modalProp {
 export const ModalBody = styled.main<modalProp>`
   padding: 10px;
   background: ${({ theme }) => theme.colors.pallete[800]};
-  max-height: 94vh;
+  max-height: 96vh;
 
   transition: 0.3s;
   animation: 0.3s ${entranceAnimation} ease;
@@ -67,9 +67,9 @@ export const ModalBody = styled.main<modalProp>`
     if (prop.position === "bottom") {
       return css`
         width: 100%;
-        height: 90%;
+        height: 97%;
         bottom: 0;
-        border-radius: 30px 30px 0 0;
+        border-radius: 40px 40px 0 0;
         transform-origin: bottom;
         position: absolute;
       `;

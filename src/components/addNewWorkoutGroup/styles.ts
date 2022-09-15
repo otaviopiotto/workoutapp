@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { entranceAnim } from "../../pages/workOutGroupPage/styles";
 
 export const Container = styled.main`
@@ -44,21 +44,20 @@ export const Container = styled.main`
     display: flex;
     gap: 10px;
     position: fixed;
-    bottom: 0px;
-    left: 4px;
-    right: 4px;
-    padding: 20px;
+    bottom: 20px;
+    left: 12px;
+    right: 12px;
     justify-content: space-between;
-    background: ${({ theme }) => theme.colors.pallete[800]};
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 99px;
 
     button {
-      border-radius: 10px;
+      border-radius: 90px;
       padding: 10px 20px;
       color: ${({ theme }) => theme.colors.white};
 
-      &:nth-child(2) {
-        flex: 1;
-      }
+      ${({ theme }) => theme.fonts.mulish.body_regular};
+      flex: 1;
     }
   }
 `;
@@ -68,4 +67,123 @@ export const Form = styled.form`
   display: grid;
   gap: 28px;
   margin-top: 10px;
+`;
+
+const entranceAnimation = keyframes`
+from{
+    transform:scaleY(0) ;
+    opacity:0.6;    
+  }
+  to{    
+    transform:scaleY(1) ;
+    opacity:1;
+}
+`;
+const deleteAnim = keyframes`
+  from{    
+    transform:scaleY(1) ;
+    opacity:1;
+}
+to{
+  
+  transform:scaleY(0) ;
+  opacity:0;    
+  }
+`;
+
+interface containerAnim {
+  deleteAnim?: boolean;
+}
+
+export const CardContainer = styled.li<containerAnim>`
+  transform-origin: top;
+  background-color: #1a1e21;
+  animation: 0.3s ${entranceAnimation} ease;
+  border-radius: 14px;
+  padding: 20px 12px 10px;
+
+  ${(prop) => {
+    if (prop.deleteAnim) {
+      return css`
+        animation: 0.2s ${deleteAnim} ease;
+      `;
+    } else {
+      return css`
+        animation: 0.3s ${entranceAnimation} ease;
+      `;
+    }
+  }}
+
+  .input-section {
+    display: grid;
+    border-radius: 14px;
+    backdrop-filter: blur(10px);
+    align-items: center;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    column-gap: 8px;
+    scroll-snap-type: x proximity;
+  }
+
+  .set-count {
+    width: 100%;
+    height: 34px;
+    display: flex;
+    border: solid 1px #2a2f33;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 8px;
+    input {
+      flex: 0.6 !important;
+      border-radius: 0px;
+      border: solid 1px #2a2f33;
+      border-width: 0 1px;
+      text-align: center;
+      color: ${({ theme }) => theme.colors.grey[400]};
+    }
+
+    button {
+      height: 100%;
+      flex: 0.4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: ${({ theme }) => theme.colors.grey[600]};
+    }
+  }
+
+  .input-container {
+    label {
+      display: block;
+      color: ${({ theme }) => theme.colors.grey[700]};
+      ${({ theme }) => theme.fonts.mulish.small_regular};
+      margin-bottom: 6px;
+    }
+  }
+
+  input {
+    width: 100%;
+    border: solid 1px #2a2f33;
+    padding: 4px 6px;
+    border-radius: 8px;
+    color: ${({ theme }) => theme.colors.grey[400]};
+    font-size: 20px;
+
+    ${({ theme }) => theme.fonts.mulish.body_regular};
+
+    &:focus {
+      outline: solid 1px ${({ theme }) => theme.colors.grey[800]};
+      background-color: ${({ theme }) => theme.colors.pallete[800]};
+    }
+  }
+
+  .exercise-input {
+    border: 0;
+    font-size: 22px;
+  }
+
+  .delete-button {
+    border-radius: 0px !important;
+    grid-column: span 3;
+  }
 `;

@@ -30,7 +30,6 @@ const DaysContainer = ({
   duplicateDay,
 }: DaysProp) => {
   const [open, setOpen] = useState(data?.muscle_group ? false : true);
-  const [holdingAnim, setHoldingAnim] = useState(false);
   const containerRef = useRef(null as any);
 
   const defaultTitle = !data?.muscle_group
@@ -73,7 +72,7 @@ const DaysContainer = ({
           />
         </ModalContent>
       </Modal>
-      <DayContainer ref={containerRef} hold={holdingAnim}>
+      <DayContainer ref={containerRef}>
         <Button
           buttonStyle="Text"
           style={{ padding: 0, width: "90%", flex: 0.98 }}
@@ -250,7 +249,7 @@ const AddExercises = ({ data: dayData, updateDay, onClose, day }: addProps) => {
           ) : null}
         </section>
         <footer className="modal-footer">
-          <Button buttonStyle="Secondary" onClick={() => createExercise()}>
+          <Button buttonStyle="Text" onClick={() => createExercise()}>
             <HiOutlinePlus />
           </Button>
           <Button buttonStyle="Primary" type="submit" form="add-exercise">

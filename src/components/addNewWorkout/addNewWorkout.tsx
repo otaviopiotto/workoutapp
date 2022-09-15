@@ -7,8 +7,8 @@ import {
   HiOutlineTrash,
 } from "react-icons/hi";
 import { exerciseType } from "../../models/exercise";
+import { CardContainer } from "../addNewWorkoutGroup/styles";
 import Button from "../Button";
-import { Container } from "./styles";
 
 export type defaultValue = { sets?: string; reps?: string; time?: string };
 
@@ -39,8 +39,8 @@ const AddNewWorkOut = ({ ...props }: addNewProp) => {
       });
     }
   }, [
-    props.watch(`exercise_${props.data?.id}.repetition`),
     props.watch(`exercise_${props.data?.id}.sets`),
+    props.watch(`exercise_${props.data?.id}.repetition`),
     props.watch(`exercise_${props.data?.id}.time`),
   ]);
 
@@ -104,11 +104,11 @@ const AddNewWorkOut = ({ ...props }: addNewProp) => {
     setDeleteAnim(true);
     setTimeout(() => {
       props.onDelete?.(props?.data?.id);
-    }, 400);
+    }, 100);
   };
 
   return (
-    <Container ref={containerRef} deleteAnim={deleteAnim}>
+    <CardContainer ref={containerRef} deleteAnim={deleteAnim}>
       <div className="input-section">
         <input
           style={{ display: "none" }}
@@ -116,15 +116,25 @@ const AddNewWorkOut = ({ ...props }: addNewProp) => {
           {...props.register?.(`exercise_${props.data?.id}.id`)}
         />
 
-        <div className="input-container" style={{ gridColumn: "span 3" }}>
+        <div
+          className="input-container"
+          style={{ gridColumn: "span 3", marginBottom: "10px" }}
+        >
           <label> Exercício</label>
-
           <input
             placeholder="Exercício"
+            className="exercise-input"
             {...props.register?.(`exercise_${props.data?.id}.exercise`)}
           />
         </div>
+        <div className="input-container" style={{ gridColumn: "span 3" }}>
+          <label> Observação</label>
 
+          <input
+            placeholder="Observação"
+            {...props.register?.(`exercise_${props.data?.id}.observation`)}
+          />
+        </div>
         <div className="input-container">
           <label> Séries</label>
 
@@ -170,14 +180,7 @@ const AddNewWorkOut = ({ ...props }: addNewProp) => {
             </button>
           </div>
         </div>
-        <div className="input-container" style={{ gridColumn: "span 3" }}>
-          <label> Observação</label>
 
-          <input
-            placeholder="Observação"
-            {...props.register?.(`exercise_${props.data?.id}.observation`)}
-          />
-        </div>
         <Button
           buttonStyle="Text"
           className="delete-button"
@@ -187,7 +190,7 @@ const AddNewWorkOut = ({ ...props }: addNewProp) => {
           <HiOutlineTrash />
         </Button>
       </div>
-    </Container>
+    </CardContainer>
   );
 };
 

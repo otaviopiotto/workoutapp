@@ -119,7 +119,7 @@ export const DayContainer = styled.div<props>`
 `;
 
 export const ExerciseContainer = styled.div`
-  height: calc(100vh - 180px);
+  height: calc(100vh - 130px);
   .add-exercise-section {
     flex: 1;
     display: flex;
@@ -129,10 +129,9 @@ export const ExerciseContainer = styled.div`
 
     .add-new {
       max-height: min-content;
-      padding: 8px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 30px;
       margin-top: 20px;
 
       &::-webkit-scrollbar {
@@ -175,18 +174,20 @@ export const ExerciseContainer = styled.div`
 
   .modal-footer {
     display: flex;
-    flex-direction: column;
     gap: 10px;
     position: sticky;
     bottom: 0px;
-    left: 4px;
-    right: 4px;
+    left: 0px;
+    right: 0px;
     justify-content: space-between;
-    background: ${({ theme }) => theme.colors.pallete[800]};
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 99px;
 
     button {
-      border-radius: 10px;
+      border-radius: 90px;
       padding: 10px 20px;
+      ${({ theme }) => theme.fonts.mulish.body_regular};
+
       color: ${({ theme }) => theme.colors.white};
       flex: 1;
     }
