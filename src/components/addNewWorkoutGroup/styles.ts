@@ -48,7 +48,7 @@ export const Container = styled.main`
     left: 12px;
     right: 12px;
     justify-content: space-between;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.4);
     border-radius: 99px;
 
     button {
