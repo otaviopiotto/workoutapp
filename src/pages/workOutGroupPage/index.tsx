@@ -51,24 +51,6 @@ const WorkOutPage = () => {
                 <HiOutlineArrowNarrowLeft />
               </Button>
             </div>
-
-            {!outlet && (
-              <div className="edit-buttons">
-                <Button
-                  buttonStyle="Text"
-                  onClick={() =>
-                    navigate("/novo-grupo", {
-                      state: workOutData?.id,
-                    })
-                  }
-                >
-                  <HiOutlinePencil />
-                </Button>
-                <Button buttonStyle="Text" onClick={() => setOpenModal(true)}>
-                  <HiOutlineTrash />
-                </Button>
-              </div>
-            )}
           </div>
         </header>
 
@@ -99,6 +81,37 @@ const WorkOutPage = () => {
             </ul>
           </>
         )}
+
+        <footer>
+          <div className="get-back-section">
+            <Button buttonStyle="Text" onClick={() => navigate(-1)} animation>
+              <HiOutlineArrowNarrowLeft />
+            </Button>
+
+            {!outlet && (
+              <>
+                <Button
+                  buttonStyle="Text"
+                  animation
+                  onClick={() =>
+                    navigate("/novo-grupo", {
+                      state: workOutData?.id,
+                    })
+                  }
+                >
+                  <HiOutlinePencil />
+                </Button>
+                <Button
+                  buttonStyle="Text"
+                  onClick={() => setOpenModal(true)}
+                  animation
+                >
+                  <HiOutlineTrash />
+                </Button>
+              </>
+            )}
+          </div>
+        </footer>
       </Container>
     </>
   );
@@ -112,8 +125,10 @@ interface dayProps {
 const DayCard = ({ data, groupId }: dayProps) => {
   const navigate = useNavigate();
 
+  const hasWorkout = data?.muscle_group.toLowerCase().includes("off");
+
   const handleClickCard = () => {
-    if (data?.muscle_group.toLowerCase().includes("off")) return;
+    if (hasWorkout) return;
 
     navigate(`${data?.muscle_group}`, {
       state: {
@@ -124,7 +139,7 @@ const DayCard = ({ data, groupId }: dayProps) => {
   };
 
   return (
-    <DayContainer dayOff={data?.muscle_group.toLowerCase().includes("off")}>
+    <DayContainer dayOff={hasWorkout}>
       <Button
         buttonStyle="Text"
         style={{ padding: 0, width: "100%", display: "unset" }}
@@ -134,11 +149,13 @@ const DayCard = ({ data, groupId }: dayProps) => {
           <div className="top-side">
             <h1>{data?.number?.toString().padStart(2, "0")}</h1>
 
-            <span className="icon-container">
-              <HiOutlineClipboardList fontSize={12} />{" "}
-              {data?.workout?.length || 0}{" "}
-              {data?.workout?.length > 1 ? "Treinos" : "Treino"}
-            </span>
+            {!hasWorkout && (
+              <span className="icon-container">
+                <HiOutlineClipboardList fontSize={12} />{" "}
+                {data?.workout?.length || 0}{" "}
+                {data?.workout?.length > 1 ? "Treinos" : "Treino"}
+              </span>
+            )}
           </div>
 
           <div className="bottom-side">

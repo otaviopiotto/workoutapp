@@ -59,18 +59,10 @@ export const Container = styled.main`
         color: ${({ theme }) => theme.colors.pallete[200]};
         font-size: 22px;
       }
-
-      .edit-buttons {
-        width: 50px;
-        display: flex;
-        gap: 20px;
-        justify-content: space-between;
-      }
     }
   }
-
   .hero-section {
-    padding: 70px 16px 0;
+    padding: 80px 16px 0;
     margin-bottom: 20px;
     color: ${({ theme }) => theme.colors.pallete[300]};
     display: flex;
@@ -78,6 +70,7 @@ export const Container = styled.main`
     gap: 4px;
 
     .top-side {
+      padding: 0 16px;
       h1 {
         line-height: 1.2em;
         color: ${({ theme }) => theme.colors.pallete[50]};
@@ -97,16 +90,16 @@ export const Container = styled.main`
 
       span {
         line-height: 1em;
-        color: ${({ theme }) => theme.colors.pallete[300]};
-        font-size: 8px !important;
-        ${({ theme }) => theme.fonts.mulish.small_regular};
+        color: ${({ theme }) => theme.colors.pallete[200]};
+        ${({ theme }) => theme.fonts.mulish.h5_regular};
+        margin-bottom: 12px;
       }
     }
 
     .description {
-      font-size: 10px !important;
+      font-size: 12px !important;
       ${({ theme }) => theme.fonts.mulish.small_regular};
-      line-height: 1.2em;
+      line-height: 1.3em;
       color: ${({ theme }) => theme.colors.pallete[200]};
       -webkit-user-modify: read-write-plaintext-only;
     }
@@ -126,7 +119,43 @@ export const Container = styled.main`
 
     flex-direction: column;
     margin-top: 40px;
-    padding: 0px 16px;
+    padding: 0px 16px 100px;
+  }
+
+  footer {
+    padding: 20px 30px 0;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    z-index: 99;
+    border-radius: 99px;
+    background-color: rgba(12, 14, 15, 0.5);
+    backdrop-filter: blur(2px);
+
+    .get-back-section {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+
+      span {
+        ${({ theme }) => theme.fonts.mulish.small_bold};
+        color: ${({ theme }) => theme.colors.pallete[200]};
+      }
+
+      button {
+        padding: 0;
+        color: ${({ theme }) => theme.colors.pallete[200]};
+        font-size: 22px;
+      }
+
+      .edit-buttons {
+        width: 50px;
+        display: flex;
+        gap: 20px;
+        justify-content: space-between;
+      }
+    }
   }
 `;
 
