@@ -20,7 +20,7 @@ export const Card = styled.div`
       transform: rotate(180deg);
       ${({ theme }) => theme.fonts.mulish.small_semibold};
       line-height: 1em;
-      color: ${({ theme }) => theme.colors.pallete[200]};
+      color: ${({ theme }) => theme.colors.pallete[300]};
     }
   }
 

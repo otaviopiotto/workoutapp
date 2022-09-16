@@ -97,18 +97,18 @@ export const Container = styled.main`
 
       span {
         line-height: 1em;
-        color: ${({ theme }) => theme.colors.pallete[200]};
+        color: ${({ theme }) => theme.colors.pallete[300]};
         font-size: 8px !important;
         ${({ theme }) => theme.fonts.mulish.small_regular};
       }
     }
 
     .description {
-      line-break: anywhere;
       font-size: 10px !important;
       ${({ theme }) => theme.fonts.mulish.small_regular};
       line-height: 1.2em;
       color: ${({ theme }) => theme.colors.pallete[200]};
+      -webkit-user-modify: read-write-plaintext-only;
     }
   }
 
@@ -130,7 +130,11 @@ export const Container = styled.main`
   }
 `;
 
-export const DayContainer = styled.li`
+interface dayProp {
+  dayOff: boolean;
+}
+
+export const DayContainer = styled.li<dayProp>`
   padding: 34px 14px;
   border: solid rgba(255, 255, 255, 0.02);
   border-width: 1px 0;
@@ -154,7 +158,10 @@ export const DayContainer = styled.li`
     h1,
     span {
       line-height: 1em;
-      color: ${({ theme }) => theme.colors.pallete[200]};
+      color: ${(prop) =>
+        prop.dayOff
+          ? "rgba(255,255,255,0.3) "
+          : ({ theme }) => theme.colors.pallete[200]};
     }
 
     h1 {
@@ -164,7 +171,10 @@ export const DayContainer = styled.li`
     .name {
       display: block;
       text-align: left;
-      color: ${({ theme }) => theme.colors.pallete[200]};
+      color: ${(prop) =>
+        prop.dayOff
+          ? "rgba(255,255,255,0.3) "
+          : ({ theme }) => theme.colors.pallete[200]};
 
       ${({ theme }) => theme.fonts.mulish.h3_bold};
     }

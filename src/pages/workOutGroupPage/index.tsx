@@ -124,7 +124,7 @@ const DayCard = ({ data, groupId }: dayProps) => {
   };
 
   return (
-    <DayContainer>
+    <DayContainer dayOff={data?.muscle_group.toLowerCase().includes("off")}>
       <Button
         buttonStyle="Text"
         style={{ padding: 0, width: "100%", display: "unset" }}
