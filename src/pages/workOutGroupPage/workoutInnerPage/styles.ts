@@ -50,7 +50,7 @@ export const Container = styled.main`
   }
 
   .list-container {
-    padding: 20px 16px 0;
+    padding: 20px 16px 80px;
     margin: 0 -20px;
   }
 `;
