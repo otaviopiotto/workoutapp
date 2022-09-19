@@ -1,6 +1,7 @@
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Button from "../../../../components/Button";
-import { useGroup } from "../../../../hooks/exerciseGroup";
+import { useMutationQuery } from "../../../../services/hooks/useMutationQuery";
 import { Container } from "./styles";
 
 interface deleteProps {
@@ -9,11 +10,16 @@ interface deleteProps {
 }
 
 const DeleteModal = ({ onClose, id }: deleteProps) => {
-  const { deleteGroup } = useGroup();
+  const { mutate: onAddGroup } = useMutationQuery(`user/group/${id}`, "delete");
+  const navigate = useNavigate();
 
   const handleDelete = () => {
-    deleteGroup(id);
-    toast.success("Grupo Deletado");
+    onAddGroup("", {
+      onSuccess: () => {
+        toast.success("Grupo Deletado");
+        navigate("/");
+      },
+    });
   };
 
   return (

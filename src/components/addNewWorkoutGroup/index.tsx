@@ -13,6 +13,7 @@ import { HiOutlinePlus } from "react-icons/hi";
 import { Modal, ModalContent } from "../radixModalComponent";
 import SaveGroup from "./component/saveGroup";
 import { Form, Container } from "./styles";
+import { getQuery } from "../../services/hooks/getQuery";
 
 interface inputProp {
   title?: string;
@@ -24,7 +25,6 @@ const AddNewWorkOutGroup = () => {
   const [listParent] = useAutoAnimate({});
   const [openModal, setOpenModal] = useState(false);
   const [formData, setFormData] = useState();
-  const { group } = useGroup();
   const navigate = useNavigate();
 
   const [days, setDays] = useState<dayType | any>([
@@ -37,16 +37,19 @@ const AddNewWorkOutGroup = () => {
 
   const { state }: any = useLocation();
 
+  const { data } = getQuery(`user/group/${state}`, ["group", state], {
+    enabled: Boolean(state),
+  });
+
   const { register, handleSubmit, setValue } = useForm<inputProp>();
 
   useEffect(() => {
-    if (!state) return;
-    const filterGroup = group.filter((e) => e.id === state);
+    if (!data) return;
 
-    setValue("title", filterGroup[0].title);
-    setValue("description", filterGroup[0].description);
-    setDays(filterGroup[0].days);
-  }, [group, state]);
+    setValue("title", data.title);
+    setValue("description", data.description);
+    setDays(data.days);
+  }, [state, data]);
 
   const onSubmit = (data: any) => {
     setFormData({
@@ -70,7 +73,7 @@ const AddNewWorkOutGroup = () => {
   };
 
   const handleDelete = (id: string | number) => {
-    const filterDay = days.filter((e: dayType) => e.id !== id);
+    const filterDay = days.filter((e: dayType) => e._id !== id);
     filterDay.forEach((e: any, i: number) => (e.number = i + 1));
 
     setDays(filterDay);

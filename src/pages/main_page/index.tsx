@@ -1,18 +1,44 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
-import { useGroup } from "../../hooks/exerciseGroup";
 import GroupCard from "../../components/exerciseGroupCard";
-import { HiOutlinePlus } from "react-icons/hi";
+import { HiOutlinePlus, HiOutlineRefresh, HiRefresh } from "react-icons/hi";
 import { Container } from "./styles";
+import { useAuth } from "../../hooks/auth";
+import { getQuery } from "../../services/hooks/getQuery";
 
 const MainPage = () => {
   const navigate = useNavigate();
-  const { group } = useGroup();
+  const [loading, setLoading] = useState(false);
+  const [group, setGroup] = useState([]);
+  const { user } = useAuth();
+
+  const { data, refetch, isFetching } = getQuery(`user/${user._id}`, [
+    "user",
+    user._id,
+  ]);
+
+  useEffect(() => {
+    if (isFetching) {
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 700);
+    }
+  }, [isFetching]);
+
+  useEffect(() => {
+    if (data) {
+      setGroup(data.group);
+      refetch();
+    }
+  }, [data]);
 
   return (
     <Container>
       <header className="group-header">
+        <p>{user.name}</p>
+
         <h5>
           Meus <br />
           Exercícios
@@ -23,8 +49,8 @@ const MainPage = () => {
         <div className="header">
           <span>Grupos</span>
 
-          <Button buttonStyle="Text" onClick={() => navigate("novo-grupo")}>
-            <HiOutlinePlus />
+          <Button buttonStyle="Text" onClick={() => refetch()}>
+            <HiOutlineRefresh className={loading ? "fetching" : ""} />
           </Button>
         </div>
         {!group.length && (
@@ -43,12 +69,12 @@ const MainPage = () => {
         )}
 
         <ul className="groups">
-          {group.map((e, i) => (
+          {group.map((e: any, i) => (
             <GroupCard
               group_data={e}
               onClick={() =>
-                navigate(`/treino/${e.id}`, {
-                  state: e.id,
+                navigate(`/treino/${e._id}`, {
+                  state: e._id,
                 })
               }
               key={i}

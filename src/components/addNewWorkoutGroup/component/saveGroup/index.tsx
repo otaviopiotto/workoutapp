@@ -5,9 +5,11 @@ import { Form } from "./styles";
 import InputComponent from "../../../formComponents/input";
 import Button from "../../../Button";
 import { useGroup } from "../../../../hooks/exerciseGroup";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
+import { useAuth } from "../../../../hooks/auth";
+import { useMutationQuery } from "../../../../services/hooks/useMutationQuery";
 
 interface inputProp {
   title: string;
@@ -23,8 +25,8 @@ interface saveGroupProps {
 }
 
 const SaveGroup = ({ id, data, onClose }: saveGroupProps) => {
-  const { createGroup, updateGroup } = useGroup();
   const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -34,19 +36,45 @@ const SaveGroup = ({ id, data, onClose }: saveGroupProps) => {
     resolver: yupResolver(schema),
   });
 
+  const { mutate: onAddGroup } = useMutationQuery(
+    `user/group/${id}`,
+    id ? "put" : "post"
+  );
+
   useEffect(() => {
-    if (id) setValue("title", data.title);
+    if (id) {
+      setValue("title", data.title);
+    }
   }, [id]);
 
   const onSubmit = ({ title }: any) => {
     if (id) {
-      updateGroup({ ...data, id, title });
+      onAddGroup(
+        {
+          ...data,
+          title,
+        },
+        {
+          onSuccess: () => {
+            toast.success("Grupo Editado");
+            navigate(-1);
+          },
+          onError: (err) => console.log(err),
+        }
+      );
     } else {
-      createGroup({
-        title,
-        id: (Math.random() * (1000000000 - 1) + 1).toFixed(0),
-        ...data,
-      });
+      onAddGroup(
+        {
+          ...data,
+          title,
+        },
+        {
+          onSuccess: () => {
+            toast.success("Grupo Criado");
+          },
+          onError: (err) => console.log(err),
+        }
+      );
 
       toast.success("Grupo Criado");
     }

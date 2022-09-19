@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { useGroup } from "../../../hooks/exerciseGroup";
 import { dayType, exerciseType } from "../../../models/exercise";
 import {
   HiOutlineClock,
@@ -8,17 +7,23 @@ import {
   HiOutlineRefresh,
 } from "react-icons/hi";
 import { Container, Button } from "./styles";
+import { getQuery } from "../../../services/hooks/getQuery";
 
 const WorkOutInnerPage = () => {
   const [workOutData, setWorkOutData] = useState<dayType>(null as any);
-  const { group } = useGroup();
   const { state }: any = useLocation();
 
+  const { data } = getQuery(`user/group/${state.groupId}`, [
+    "group",
+    state.groupId,
+  ]);
+
   useEffect(() => {
-    const filterGroup = group.filter((e) => e?.id === state.groupId);
-    const filterDay = filterGroup[0].days.filter((e) => e.id === state.id);
-    setWorkOutData(filterDay[0]);
-  }, [group, state]);
+    if (data) {
+      const filterDay = data.days.filter((e: any) => e._id === state.id);
+      setWorkOutData(filterDay[0]);
+    }
+  }, [data, state]);
 
   return (
     <Container>

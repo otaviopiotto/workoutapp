@@ -13,18 +13,40 @@ transform:scale(1) ;
 }
 `;
 
+const refresh = keyframes`
+
+from{
+transform:rotate(0deg) ;
+}
+to{
+  transform:rotate(-360deg) ;
+
+}
+`;
+
 export const Container = styled.main`
   padding: 20px 16px;
   height: 100%;
   position: relative;
   animation: ${showAnim} 0.4s ease;
 
+  .fetching {
+    animation: ${refresh} 0.6s ease infinite;
+  }
   .group-header {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: space-between;
     margin-top: 20px;
+
+    p {
+      ${({ theme }) => theme.fonts.mulish.body_regular};
+      color: ${({ theme }) => theme.colors.grey[300]};
+    }
+
     h5 {
+      margin-top: 60px;
       ${({ theme }) => theme.fonts.mulish.h5_semibold};
       font-size: 32px;
       line-height: 1.2em;

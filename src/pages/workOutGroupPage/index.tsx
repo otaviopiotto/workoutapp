@@ -12,26 +12,31 @@ import {
 } from "react-icons/hi";
 import { Modal, ModalContent } from "../../components/radixModalComponent";
 import DeleteModal from "./components/deleteModal";
+import { getQuery } from "../../services/hooks/getQuery";
 
 const WorkOutPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const [workOutData, setWorkOutData] = useState<GroupType>(null as any);
   const navigate = useNavigate();
   const outlet = useOutlet();
-  const { group } = useGroup();
   const { state }: any = useLocation();
 
+  const { data } = getQuery(`user/group/${state}`, ["group", state], {
+    enabled: !outlet,
+  });
+
   useEffect(() => {
-    const filterGroup = group.filter((e) => e.id === state);
-    setWorkOutData(filterGroup[0]);
-  }, [group, state]);
+    if (data) {
+      setWorkOutData(data);
+    }
+  }, [data, state]);
 
   return (
     <>
       <Modal open={openModal} onOpenChange={() => setOpenModal(!openModal)}>
         <ModalContent title="Deletar" position="center">
           <DeleteModal
-            id={workOutData?.id}
+            id={workOutData?._id}
             onClose={() => setOpenModal(false)}
           />
         </ModalContent>
@@ -95,7 +100,7 @@ const WorkOutPage = () => {
                   animation
                   onClick={() =>
                     navigate("/novo-grupo", {
-                      state: workOutData?.id,
+                      state: workOutData?._id,
                     })
                   }
                 >
@@ -130,9 +135,9 @@ const DayCard = ({ data, groupId }: dayProps) => {
   const handleClickCard = () => {
     if (hasWorkout) return;
 
-    navigate(`${data?.muscle_group}`, {
+    navigate(`${data?._id}`, {
       state: {
-        id: data.id,
+        id: data._id,
         groupId,
       },
     });
