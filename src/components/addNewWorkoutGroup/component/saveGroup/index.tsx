@@ -26,7 +26,7 @@ interface saveGroupProps {
 
 const SaveGroup = ({ id, data, onClose }: saveGroupProps) => {
   const navigate = useNavigate();
-
+  const { user } = useAuth();
   const {
     register,
     handleSubmit,
@@ -37,7 +37,7 @@ const SaveGroup = ({ id, data, onClose }: saveGroupProps) => {
   });
 
   const { mutate: onAddGroup } = useMutationQuery(
-    `user/group/${id}`,
+    `user/group/${user._id}`,
     id ? "put" : "post"
   );
 
