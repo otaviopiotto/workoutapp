@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import Button from "../../components/Button";
 import InputComponent from "../../components/formComponents/input";
 import { useAuth } from "../../hooks/auth";
@@ -36,6 +37,12 @@ const LoginPage = () => {
         <Button buttonStyle="Primary" type="submit" loading={loading}>
           Entrar
         </Button>
+
+        <div className="account-missing">
+          <p>
+            Não tem uma conta? <Link to="/registrar">Registre-se</Link>
+          </p>
+        </div>
       </form>
     </Container>
   );

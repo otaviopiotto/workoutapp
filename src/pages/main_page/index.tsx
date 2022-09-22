@@ -37,7 +37,9 @@ const MainPage = () => {
   return (
     <Container>
       <header className="group-header">
-        <p>{user.name}</p>
+        <Button buttonStyle="Text" onClick={() => navigate("/perfil")}>
+          {user.name}
+        </Button>
 
         <h5>
           Meus <br />

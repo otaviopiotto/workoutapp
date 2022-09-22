@@ -3,6 +3,8 @@ import AddNewWorkOutGroup from "../components/addNewWorkoutGroup";
 import { useAuth } from "../hooks/auth";
 import LoginPage from "../pages/loginPage";
 import MainPage from "../pages/main_page";
+import ProfilePage from "../pages/profilePage";
+import RegisterPage from "../pages/registerPage";
 import WorkOutPage from "../pages/workOutGroupPage";
 import WorkOutInnerPage from "../pages/workOutGroupPage/workoutInnerPage";
 
@@ -15,6 +17,7 @@ const RoutesConfig = () => {
 const UserRoute = () => (
   <Routes>
     <Route path="/" element={<MainPage />} />
+    <Route path="/perfil" element={<ProfilePage />} />
     <Route path="/novo-grupo" element={<AddNewWorkOutGroup />} />
     <Route path="treino/:id" element={<WorkOutPage />}>
       <Route path=":workout" element={<WorkOutInnerPage />} />
@@ -26,6 +29,7 @@ const UserRoute = () => (
 const AuthRoute = () => (
   <Routes>
     <Route path="/login" element={<LoginPage />} />
+    <Route path="/registrar" element={<RegisterPage />} />
     <Route path="*" element={<Navigate replace to="/login" />} />
   </Routes>
 );
