@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useForm } from "react-hook-form";
-import { useGroup } from "../../hooks/exerciseGroup";
 import Button from "../Button";
 
 import { dayType } from "../../models/exercise";
@@ -73,7 +72,7 @@ const AddNewWorkOutGroup = () => {
   };
 
   const handleDelete = (id: string | number) => {
-    const filterDay = days.filter((e: dayType) => e._id !== id);
+    const filterDay = days.filter((e: dayType) => e.id !== id);
     filterDay.forEach((e: any, i: number) => (e.number = i + 1));
 
     setDays(filterDay);

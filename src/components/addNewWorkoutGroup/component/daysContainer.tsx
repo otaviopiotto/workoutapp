@@ -115,7 +115,7 @@ const DaysContainer = ({
         </Button>
 
         <div className="right-side">
-          <Button buttonStyle="Text" onClick={() => onDelete?.(data?._id)}>
+          <Button buttonStyle="Text" onClick={() => onDelete?.(data?.id)}>
             <HiOutlineX fontSize={20} />
           </Button>
           <Button buttonStyle="Text" onClick={() => duplicateDay(data)}>
@@ -171,7 +171,7 @@ const AddExercises = ({ data: dayData, updateDay, onClose, day }: addProps) => {
       `exercise_${id}.repetition`,
     ];
 
-    const filterDay = exercises.filter((e: dayType) => e._id !== id);
+    const filterDay = exercises.filter((e: dayType) => e.id !== id);
     map(registerNames, (value) => resetField(value));
     unregister([`exercise_${id}`, ...registerNames]);
     setExercises(filterDay);
