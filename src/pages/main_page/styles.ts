@@ -1,6 +1,35 @@
-import styled, { keyframes } from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 
-const showAnim = keyframes`
+const skeletonLoading = keyframes`
+ to {
+    background-position-x: -20%;
+  }
+`;
+
+export const skeletonAnim = css`
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 900;
+  font-size: 32px;
+  background-color: #0b0d0f;
+  background: linear-gradient(
+      100deg,
+      rgba(22, 26, 29, 0) 10%,
+      rgba(22, 26, 29, 0.5) 50%,
+      rgba(22, 26, 29, 0) 70%
+    )
+    #0b0d0f;
+  background-size: 200% 100%;
+  background-position-x: 180%;
+  border-radius: 10px;
+  animation: ${skeletonLoading} 1s infinite;
+`;
+
+export const showAnim = keyframes`
 
 from{
 opacity:0 ;
@@ -30,9 +59,25 @@ export const Container = styled.main`
   position: relative;
   animation: ${showAnim} 0.4s ease;
 
+  .skeleton-loader {
+    width: 100%;
+    height: 90px;
+    border-radius: 10px;
+    animation: ${showAnim} 0.4s ease;
+    position: relative;
+    &:after {
+      ${skeletonAnim};
+    }
+  }
+
   .fetching {
     animation: ${refresh} 0.6s ease infinite;
   }
+
+  .perfil-button {
+    color: ${({ theme }) => theme.colors.grey[400]};
+  }
+
   .group-header {
     display: flex;
     flex-direction: column;

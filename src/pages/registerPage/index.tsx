@@ -44,7 +44,6 @@ const RegisterPage = () => {
         signIn(data.username, data.password);
       },
       onError: (err: any) => {
-        console.log(err.response);
         if (err.response.data.code === 11000) {
           setError("username", { message: "Username já cadastrado" });
         }

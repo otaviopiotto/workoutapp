@@ -13,10 +13,10 @@ const MainPage = () => {
   const [group, setGroup] = useState([]);
   const { user } = useAuth();
 
-  const { data, refetch, isFetching } = getQuery(`user/${user._id}`, [
-    "user",
-    user._id,
-  ]);
+  const { data, refetch, isFetching, isLoading } = getQuery(
+    `user/${user._id}`,
+    ["user", user._id]
+  );
 
   useEffect(() => {
     if (isFetching) {
@@ -37,7 +37,12 @@ const MainPage = () => {
   return (
     <Container>
       <header className="group-header">
-        <Button buttonStyle="Text" onClick={() => navigate("/perfil")}>
+        <Button
+          buttonStyle="Text"
+          onClick={() => navigate("/perfil")}
+          style={{ padding: 0 }}
+          className="perfil-button"
+        >
           {user.name}
         </Button>
 
@@ -55,7 +60,7 @@ const MainPage = () => {
             <HiOutlineRefresh className={loading ? "fetching" : ""} />
           </Button>
         </div>
-        {!group.length && (
+        {!group.length && !isLoading && (
           <Button
             buttonStyle="Secondary"
             size="Large"
@@ -71,6 +76,12 @@ const MainPage = () => {
         )}
 
         <ul className="groups">
+          {isLoading && (
+            <>
+              <div className="skeleton-loader" />
+              <div className="skeleton-loader" />
+            </>
+          )}
           {group.map((e: any, i) => (
             <GroupCard
               group_data={e}
