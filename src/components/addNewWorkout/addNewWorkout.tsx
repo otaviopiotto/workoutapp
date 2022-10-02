@@ -1,121 +1,84 @@
 import { map } from "lodash";
 import { useEffect, useRef, useState } from "react";
-import { UseFormRegister } from "react-hook-form";
+import {
+  UseFieldArrayRemove,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+} from "react-hook-form";
 import {
   HiOutlineMinusSm,
   HiOutlinePlusSm,
   HiOutlineTrash,
 } from "react-icons/hi";
-import { exerciseType } from "../../models/exercise";
+import { inputProp } from "../addNewWorkoutGroup";
 import { CardContainer } from "../addNewWorkoutGroup/styles";
 import Button from "../Button";
 
 export type defaultValue = { sets?: string; reps?: string; time?: string };
 
 interface addNewProp {
-  onDelete?(id: number | string | undefined): void;
-  register?: UseFormRegister<any>;
-  setValue: any;
-  data: exerciseType;
-  setDefaultValue(value: defaultValue): void;
-  defaultValue: defaultValue | undefined;
-  watch: any;
+  onDelete: UseFieldArrayRemove;
+  register: UseFormRegister<inputProp>;
+  index: number;
+  watch: UseFormWatch<inputProp>;
+  parent: string;
+  setValue: UseFormSetValue<inputProp>;
 }
 
-const AddNewWorkOut = ({ ...props }: addNewProp) => {
+const AddNewWorkOut = ({ parent, ...props }: addNewProp) => {
   const [deleteAnim, setDeleteAnim] = useState(false);
   const containerRef = useRef(null as unknown as HTMLLIElement);
 
   useEffect(() => {
-    const sets = props.watch(`exercise_${props.data?.id}.sets`);
-    const reps = props.watch(`exercise_${props.data?.id}.repetition`);
-    const time = props.watch(`exercise_${props.data?.id}.time`);
-
-    if (sets || reps || time) {
-      props.setDefaultValue({
-        sets,
-        reps,
-        time,
-      });
-    }
-  }, [
-    props.watch(`exercise_${props.data?.id}.sets`),
-    props.watch(`exercise_${props.data?.id}.repetition`),
-    props.watch(`exercise_${props.data?.id}.time`),
-  ]);
-
-  useEffect(() => {
     containerRef.current.scrollIntoView({ behavior: "smooth" });
-
-    if (props.defaultValue) {
-      props.setValue(
-        `exercise_${props.data?.id}.sets`,
-        props.defaultValue?.sets
-      );
-      props.setValue(
-        `exercise_${props.data?.id}.repetition`,
-        props.defaultValue?.reps
-      );
-      props.setValue(
-        `exercise_${props.data?.id}.time`,
-        props.defaultValue?.time
-      );
-    } else {
-      props.setValue(`exercise_${props.data?.id}.sets`, 3);
-      props.setValue(`exercise_${props.data?.id}.repetition`, 10);
-      props.setValue(`exercise_${props.data?.id}.time`, 30);
-    }
   }, []);
 
   const handleSets = (value: boolean) => {
-    const currentValue = Number(props.watch(`exercise_${props.data?.id}.sets`));
+    const currentValue = Number(
+      props.watch(`${parent}.workout.${props.index}.sets` as any)
+    );
 
     if (value) {
-      props.setValue(`exercise_${props.data?.id}.sets`, currentValue + 1);
+      props.setValue(
+        `${parent}.workout.${props.index}.sets` as any,
+        currentValue + 1
+      );
     } else {
       props.setValue(
-        `exercise_${props.data?.id}.sets`,
+        `${parent}.workout.${props.index}.sets` as any,
         currentValue === 0 ? 0 : currentValue - 1
       );
     }
   };
   const handleRest = (value: boolean) => {
-    const currentValue = Number(props.watch(`exercise_${props.data?.id}.time`));
+    const currentValue = Number(
+      props.watch(`${parent}.workout.${props.index}.time` as any)
+    );
 
     if (value) {
-      props.setValue(`exercise_${props.data?.id}.time`, currentValue + 5);
+      props.setValue(
+        `${parent}.workout.${props.index}.time` as any,
+        currentValue + 5
+      );
     } else {
       props.setValue(
-        `exercise_${props.data?.id}.time`,
+        `${parent}.workout.${props.index}.time` as any,
         currentValue === 0 ? 0 : currentValue - 5
       );
     }
   };
 
-  useEffect(() => {
-    if (Object.keys(props.data).length > 1) {
-      map(props.data, (e, i) => {
-        props.setValue(`exercise_${props.data?.id}.${i}`, e);
-      });
-    }
-  }, []);
-
   const handleDelete = () => {
     setDeleteAnim(true);
     setTimeout(() => {
-      props.onDelete?.(props?.data?.id);
+      props.onDelete(props.index);
     }, 100);
   };
 
   return (
     <CardContainer ref={containerRef} deleteAnim={deleteAnim}>
       <div className="input-section">
-        <input
-          style={{ display: "none" }}
-          value={props.data.id}
-          {...props.register?.(`exercise_${props.data?.id}.id`)}
-        />
-
         <div
           className="input-container"
           style={{ gridColumn: "span 3", marginBottom: "10px" }}
@@ -124,7 +87,9 @@ const AddNewWorkOut = ({ ...props }: addNewProp) => {
           <input
             placeholder="Exercício"
             className="exercise-input"
-            {...props.register?.(`exercise_${props.data?.id}.exercise`)}
+            {...props.register?.(
+              `${parent}.workout.${props.index}.exercise` as any
+            )}
           />
         </div>
         <div className="input-container" style={{ gridColumn: "span 3" }}>
@@ -132,7 +97,9 @@ const AddNewWorkOut = ({ ...props }: addNewProp) => {
 
           <input
             placeholder="Observação"
-            {...props.register?.(`exercise_${props.data?.id}.observation`)}
+            {...props.register?.(
+              `${parent}.workout.${props.index}.observation` as any
+            )}
           />
         </div>
         <div className="input-container">
@@ -146,7 +113,9 @@ const AddNewWorkOut = ({ ...props }: addNewProp) => {
               placeholder="0"
               type="number"
               min="0"
-              {...props.register?.(`exercise_${props.data?.id}.sets`)}
+              {...props.register?.(
+                `${parent}.workout.${props.index}.sets` as any
+              )}
             />
             <button type="button" onClick={() => handleSets(true)}>
               <HiOutlinePlusSm />
@@ -159,7 +128,9 @@ const AddNewWorkOut = ({ ...props }: addNewProp) => {
 
           <input
             placeholder="Rep"
-            {...props.register?.(`exercise_${props.data?.id}.repetition`)}
+            {...props.register?.(
+              `${parent}.workout.${props.index}.repetition` as any
+            )}
           />
         </div>
 
@@ -173,7 +144,9 @@ const AddNewWorkOut = ({ ...props }: addNewProp) => {
               placeholder="0"
               type="number"
               min="0"
-              {...props.register?.(`exercise_${props.data?.id}.time`)}
+              {...props.register?.(
+                `${parent}.workout.${props.index}.time` as any
+              )}
             />
             <button type="button" onClick={() => handleRest(true)}>
               <HiOutlinePlusSm />

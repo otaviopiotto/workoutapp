@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import GroupCard from "../../components/exerciseGroupCard";
-import { HiOutlinePlus, HiOutlineRefresh, HiRefresh } from "react-icons/hi";
+import { HiOutlinePlus, HiOutlineRefresh } from "react-icons/hi";
 import { Container } from "./styles";
 import { useAuth } from "../../hooks/auth";
 import { getQuery } from "../../services/hooks/getQuery";
+import Footer from "../../components/footer";
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -96,11 +97,7 @@ const MainPage = () => {
         </ul>
       </section>
 
-      <footer>
-        <Button buttonStyle="Text" onClick={() => navigate("novo-grupo")}>
-          <HiOutlinePlus />
-        </Button>
-      </footer>
+      <Footer />
     </Container>
   );
 };

@@ -1,23 +1,25 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import Button from "../Button";
-
 import { dayType } from "../../models/exercise";
-import { assign } from "lodash";
 import DaysContainer from "./component/daysContainer";
 import { useLocation, useNavigate } from "react-router-dom";
 import TextAreaComponent from "../formComponents/textarea";
-import { HiOutlinePlus } from "react-icons/hi";
+import {
+  HiOutlineCheck,
+  HiOutlineChevronLeft,
+  HiOutlinePlus,
+} from "react-icons/hi";
 import { Modal, ModalContent } from "../radixModalComponent";
 import SaveGroup from "./component/saveGroup";
-import { Form, Container } from "./styles";
 import { getQuery } from "../../services/hooks/getQuery";
+import { Form, Container } from "./styles";
 
-interface inputProp {
+export interface inputProp {
   title?: string;
   description?: string;
-  days?: dayType | any;
+  days?: dayType[];
 }
 
 const AddNewWorkOutGroup = () => {
@@ -26,65 +28,42 @@ const AddNewWorkOutGroup = () => {
   const [formData, setFormData] = useState();
   const navigate = useNavigate();
 
-  const [days, setDays] = useState<dayType | any>([
-    {
-      id: (Math.random() * (1000000000 - 1) + 1).toFixed(0),
-      number: 1,
-      muscle_group: "OFF",
-    },
-  ]);
-
   const { state }: any = useLocation();
 
   const { data } = getQuery(`user/group/${state}`, ["group", state], {
     enabled: Boolean(state),
   });
 
-  const { register, handleSubmit, setValue } = useForm<inputProp>();
+  const { register, handleSubmit, setValue, watch, control, getValues } =
+    useForm<inputProp>({
+      defaultValues: data,
+    });
 
-  useEffect(() => {
-    if (!data) return;
-
-    setValue("title", data.title);
-    setValue("description", data.description);
-    setDays(data.days);
-  }, [state, data]);
+  const { fields, append, remove } = useFieldArray({
+    name: "days",
+    control,
+  });
 
   const onSubmit = (data: any) => {
-    setFormData({
+    const format = {
       ...data,
-      days,
-    });
+      days: data?.days?.map((e: any, i: number) => ({ ...e, number: i + 1 })),
+    };
+    setFormData(format);
     setOpenModal(true);
   };
 
   const createDay = () => {
-    const newDay = {
-      id: (Math.random() * (100000 - 1) + 1).toFixed(0),
-      number: days.length + 1,
-    };
-    setDays([...days, newDay]);
-  };
-
-  const updateDay = (data: any) => {
-    const objIndex = days.findIndex((obj: any) => obj.id == data.id);
-    assign(days[objIndex], data);
-  };
-
-  const handleDelete = (id: string | number) => {
-    const filterDay = days.filter((e: dayType) => e.id !== id);
-    filterDay.forEach((e: any, i: number) => (e.number = i + 1));
-
-    setDays(filterDay);
+    append({
+      muscle_group: "",
+    });
   };
 
   const duplicateDay = (data: any) => {
-    const duplicated = {
+    append({
       ...data,
-      id: (Math.random() * (100000 - 1) + 1).toFixed(0),
-      number: days.length + 1,
-    };
-    setDays([...days, duplicated]);
+      muscle_group: watch(`days[${fields.length - 1}].muscle_group` as any),
+    });
   };
 
   return (
@@ -112,13 +91,17 @@ const AddNewWorkOutGroup = () => {
 
         <section className="add-days-section">
           <div className="grid-container" ref={listParent as any}>
-            {days.map((e: dayType | any, index: number) => (
+            {fields.map((e: dayType | any, index: number) => (
               <DaysContainer
-                day={index + 1}
                 duplicateDay={duplicateDay}
-                updateDay={updateDay}
-                onDelete={handleDelete}
+                register={register}
+                remove={remove}
+                setValue={setValue}
+                getValues={getValues}
+                watch={watch}
+                control={control}
                 key={index}
+                index={index}
                 data={e}
               />
             ))}
@@ -134,10 +117,13 @@ const AddNewWorkOutGroup = () => {
 
         <footer>
           <Button buttonStyle="Text" onClick={() => navigate(-1)} dangerous>
-            Cancelar
+            <HiOutlineChevronLeft />
           </Button>
-          <Button buttonStyle="Primary" type="submit" form="group-form">
-            Salvar
+          <Button buttonStyle="Text" onClick={() => createDay()}>
+            <HiOutlinePlus />
+          </Button>
+          <Button buttonStyle="Text" type="submit" form="group-form">
+            <HiOutlineCheck />
           </Button>
         </footer>
       </Container>

@@ -173,23 +173,26 @@ export const ExerciseContainer = styled.div`
   }
 
   .modal-footer {
-    display: flex;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    padding: 20px 0px;
     position: sticky;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    justify-content: space-between;
-    background: rgba(0, 0, 0, 0.1);
+    bottom: 10px;
+    left: 20px;
+    right: 20px;
+    z-index: 99;
     border-radius: 99px;
+    background-color: rgba(12, 14, 15, 0.5);
+    backdrop-filter: blur(2px);
 
     button {
       border-radius: 90px;
-      padding: 10px 20px;
+      padding: 0px;
       ${({ theme }) => theme.fonts.mulish.body_regular};
 
       color: ${({ theme }) => theme.colors.white};
-      flex: 1;
+      font-size: 22px;
     }
   }
 `;

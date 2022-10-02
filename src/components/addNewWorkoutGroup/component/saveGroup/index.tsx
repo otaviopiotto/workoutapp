@@ -1,15 +1,14 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Form } from "./styles";
+import { useMutationQuery } from "../../../../services/hooks/useMutationQuery";
 import InputComponent from "../../../formComponents/input";
 import Button from "../../../Button";
-import { useGroup } from "../../../../hooks/exerciseGroup";
-import { useLocation, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { useEffect } from "react";
 import { useAuth } from "../../../../hooks/auth";
-import { useMutationQuery } from "../../../../services/hooks/useMutationQuery";
+import { Form } from "./styles";
 
 interface inputProp {
   title: string;
@@ -48,6 +47,7 @@ const SaveGroup = ({ id, data, onClose }: saveGroupProps) => {
   }, [id]);
 
   const onSubmit = ({ title }: any) => {
+    //PUT
     if (id) {
       onAddGroup(
         {
@@ -62,6 +62,7 @@ const SaveGroup = ({ id, data, onClose }: saveGroupProps) => {
           onError: (err) => console.log(err),
         }
       );
+      //POST
     } else {
       onAddGroup(
         {
@@ -71,14 +72,12 @@ const SaveGroup = ({ id, data, onClose }: saveGroupProps) => {
         {
           onSuccess: () => {
             toast.success("Grupo Criado");
+            navigate(-1);
           },
           onError: (err) => console.log(err),
         }
       );
-
-      toast.success("Grupo Criado");
     }
-    navigate(-1);
   };
 
   return (

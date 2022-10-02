@@ -1,22 +1,39 @@
 import { useEffect, useRef, useState } from "react";
-import { map } from "lodash";
-import { useForm } from "react-hook-form";
+import {
+  Control,
+  useFieldArray,
+  UseFieldArrayRemove,
+  UseFormGetValues,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+} from "react-hook-form";
 import { dayType, exerciseType } from "../../../models/exercise";
 import AddNewWorkOut from "../../addNewWorkout/addNewWorkout";
 import Button from "../../Button";
 import { Modal, ModalContent } from "../../radixModalComponent";
-import { defaultValue } from "../../../components/addNewWorkout/addNewWorkout";
+import {
+  HiOutlineCheck,
+  HiOutlineDuplicate,
+  HiOutlinePlus,
+  HiOutlineX,
+  HiX,
+} from "react-icons/hi";
+import InputComponent from "../../formComponents/input";
+import { inputProp } from "..";
 import { Form } from "../styles";
 import { DayContainer, ExerciseContainer } from "./styles";
-import { HiOutlineDuplicate, HiOutlinePlus, HiOutlineX } from "react-icons/hi";
-import InputComponent from "../../formComponents/input";
 
 interface DaysProp {
-  day: number;
   data?: dayType;
-  onDelete?(id: string | number | undefined): void;
-  updateDay(data: any): void;
   duplicateDay(data: any): void;
+  remove: UseFieldArrayRemove;
+  register: UseFormRegister<inputProp>;
+  watch: UseFormWatch<inputProp>;
+  index: number;
+  getValues: UseFormGetValues<inputProp>;
+  setValue: UseFormSetValue<inputProp>;
+  control: Control<inputProp, any>;
 }
 
 const defaultList = ["Exercícios", "Séries", "Reps", "Desc"];
@@ -24,38 +41,35 @@ const offList = ["Off", "Off", "Off", "Off"];
 
 const DaysContainer = ({
   data,
-  day,
-  onDelete,
-  updateDay,
   duplicateDay,
+  watch,
+  index,
+  remove,
+  control,
+  register,
+  setValue,
+  getValues,
 }: DaysProp) => {
-  const [open, setOpen] = useState(data?.muscle_group ? false : true);
+  const [open, setOpen] = useState(
+    watch(`days.${index}.muscle_group`) ? false : true
+  );
   const containerRef = useRef(null as any);
 
-  const defaultTitle = !data?.muscle_group
-    ? `Dia ${day} - Exercícios`
-    : `Dia ${day} - ${data.muscle_group}`;
+  const defaultTitle = !getValues(`days.${index}.muscle_group`)
+    ? `Dia ${index + 1} - Exercícios`
+    : `Dia ${index + 1} - ${getValues(`days.${index}.muscle_group`)}`;
 
   useEffect(() => {
-    if (!data?.muscle_group) setOpen(true);
+    if (!getValues(`days.${index}.muscle_group`)) setOpen(true);
   }, [open]);
 
   const handleOpenChange = () => {
-    setOpen(!open);
-
-    if (open) {
-      if (!data?.muscle_group) {
-        const formatData = {
-          muscle_group: "OFF",
-          number: day,
-          workout: [],
-        };
-
-        updateDay({ ...data, ...formatData });
-      }
+    if (!watch(`days.${index}.muscle_group`)) {
+      setValue(`days.${index}.muscle_group`, "OFF");
       setOpen(false);
+    } else {
+      setOpen(!open);
     }
-    setOpen(false);
   };
 
   return (
@@ -64,10 +78,16 @@ const DaysContainer = ({
         <ModalContent title={defaultTitle}>
           <AddExercises
             {...{
-              data,
-              day,
-              onClose: () => setOpen(false),
-              updateDay,
+              control,
+              nestedIndex: index,
+              register,
+              getValues,
+              setValue,
+              watch,
+              onClose: () => {
+                setValue(`days.${index}.muscle_group`, "OFF");
+                setOpen(false);
+              },
             }}
           />
         </ModalContent>
@@ -81,16 +101,18 @@ const DaysContainer = ({
           <article className="days-container">
             <div className="left-side">
               <div className="day-container">
-                <h1>{day?.toString().padStart(2, "0")}</h1>
+                <h1>{(index + 1).toString().padStart(2, "0")}</h1>
               </div>
               <div className="exercise-list">
                 <div className="top-side">
-                  <h3>{data?.muscle_group}</h3>
+                  <h3>{watch(`days.${index}.muscle_group`)}</h3>
                 </div>
 
                 <section className="exercise-bottom">
                   <ul className="list-header">
-                    {(data?.muscle_group?.toLowerCase().includes("off")
+                    {(watch(`days.${index}.muscle_group`)
+                      ?.toLowerCase()
+                      .includes("off")
                       ? offList
                       : defaultList
                     ).map((e, i) => (
@@ -98,16 +120,18 @@ const DaysContainer = ({
                     ))}
                   </ul>
 
-                  {data?.workout?.map((e: exerciseType, i: number) => (
-                    <ul key={i}>
-                      <li>
-                        <span>{e.exercise}</span>
-                      </li>
-                      <li>{e.sets}x</li>
-                      <li>{e.repetition}</li>
-                      <li>{e.time}s</li>
-                    </ul>
-                  ))}
+                  {watch(`days.${index}.workout`)?.map(
+                    (e: exerciseType, i: number) => (
+                      <ul key={i}>
+                        <li>
+                          <span>{e.exercise}</span>
+                        </li>
+                        <li>{e.sets}x</li>
+                        <li>{e.repetition}</li>
+                        <li>{e.time}s</li>
+                      </ul>
+                    )
+                  )}
                 </section>
               </div>
             </div>
@@ -115,7 +139,7 @@ const DaysContainer = ({
         </Button>
 
         <div className="right-side">
-          <Button buttonStyle="Text" onClick={() => onDelete?.(data?.id)}>
+          <Button buttonStyle="Text" onClick={() => remove(index)}>
             <HiOutlineX fontSize={20} />
           </Button>
           <Button buttonStyle="Text" onClick={() => duplicateDay(data)}>
@@ -129,77 +153,45 @@ const DaysContainer = ({
 
 interface addProps {
   onClose: () => void;
-  data: any;
-  updateDay(data: any): void;
-  day: number;
+  register: UseFormRegister<inputProp>;
+  watch: UseFormWatch<inputProp>;
+  setValue: UseFormSetValue<inputProp>;
+  nestedIndex: number;
+  getValues: UseFormGetValues<inputProp>;
+  control: Control<inputProp, any>;
 }
 
-const AddExercises = ({ data: dayData, updateDay, onClose, day }: addProps) => {
-  const [loading, setLoading] = useState(true);
-  const [exercises, setExercises] = useState<exerciseType | any>([]);
-  const [defaultValue, setDefaultValue] = useState<defaultValue>();
-
-  const { handleSubmit, register, unregister, setValue, watch, resetField } =
-    useForm({});
-
-  const onAdd = (data: any) => {
-    const muscle_group = data.muscle_group;
-
-    delete data.muscle_group;
-    const workout = map(data, (e) => e);
-    const formatData = {
-      muscle_group,
-      number: day,
-      workout,
-    };
-    updateDay({ ...dayData, ...formatData });
-    onClose();
-  };
+const AddExercises = ({
+  onClose,
+  nestedIndex,
+  control,
+  register,
+  setValue,
+  watch,
+  getValues,
+}: addProps) => {
+  const { fields, append, remove } = useFieldArray({
+    name: `days.${nestedIndex}.workout`,
+    control,
+  });
 
   const createExercise = () => {
-    const newExercise = {
-      id: (Math.random() * (100000 - 1) + 1).toFixed(0),
-    };
-    setExercises([...exercises, newExercise]);
+    append({
+      sets: getValues(
+        `days.${nestedIndex}.workout[${fields.length - 1}].sets` as any
+      ),
+      repetition: getValues(
+        `days.${nestedIndex}.workout[${fields.length - 1}].repetition` as any
+      ),
+      time: getValues(
+        `days.${nestedIndex}.workout[${fields.length - 1}].time` as any
+      ),
+    });
   };
-
-  const deleteExercise = (id: number | string) => {
-    const registerNames = [
-      `exercise_${id}.id`,
-      `exercise_${id}.exercise`,
-      `exercise_${id}.sets`,
-      `exercise_${id}.repetition`,
-    ];
-
-    const filterDay = exercises.filter((e: dayType) => e.id !== id);
-    map(registerNames, (value) => resetField(value));
-    unregister([`exercise_${id}`, ...registerNames]);
-    setExercises(filterDay);
-  };
-
-  useEffect(() => {
-    if (dayData?.muscle_group) {
-      setValue("muscle_group", dayData.muscle_group);
-      setLoading(false);
-    } else {
-      setValue("muscle_group", "OFF");
-    }
-    if (!dayData?.workout) {
-      setLoading(false);
-      return;
-    }
-
-    const newExercise = dayData?.workout?.map((e: exerciseType) => ({
-      ...e,
-    }));
-
-    setExercises(newExercise);
-  }, [dayData]);
 
   return (
     <ExerciseContainer>
       <Form
-        onSubmit={handleSubmit(onAdd)}
         id="add-exercise"
         style={{
           gap: 0,
@@ -209,36 +201,33 @@ const AddExercises = ({ data: dayData, updateDay, onClose, day }: addProps) => {
           marginTop: "20px",
         }}
       >
-        {!loading && (
-          <InputComponent
-            label="Dia de:"
-            style={{ gap: 0, height: "fit-content" }}
-            register={{ ...register("muscle_group") }}
-          />
-        )}
+        <InputComponent
+          label="Dia de:"
+          style={{ gap: 0, height: "fit-content" }}
+          register={{ ...register(`days.${nestedIndex}.muscle_group`) }}
+        />
 
         <section className="add-exercise-section">
           <ul
             className="add-new"
-            style={{ display: !exercises.length ? "none" : "flex" }}
+            style={{ display: !fields.length ? "none" : "flex" }}
           >
-            {exercises.map((e: exerciseType | any, i: number) => (
+            {fields.map((e: exerciseType | any, i: number) => (
               <AddNewWorkOut
-                onDelete={deleteExercise}
-                data={e}
                 key={i}
+                index={i}
+                parent={`days.${nestedIndex}`}
                 {...{
-                  setDefaultValue,
-                  defaultValue,
                   register,
                   setValue,
                   watch,
+                  onDelete: remove,
                 }}
               />
             ))}
           </ul>
 
-          {!exercises.length ? (
+          {!fields.length ? (
             <Button
               buttonStyle="Secondary"
               onClick={() => createExercise()}
@@ -249,11 +238,14 @@ const AddExercises = ({ data: dayData, updateDay, onClose, day }: addProps) => {
           ) : null}
         </section>
         <footer className="modal-footer">
+          <Button buttonStyle="Text" onClick={onClose}>
+            <HiX />
+          </Button>
           <Button buttonStyle="Text" onClick={() => createExercise()}>
             <HiOutlinePlus />
           </Button>
-          <Button buttonStyle="Primary" type="submit" form="add-exercise">
-            Salvar
+          <Button buttonStyle="Text" onClick={onClose} form="add-exercise">
+            <HiOutlineCheck />
           </Button>
         </footer>
       </Form>

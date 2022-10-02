@@ -41,24 +41,25 @@ export const Container = styled.main`
   }
 
   footer {
-    display: flex;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    padding: 20px 0px;
     position: fixed;
     bottom: 20px;
-    left: 12px;
-    right: 12px;
-    justify-content: space-between;
-    background-color: rgba(12, 14, 15, 0.5);
-
+    left: 20px;
+    right: 20px;
+    z-index: 99;
     border-radius: 99px;
+    background-color: rgba(12, 14, 15, 0.5);
+    backdrop-filter: blur(2px);
 
     button {
       border-radius: 90px;
-      padding: 10px 20px;
+      padding: 0px;
       color: ${({ theme }) => theme.colors.white};
-
       ${({ theme }) => theme.fonts.mulish.body_regular};
-      flex: 1;
+      font-size: 22px;
     }
   }
 `;
