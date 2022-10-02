@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate, useOutlet } from "react-router-dom";
 import Button from "../../components/Button";
-import { useGroup } from "../../hooks/exerciseGroup";
 import { dayType, GroupType } from "../../models/exercise";
 import { Container, DayContainer } from "./styles";
 import {
@@ -158,7 +157,7 @@ const DayCard = ({ data, groupId }: dayProps) => {
               <span className="icon-container">
                 <HiOutlineClipboardList fontSize={12} />{" "}
                 {data?.workout?.length || 0}{" "}
-                {data?.workout?.length > 1 ? "Treinos" : "Treino"}
+                {(data?.workout?.length as number) > 1 ? "Treinos" : "Treino"}
               </span>
             )}
           </div>
