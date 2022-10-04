@@ -7,7 +7,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutationQuery } from "../../../../services/hooks/useMutationQuery";
 import InputComponent from "../../../formComponents/input";
 import Button from "../../../Button";
-import { useAuth } from "../../../../hooks/auth";
 import { Form } from "./styles";
 
 interface inputProp {
@@ -25,7 +24,6 @@ interface saveGroupProps {
 
 const SaveGroup = ({ id, data, onClose }: saveGroupProps) => {
   const navigate = useNavigate();
-  const { user } = useAuth();
   const {
     register,
     handleSubmit,
@@ -35,8 +33,8 @@ const SaveGroup = ({ id, data, onClose }: saveGroupProps) => {
     resolver: yupResolver(schema),
   });
 
-  const { mutate: onAddGroup } = useMutationQuery(
-    `user/group/${user._id}`,
+  const { mutate: onAddGroup, isLoading } = useMutationQuery(
+    `user/group/${id}`,
     id ? "put" : "post"
   );
 
@@ -48,6 +46,7 @@ const SaveGroup = ({ id, data, onClose }: saveGroupProps) => {
 
   const onSubmit = ({ title }: any) => {
     //PUT
+    console.log(id);
     if (id) {
       onAddGroup(
         {
@@ -89,7 +88,12 @@ const SaveGroup = ({ id, data, onClose }: saveGroupProps) => {
         error={errors.title?.message}
       />
 
-      <Button buttonStyle="Primary" size="Large" type="submit">
+      <Button
+        buttonStyle="Primary"
+        size="Large"
+        type="submit"
+        loading={isLoading}
+      >
         Salvar
       </Button>
 

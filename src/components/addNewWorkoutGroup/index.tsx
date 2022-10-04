@@ -60,10 +60,7 @@ const AddNewWorkOutGroup = () => {
   };
 
   const duplicateDay = (data: any) => {
-    append({
-      ...data,
-      muscle_group: watch(`days[${fields.length - 1}].muscle_group` as any),
-    });
+    append(data);
   };
 
   return (

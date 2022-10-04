@@ -64,7 +64,7 @@ const DaysContainer = ({
   }, [open]);
 
   const handleOpenChange = () => {
-    if (!watch(`days.${index}.muscle_group`)) {
+    if (!getValues(`days.${index}.muscle_group`)) {
       setValue(`days.${index}.muscle_group`, "OFF");
       setOpen(false);
     } else {
@@ -84,10 +84,7 @@ const DaysContainer = ({
               getValues,
               setValue,
               watch,
-              onClose: () => {
-                setValue(`days.${index}.muscle_group`, "OFF");
-                setOpen(false);
-              },
+              onClose: handleOpenChange,
             }}
           />
         </ModalContent>
