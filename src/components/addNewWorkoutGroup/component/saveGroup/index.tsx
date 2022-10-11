@@ -8,6 +8,7 @@ import { useMutationQuery } from "../../../../services/hooks/useMutationQuery";
 import InputComponent from "../../../formComponents/input";
 import Button from "../../../Button";
 import { Form } from "./styles";
+import { useAuth } from "../../../../hooks/auth";
 
 interface inputProp {
   title: string;
@@ -24,6 +25,9 @@ interface saveGroupProps {
 
 const SaveGroup = ({ id, data, onClose }: saveGroupProps) => {
   const navigate = useNavigate();
+
+  const { user } = useAuth();
+
   const {
     register,
     handleSubmit,
@@ -34,11 +38,12 @@ const SaveGroup = ({ id, data, onClose }: saveGroupProps) => {
   });
 
   const { mutate: onAddGroup, isLoading } = useMutationQuery(
-    `user/group/${id}`,
+    `user/group/${id || user._id}`,
     id ? "put" : "post"
   );
 
   useEffect(() => {
+    console.log(id);
     if (id) {
       setValue("title", data.title);
     }
@@ -46,7 +51,6 @@ const SaveGroup = ({ id, data, onClose }: saveGroupProps) => {
 
   const onSubmit = ({ title }: any) => {
     //PUT
-    console.log(id);
     if (id) {
       onAddGroup(
         {

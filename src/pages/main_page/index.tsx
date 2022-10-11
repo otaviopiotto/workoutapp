@@ -35,6 +35,12 @@ const MainPage = () => {
     }
   }, [data]);
 
+  const addButton = (
+    <Button buttonStyle="Text" onClick={() => navigate("novo-grupo")}>
+      <HiOutlinePlus />
+    </Button>
+  );
+
   return (
     <Container>
       <header className="group-header">
@@ -97,7 +103,7 @@ const MainPage = () => {
         </ul>
       </section>
 
-      <Footer />
+      <Footer addons={addButton} />
     </Container>
   );
 };

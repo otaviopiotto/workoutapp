@@ -36,7 +36,7 @@ export const Container = styled.main`
     }
   }
 
-  footer {
+  .edit-footer {
     padding: 20px 30px 0;
     position: fixed;
     bottom: 20px;

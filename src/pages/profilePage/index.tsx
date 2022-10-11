@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import {
-  HiLogout,
-  HiOutlineArrowNarrowLeft,
-  HiOutlinePencil,
-} from "react-icons/hi";
+import { HiOutlinePencil } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Button from "../../components/Button";
+import Footer from "../../components/footer";
 import InputComponent from "../../components/formComponents/input";
 import { useAuth } from "../../hooks/auth";
 import { useMutationQuery } from "../../services/hooks/useMutationQuery";
@@ -49,6 +46,12 @@ const ProfilePage = () => {
     });
   };
 
+  const addButton = (
+    <Button buttonStyle="Text" onClick={() => setEdit(true)}>
+      <HiOutlinePencil />
+    </Button>
+  );
+
   return (
     <Container>
       <header>
@@ -85,21 +88,7 @@ const ProfilePage = () => {
           </div>
         </footer>
       )}
-      {!edit && (
-        <footer>
-          <div className="get-back-section">
-            <Button buttonStyle="Text" onClick={() => navigate(-1)}>
-              <HiOutlineArrowNarrowLeft />
-            </Button>
-            <Button buttonStyle="Text" onClick={() => setEdit(true)}>
-              <HiOutlinePencil />
-            </Button>
-            <Button buttonStyle="Text" onClick={() => signOut()}>
-              <HiLogout />
-            </Button>
-          </div>
-        </footer>
-      )}
+      {!edit && <Footer addons={addButton} />}
     </Container>
   );
 };
