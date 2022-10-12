@@ -9,15 +9,29 @@ export const Container = styled.main`
   animation: ${entranceAnim} 0.4s ease;
 
   .user-info {
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
     p {
+      text-align: center;
       ${({ theme }) => theme.fonts.mulish.small_regular};
-
       color: ${({ theme }) => theme.colors.pallete[200]};
     }
     h1 {
+      text-align: center;
       line-height: 1.2em;
       font-size: 43px;
       color: ${({ theme }) => theme.colors.pallete[200]};
+    }
+
+    img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 999px;
     }
   }
 

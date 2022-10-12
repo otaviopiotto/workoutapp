@@ -73,6 +73,14 @@ export const Container = styled.main`
   }
 
   .perfil-button {
+    img {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 99px;
+      margin-right: 4px;
+    }
+
     color: ${({ theme }) => theme.colors.grey[400]};
   }
 

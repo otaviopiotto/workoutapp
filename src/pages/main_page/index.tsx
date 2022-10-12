@@ -8,6 +8,9 @@ import { useAuth } from "../../hooks/auth";
 import { getQuery } from "../../services/hooks/getQuery";
 import Footer from "../../components/footer";
 
+const defualtImg =
+  "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg";
+
 const MainPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -50,7 +53,11 @@ const MainPage = () => {
           style={{ padding: 0 }}
           className="perfil-button"
         >
-          {user.name}
+          <img
+            src={user?.profile_picture?.url || defualtImg}
+            alt="profile-pic"
+          />{" "}
+          <p>{user.name}</p>
         </Button>
 
         <h5>

@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { HiOutlinePencil } from "react-icons/hi";
+import { HiOutlineLogout, HiOutlinePencil } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import uploadImage from "../../utils/uploadImage";
 import Button from "../../components/Button";
 import Footer from "../../components/footer";
 import InputComponent from "../../components/formComponents/input";
+import UploadPictureComponent from "../../components/formComponents/picture";
 import { useAuth } from "../../hooks/auth";
 import { useMutationQuery } from "../../services/hooks/useMutationQuery";
 import { Container } from "./styles";
@@ -55,11 +57,21 @@ const ProfilePage = () => {
   return (
     <Container>
       <header>
-        <div className="user-info">
+        <Button buttonStyle="Text" onClick={signOut}>
+          <HiOutlineLogout />
+        </Button>
+      </header>
+
+      <section className="user-info">
+        <div>
+          <UploadPictureComponent
+            readonly={false}
+            imageSrc={user?.profile_picture?.url}
+          />
           <h1>{user.name}</h1>
           <p>username: {user.username}</p>
         </div>
-      </header>
+      </section>
 
       {edit && (
         <main>
