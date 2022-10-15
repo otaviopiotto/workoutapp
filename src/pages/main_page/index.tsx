@@ -57,7 +57,6 @@ const MainPage = () => {
             src={user?.profile_picture?.url || defualtImg}
             alt="profile-pic"
           />{" "}
-          <p>{user.name}</p>
         </Button>
 
         <h5>

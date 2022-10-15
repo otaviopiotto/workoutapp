@@ -1,9 +1,10 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-alert */
-import React, { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { toast } from "react-toastify";
 import { UserType } from "../models/user";
 import { api } from "../services/api";
+import { getQuery } from "../services/hooks/getQuery";
 
 interface AuthState {
   token: string;
@@ -18,6 +19,7 @@ export interface AuthContextData {
   signIn(username: string, password: string): Promise<void>;
   signOut(): void;
   updateProfile(user: Partial<UserType>): void;
+  refreshProfile(): void;
 }
 
 export const AuthContext = createContext<AuthContextData>(
@@ -79,6 +81,21 @@ export const AuthProvider = ({ children }: any) => {
     setData((oldData) => ({ ...oldData, user: newUserData }));
   };
 
+  const { data: profileData, refetch } = getQuery(
+    `user/${data?.user?._id}`,
+    ["user", data?.user?._id],
+    {
+      enabled: false,
+    }
+  );
+
+  const refreshProfile = () => {
+    refetch();
+    if (profileData) {
+      setData((old) => ({ ...old, user: profileData }));
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -89,6 +106,7 @@ export const AuthProvider = ({ children }: any) => {
         signIn,
         signOut,
         updateProfile,
+        refreshProfile,
       }}
     >
       {children}

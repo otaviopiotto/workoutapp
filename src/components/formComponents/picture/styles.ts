@@ -43,21 +43,15 @@ export const Container = styled.div<pictureStyleProp>`
     visibility: hidden;
   }
 
-  small {
-    margin: 12px 0;
-    ${({ theme }: any) => theme.fonts.mulish.small_regular};
-    color: ${({ theme }) => theme.colors.cold_grey_800};
-  }
-
   .loading {
     &:after {
       ${skeletonAnim}
     }
   }
 
-  .required {
-    font-family: "Mulish";
-    color: #d32f2f;
+  .edit-btn {
+    color: ${({ theme }: any) => theme.colors.pallete[300]};
+    font-weight: 400;
   }
 `;
 
@@ -66,10 +60,9 @@ interface PicturePreviewProp {
 }
 
 export const PicturePreview = styled.div<PicturePreviewProp>`
-  width: ${(props) => (props.maxWidth ? props.maxWidth : "256")}px;
-  height: ${(props) => (props.maxWidth ? props.maxWidth : "256")}px;
+  max-width: ${(props) => (props.maxWidth ? props.maxWidth : "256")}px;
+  max-height: ${(props) => (props.maxWidth ? props.maxWidth : "256")}px;
   position: relative;
-  border-radius: 50%;
   overflow: hidden;
 
   img {
@@ -81,8 +74,8 @@ export const PicturePreview = styled.div<PicturePreviewProp>`
 
 export const CroppContainer = styled.div`
   min-width: 100%;
-  margin-top: 20px;
-
+  min-height: 100%;
+  padding: 60px 0 0;
   .cropp-container {
     width: 90vw;
     height: 64vh;
@@ -107,12 +100,6 @@ export const CroppContainer = styled.div`
     gap: 20px;
   }
 `;
-
-export const buttonStyle = {
-  color: `${({ theme }: any) => theme.colors.cold_grey_500}`,
-  fontWeight: "400",
-  margin: "0 auto",
-};
 
 export const svgStyle = {
   width: "17px",

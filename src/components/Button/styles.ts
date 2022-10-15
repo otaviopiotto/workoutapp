@@ -163,7 +163,6 @@ const buttonColorDisabled = (param: string) => {
 const disabledButton = css<ButtonProps>`
   background: ${(props) => buttonColorDisabled(props.buttonStyle)};
   color: ${({ theme }) => theme.colors.grey[50]};
-  border-color: ${({ theme }) => theme.colors.grey[50]};
   cursor: no-drop;
   opacity: 0.7;
   &:hover {
@@ -182,6 +181,7 @@ export const ButtonContainer = styled.button.attrs<ButtonProps>(({ type }) => ({
   justify-content: center;
   gap: 4px;
   transition: 0.3s;
+  position: relative;
   animation: ${(props) => props.animation && buttonAnimation} 0.6s ease;
   padding: ${(props) =>
     props.circle || props.square
@@ -194,10 +194,26 @@ export const ButtonContainer = styled.button.attrs<ButtonProps>(({ type }) => ({
   ${(props) =>
     props.loading &&
     css`
-      opacity: 0.7;
       cursor: no-drop;
-      svg {
-        animation: 1s ${loadingAnimation} infinite ease;
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        background: rgba(0, 0, 0, 0.6);
+        border-radius: ${props.circle ? "99px" : "8px"};
       }
+      /* opacity: 0.7; */
     `}
+
+  .loading-icon {
+    position: absolute;
+
+    opacity: 1;
+    animation: 1s ${loadingAnimation} infinite ease;
+    z-index: 2;
+  }
 `;

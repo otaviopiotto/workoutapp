@@ -8,36 +8,91 @@ export const Container = styled.main`
   padding: 50px 40px;
   animation: ${entranceAnim} 0.4s ease;
 
-  .user-info {
-    div {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+  header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    z-index: 2;
+
+    button {
+      color: white;
+      padding: 0;
     }
+  }
+
+  .user-info {
+    position: relative;
+    margin: -50px -40px 0;
+    padding: 50px 40px;
+    height: 300px;
+    overflow: hidden;
+
+    img {
+      border-radius: 999px;
+      box-shadow: 0 0 1em rgba(0, 0, 0, 0.3);
+    }
+
+    .background-effect {
+      position: absolute;
+
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 0;
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 0px;
+        object-fit: cover;
+        position: absolute;
+        filter: blur(7px) brightness(50%);
+      }
+      &::after {
+        content: "";
+        background: rgb(22, 26, 29);
+        background: linear-gradient(
+          0deg,
+          rgba(22, 26, 29, 1) 0%,
+          rgba(0, 0, 0, 0) 100%
+        );
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+      }
+    }
+  }
+
+  .float-user-info {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: flex-start;
+    justify-content: flex-start;
+    z-index: 1;
     p {
-      text-align: center;
       ${({ theme }) => theme.fonts.mulish.small_regular};
+      font-size: 9px;
       color: ${({ theme }) => theme.colors.pallete[200]};
     }
     h1 {
-      text-align: center;
       line-height: 1.2em;
-      font-size: 43px;
+      font-size: 25px;
+      font-weight: 400;
       color: ${({ theme }) => theme.colors.pallete[200]};
-    }
-
-    img {
-      width: 200px;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 999px;
     }
   }
 
   main {
     width: 100%;
-    height: 60%;
     display: flex;
     justify-content: center;
     align-items: center;

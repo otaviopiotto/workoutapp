@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { HiOutlineLogout, HiOutlinePencil } from "react-icons/hi";
+import {
+  HiOutlineArrowNarrowLeft,
+  HiOutlineLogout,
+  HiOutlinePencil,
+} from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import uploadImage from "../../utils/uploadImage";
 import Button from "../../components/Button";
 import Footer from "../../components/footer";
 import InputComponent from "../../components/formComponents/input";
@@ -19,16 +22,14 @@ interface inputProp {
 
 const ProfilePage = () => {
   const navigate = useNavigate();
-  const { user, signOut, updateProfile } = useAuth();
+  const { user, updateProfile, refreshProfile, signOut } = useAuth();
   const [edit, setEdit] = useState(false);
   const { register, handleSubmit, setValue, setError } = useForm<inputProp>();
 
-  const { mutate: onEditUser, isLoading } = useMutationQuery(
-    `/user/${user._id}`,
-    "put"
-  );
+  const { mutate: onEditUser } = useMutationQuery(`/user/${user._id}`, "put");
 
   useEffect(() => {
+    refreshProfile();
     setValue("name", user.name);
     setValue("username", user.username);
   }, []);
@@ -57,23 +58,27 @@ const ProfilePage = () => {
   return (
     <Container>
       <header>
-        <Button buttonStyle="Text" onClick={signOut}>
+        <Button buttonStyle="Text" onClick={() => navigate("/")}>
+          <HiOutlineArrowNarrowLeft />
+        </Button>
+        <Button buttonStyle="Text" onClick={() => signOut()}>
           <HiOutlineLogout />
         </Button>
       </header>
 
       <section className="user-info">
-        <div>
-          <UploadPictureComponent
-            readonly={false}
-            imageSrc={user?.profile_picture?.url}
-          />
-          <h1>{user.name}</h1>
-          <p>username: {user.username}</p>
+        <div className="background-effect">
+          <img src={user?.profile_picture?.url} alt="background-effect" />
         </div>
+
+        <UploadPictureComponent
+          maxWidth={200}
+          readonly={!edit}
+          imageSrc={user?.profile_picture?.url}
+        />
       </section>
 
-      {edit && (
+      {edit ? (
         <main>
           <form onSubmit={handleSubmit(onSubmit)} id="edit-form">
             <InputComponent
@@ -86,6 +91,11 @@ const ProfilePage = () => {
             />
           </form>
         </main>
+      ) : (
+        <div className="float-user-info">
+          <h1>{user.name}</h1>
+          <p>username: {user.username}</p>
+        </div>
       )}
       {edit && (
         <footer className="edit-footer">

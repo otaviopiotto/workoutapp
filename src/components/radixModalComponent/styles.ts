@@ -54,10 +54,9 @@ interface modalProp {
 }
 
 export const ModalBody = styled.main<modalProp>`
+  height: 100%;
   padding: 10px;
   background: ${({ theme }) => theme.colors.pallete[800]};
-  max-height: 96vh;
-
   transition: 0.3s;
   animation: 0.3s ${entranceAnimation} ease;
   overflow: hidden;

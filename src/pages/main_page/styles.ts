@@ -74,14 +74,12 @@ export const Container = styled.main`
 
   .perfil-button {
     img {
-      width: 40px;
-      height: 40px;
+      width: 35px;
+      height: 35px;
       object-fit: cover;
       border-radius: 99px;
       margin-right: 4px;
     }
-
-    color: ${({ theme }) => theme.colors.grey[400]};
   }
 
   .group-header {
@@ -97,7 +95,7 @@ export const Container = styled.main`
     }
 
     h5 {
-      margin-top: 60px;
+      margin-top: 30px;
       ${({ theme }) => theme.fonts.mulish.h5_semibold};
       font-size: 32px;
       line-height: 1.2em;

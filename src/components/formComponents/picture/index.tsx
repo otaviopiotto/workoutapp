@@ -7,13 +7,7 @@ import uploadImage from "../../../utils/uploadImage";
 import Button from "../../Button";
 import { Modal, ModalContent } from "../../radixModalComponent";
 import RangeComponent from "../range";
-import {
-  Container,
-  PicturePreview,
-  CroppContainer,
-  buttonStyle,
-  svgStyle,
-} from "./styles";
+import { Container, PicturePreview, CroppContainer, svgStyle } from "./styles";
 
 interface UploadFileProps {
   onClick?(): void;
@@ -35,16 +29,17 @@ const UploadPictureComponent = ({
   onChange,
   maxWidth,
 }: UploadFileProps) => {
-  const { user } = useAuth();
+  const { user, refreshProfile } = useAuth();
 
   const [imageToEdit, setImageToEdit] = useState(null);
   const [newImage, setNewImage] = useState();
   const [editing, setEditing] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const onCropImg = (data: any) => {
+  const onCropImg = async (data: any) => {
     setNewImage(data);
-    uploadImage(data, user._id);
+    await uploadImage(data, user._id);
+    await refreshProfile();
     onChange?.(data);
   };
 
@@ -83,7 +78,7 @@ const UploadPictureComponent = ({
           buttonStyle="Text"
           size="Large"
           onClick={handleClick}
-          style={buttonStyle}
+          className="edit-btn"
         >
           <AiOutlineEdit style={svgStyle} />
         </Button>
@@ -93,12 +88,13 @@ const UploadPictureComponent = ({
         type="file"
         className="file-input"
         ref={inputRef}
-        accept="image/png, image/jpeg, image/jpg"
+        multiple={false}
+        accept="image/*"
         onInput={(e) => getImage(e.target)}
       />
 
       <Modal open={editing} onOpenChange={() => setEditing(false)}>
-        <ModalContent title="">
+        <ModalContent title="" position="top">
           <EditImage
             imageUrl={imageToEdit !== null ? imageToEdit : ""}
             setEditing={setEditing}

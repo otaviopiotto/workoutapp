@@ -1,4 +1,5 @@
 import React, { ButtonHTMLAttributes } from "react";
+import { HiOutlineRefresh } from "react-icons/hi";
 import { ButtonContainer } from "./styles";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -19,7 +20,12 @@ const Button: React.FC<ButtonProps> = ({
   size = "Medium",
   ...props
 }) => {
-  return <ButtonContainer {...{ ...props, size }}>{children}</ButtonContainer>;
+  return (
+    <ButtonContainer {...{ ...props, size }}>
+      {children}
+      {props.loading && <HiOutlineRefresh className="loading-icon" />}
+    </ButtonContainer>
+  );
 };
 
 export default Button;
