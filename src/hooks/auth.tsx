@@ -78,7 +78,14 @@ export const AuthProvider = ({ children }: any) => {
 
   const updateProfile = (user: Partial<UserType>) => {
     const newUserData = { ...data.user, ...user };
-    setData((oldData) => ({ ...oldData, user: newUserData }));
+    setData((oldData) => {
+      localStorage.setItem(
+        "workoutapp/user",
+        JSON.stringify({ ...oldData, user: newUserData })
+      );
+
+      return { ...oldData, user: newUserData };
+    });
   };
 
   const { data: profileData, refetch } = getQuery(

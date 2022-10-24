@@ -5,6 +5,7 @@ export const Card = styled.div`
   align-items: center;
   padding: 12px 0px;
   border-radius: 12px;
+  flex-direction: row;
   display: flex;
 
   .left-side {

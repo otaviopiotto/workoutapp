@@ -52,8 +52,8 @@ to{
 `;
 
 export const Container = styled.main`
-  padding: 20px 16px;
-  height: 100%;
+  padding: 20px 16px 130px;
+
   position: relative;
   animation: ${showAnim} 0.4s ease;
 
